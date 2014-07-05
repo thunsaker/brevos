@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutHistorySearchMainWrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".brevos.ui.HistorySearchActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <include layout="@layout/search_header_view" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/hard_shadow"/>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutHistorySearchListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+        <ListView
+            android:id="@+id/listViewHistorySearchResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/default_layout_selector" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutHistorySearchResultsEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                style="?android:attr/progressBarStyleLarge"
+                android:indeterminate="true" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutHistorySearchNoResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/now_background">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:textSize="24sp"
+            android:textColor="@color/gray_darkish"
+            android:text="@string/search_no_results"/>
+    </LinearLayout>
+</LinearLayout>

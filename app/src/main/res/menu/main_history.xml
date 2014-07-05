@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:brevos="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.thunsaker.brevos.ui.MainActivity" >
+
+    <item android:id="@+id/action_history"
+        android:title="@string/action_history"
+        android:orderInCategory="101"
+        android:icon="@drawable/ic_action_history_white"
+        brevos:showAsAction="always" />
+</menu>

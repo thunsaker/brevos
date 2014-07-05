@@ -1,0 +1,122 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url 'http://download.crashlytics.com/maven'
+        }
+    }
+    dependencies {
+//        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.9.+'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    }
+}
+
+//apply plugin: 'android-sdk-manager'
+apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+        versionCode 21
+        versionName "3.1"
+    }
+
+    signingConfigs {
+        debugSigning {
+            storeFile file(DEBUG_STORE_FILE)
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+
+        proReleaseSigning {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword System.console() != null ? new String(System.console().readPassword("\nStore password: ")) : ""
+            keyAlias RELEASE_KEY_ALIAS_PRO
+            keyPassword System.console() != null ? new String(System.console().readPassword("\nPro Key password: ")) : ""
+        }
+
+        releaseSigning {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword System.console() != null ? new String(System.console().readPassword("\nStore password: ")) : ""
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword System.console() != null ? new String(System.console().readPassword("\nKey password: ")) : ""
+        }
+    }
+
+    buildTypes {
+        debug {
+            zipAlign true
+            debuggable true
+            runProguard false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debugSigning
+        }
+
+//        pro {
+//            zipAlign true
+//            debuggable false
+//            runProguard false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            signingConfig signingConfigs.proReleaseSigning
+//        }
+
+        release {
+            zipAlign true
+            debuggable false
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            if (android.productFlavors == "pro") {
+//            signingConfig signingConfigs.proReleaseSigning
+//            } else {
+                signingConfig signingConfigs.releaseSigning
+//            }
+        }
+    }
+
+    productFlavors {
+        free {
+            applicationId "com.thunsaker"
+        }
+
+        pro {
+            applicationId "com.thunsaker.BitDroid.Donate"
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'http://download.crashlytics.com/maven' }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':HoloGraphLibrary')
+    compile project(':AboutLibraries')
+
+    provided 'com.squareup.dagger:dagger-compiler:1.2.1'
+
+    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.android.gms:play-services:+'
+    compile 'joda-time:joda-time:+'
+    compile 'com.squareup.dagger:dagger:1.2.1'
+    compile 'com.squareup.okhttp:okhttp:1.3.0'
+    compile 'com.squareup.picasso:picasso:2.2.0'
+    compile 'com.squareup.retrofit:retrofit:1.4.1'
+
+    compile 'com.jakewharton:butterknife:5.1.+'
+    compile 'com.nineoldandroids:library:2.4.0'
+
+    compile 'de.greenrobot:eventbus:2.2.0'
+    compile 'com.twitter:twitter-text:1.9.0'
+    compile 'com.crashlytics.android:crashlytics:1.+'
+}

@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<CheckBoxPreference-->
+        <!--android:key="@string/prefs_bitly_connected"-->
+        <!--android:title="@string/pref_title_bitly"-->
+        <!--android:summary="@string/pref_description_bitly_connected"-->
+        <!--android:icon="@drawable/bitly_fugu"/>-->
+
+    <CheckBoxPreference
+        android:key="@string/prefs_bitly_private_always"
+        android:title="@string/pref_title_private"
+        android:summary="@string/pref_description_private_always"
+        android:icon="@drawable/ic_lock_closed_solid_gray"
+        android:defaultValue="false" />
+
+    <ListPreference
+        android:key="@string/prefs_bitly_shorten_domain"
+        android:title="@string/domain_select"
+        android:defaultValue="0"
+        android:entries="@array/bitly_domain_options"
+        android:entryValues="@array/prefs_bitly_shorten_domain_entryValues"
+        android:summary="@string/prefs_domain_select_summary"
+        android:icon="@drawable/ic_domain_suffix"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null" />
+
+</PreferenceScreen>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brevos_green">
+    <EditText
+        android:id="@+id/editTextSearchQuery"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/ic_search_small"
+        android:layout_gravity="center"
+        android:hint="@string/search_hint"
+        style="@style/EditText.Brevos.White"
+        android:inputType="textAutoComplete"
+        android:imeOptions="actionSearch" />
+    <ImageButton
+        android:id="@+id/imageButtonSearch"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        style="?attr/buttonBarButtonStyle"
+        android:background="@drawable/default_layout_selector_gray"
+        android:src="@drawable/ic_action_search"
+        android:contentDescription="@string/action_search" />
+</LinearLayout>

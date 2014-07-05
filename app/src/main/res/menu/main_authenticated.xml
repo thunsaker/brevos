@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:brevos="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.thunsaker.brevos.ui.MainActivity" >
+    <item android:id="@+id/action_bundle"
+        android:title="@string/action_about"
+        android:orderInCategory="98"
+        android:icon="@drawable/ic_action_bundles"
+        brevos:showAsAction="always"
+        android:visible="false"/>
+
+    <item android:id="@+id/action_search"
+        android:title="@string/action_search"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_action_search"
+        brevos:showAsAction="always" />
+
+    <item android:id="@+id/action_sign_out"
+        android:title="@string/action_sign_out"
+        android:orderInCategory="102"
+        brevos:showAsAction="never"
+        android:visible="false"/>
+</menu>

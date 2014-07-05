@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Brevos</string>
+    <string name="app_version">3.1</string>
+    <string name="prefs_bitly_about_version_summary">v 3.1</string>
+
+    <!-- bit.ly user preferences -->
+    <string name="prefs_bitly_auto_copy_links">brevos_bitly_auto_copy_link</string>
+    <string-array name="bitly_domain_options">
+        <item>default</item>
+        <item>bit.ly</item>
+        <item>j.mp</item>
+        <item>bitly.com</item>
+        <!-- <item>Custom Domain</item> -->
+	</string-array>
+	<string-array name="prefs_bitly_shorten_domain_entryValues">
+	    <item>0</item>
+    	<item>1</item>
+    	<item>2</item>
+    	<item>3</item>
+    	<!-- <item>4</item> -->
+	</string-array>
+	<string name="prefs_bitly_title_shorten_domain_default">0</string>
+	<string name="prefs_bitly_title_shorten_domain_bitly">1</string>
+    <string name="prefs_bitly_title_shorten_domain_jmp">2</string>
+    <string name="prefs_bitly_title_shorten_domain_bitlycom">3</string>
+    <string name="prefs_bitly_title_shorten_domain_pro">4</string>
+    <string name="prefs_bitly_shorten_domain_pro">brevos_bitly_shorten_pro_enabled</string>
+
+    <!-- bit.ly user preferences -->
+    <string name="prefs_bitly_connected">brevos_bitly_connected</string>
+    <string name="prefs_bitly_shorten_facebook">brevos_bitly_shorten_facebook</string>
+    <string name="prefs_bitly_shorten_twitter">brevos_bitly_shorten_twitter</string>
+    <string name="prefs_bitly_shorten_domain">brevos_bitly_shorten_domain</string>
+
+    <!-- bit.ly user info -->
+    <string name="prefs_bitly_token">brevos_bitly_token</string>
+    <string name="prefs_bitly_apikey">brevos_bitly_apikey</string>
+    <string name="prefs_bitly_login">brevos_bitly_login</string>
+
+    <string name="prefs_bitly_share_menu">brevos_share_menu</string>
+    <string name="prefs_bitly_private_always">brevos_private_always</string>
+    <string name="prefs_bitly_beta_shorten_feelings">brevos_bitly_beta_shorten_feelings</string>
+    <string name="prefs_bitly_options_hide">brevos_options_hide</string>
+
+    <string name="title_activity_main">Brevos</string>
+    <string name="prefs_brevos_welcome_wizard">brevos_welcome_wizard</string>
+    <string name="default_click_count">-</string>
+</resources>

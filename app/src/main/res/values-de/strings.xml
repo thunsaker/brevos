@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shorten_copy">Kopieren</string>
+    <string name="shorten_share">Teilen</string>
+    <string name="shorten_hint_text">URL hier einfügen</string>
+
+    <string name="expand">erweitern</string>
+    <string name="shorten">kürzen</string>
+    <string name="shorten_url">URL kürzen</string>
+    <string name="create_short_url">Kurze Url erstellen</string>
+
+    <string name="button_auth_bitly">Mit bit.ly anmelden</string>
+    <string name="button_auth_bitly_sign_out">Abmelden</string>
+
+    <string name="clipboard_use_url">Kürzen</string>
+    <string name="clipboard_url_text">In der Zwischenablage wurde eine URL gefunden: %s</string>
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_sign_out">Abmelden</string>
+    <string name="action_copy">Kopieren</string>
+    <string name="action_open_main">Brevos öffnen</string>
+    <string name="action_share">Teilen</string>
+    <string name="dialog_please_wait">Bitte warten&#8230;</string>
+    <string name="dialog_loading_authorization">Lädt bit.ly Authentifikation</string>
+    <string name="dialog_abort">abgebrochen</string>
+
+    <string name="dialog_auth_bitly_required">Für dieses Feature muss man bei bit.ly angemeldet sein.</string>
+    <string name="dialog_no">Nein Danke</string>
+
+    <string name="pop_over_open_app">Link in Brevos öffnen</string>
+    <string name="link_copied">%s in die Zwischenablage kopiert.</string>
+    <string name="error_invalid_url">Bitte gültige URL angeben.</string>
+
+    <string name="title_activity_bitly_auth">Bit.ly Authentifikation</string>
+    <string name="shorten_info">Info</string>
+    <string name="action_log_out">Abmelden</string>
+    <string name="error_no_url">Bitte eine URL eingeben</string>
+    <string name="error_placeholder">Fehler: %s</string>
+    <string name="title_activity_link">Link Info</string>
+    <string name="error_loading_clicks">Klicks laden gescheitert.</string>
+    <string name="error_loading_info">Info laden gescheitert.</string>
+
+    <string name="error_loading">Laden gescheitert, bitte erneut versuchen.</string>
+    <string name="error_server">Server Error, bitte erneut versuchen.</string>
+    <string name="bitly_connection_error">Error connecting to bit.ly</string>
+
+    <string name="shorten_url_options">Optionen für gekürzte Url</string>
+    <string name="button_collapse">Collapse Options</string>
+    <string name="domain_select">Domain auswählen</string>
+
+    <string name="click_day_title">Tag</string>
+    <string name="click_hour_title">Stunde</string>
+    <string name="click_month_title">Monat</string>
+    <string name="click_week_title">Woche</string>
+    <string name="favicon">favicon</string>
+    <string name="link_info_clicks_title">Klicks</string>
+
+    <string name="error_loading_history">Fehler beim Laden des Benutzer Verlaufs</string>
+    <string name="error_shortening">Fehler beim erstellen der kurz Url, erneut versuchen?</string>
+    <string name="error_expanding">Error expanding url, try again?</string>
+    <string name="error_parsing_response">Error parsing response from server.</string>
+
+    <string name="pop_over_select_title">Zu kürzende Url auswählen</string>
+    <string name="title_activity_brevos_pop_over_list">Url auswählen</string>
+    <string name="private_link">Private Url</string>
+    <string name="error_not_found">Keine gültige bit.ly kurz url.</string>
+    <string name="open_in_browser">Im Browser öffnen</string>
+
+    <string name="bitly_disconnect">bit.ly Account trennen und Brevos Daten löschen?</string>
+    <string name="confirm">Sind Sie sicher?</string>
+    <string name="no">Nein</string>
+    <string name="yes">Ja</string>
+    <string name="title_activity_about">Über</string>
+
+    <string name="about_other_apps">Mehr Apps!</string>
+
+    <string name="app_about">Brevos ist eine gute Hilfe beim Erstellen von gekürzten Links und teilen mit Freunden.</string>
+
+    <string name="action_about">Über</string>
+    <string name="error_copy_nothing">Nichts zu kopieren.</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="clicks_last_four_days">In den letzten 4 Tage</string>
+    <string name="clicks_last_three_hours">In den letzten 3 Stunden</string>
+    <string name="clicks_last_two_months">In den letzten 2 Monate</string>
+    <string name="clicks_last_thee_months">In den letzten 3 Monate</string>
+    <string name="clicks_last_two_years">In den letzten 2 Jahre</string>
+    <string name="clicks_last_seven_days">In den letzten 7 Tage</string>
+    <string name="clicks_last_few_hours">In den letzten paar Stunden</string>
+
+    <string name="loading">Laden…</string>
+    <string name="links_see_all">Alles anzeigen</string>
+    <string name="links_see_more">Mehr anzeigen</string>
+    <string name="link_list_recent">Kürzliche Links</string>
+    <string name="title_activity_history">Deine Links</string>
+    <string name="no_clicks">Keine Klicks</string>
+    <string name="history_load_more">Lade %s mehr</string>
+    <string name="action_filter">Filter</string>
+    <string name="action_search">Suchen</string>
+    <string name="search_hint">Eigene bitlinks suchen</string>
+    <string name="title_activity_history_search">Suche</string>
+    <string name="expand_pop_over">Url ist bereits gekürzt.</string>
+
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="notice_nfc_unavailable">NFC auf diesem Gerät nicht verfügbar.</string>
+    <string name="nfc_link_sent">Link Gesendet!</string>
+    <string name="about_open_source_licences">Öffne Source Licences</string>
+    <string name="notification_shortening_placeholder">Kürzt %s</string>
+    <string name="notification_retry">Wiederholen</string>
+    <string name="title_activity_wizard">Willkommen</string>
+    <string name="wizard_welcome">Willkommen bei Brevos!</string>
+    <string name="wizard_welcome_about_history">BitDroid war meine erste Android App. Sie hat sich mit der Plattform seit Android 1.5 weiterentwickelt und hat sich in den Jahren sehr verändert. \nlch entschied, der Name BitDroid müsse für etwas neues Platz machen. BitDroid (für bit.ly) existiert nicht mehr.</string>
+    <string name="wizard_welcome_about_brevos">Brevos ist eine komplett neu gestalltete Version von BitDroid. Brevos ist KOMPLETT neu! Neues Icon, neue Farben, new Funktionen, gleiche großartige bit.ly Link Erstellung und Statistiken.</string>
+    <string name="wizard_welcome_feedback">Ich hoffe, dass ihnen die neue Version von BitDroid gefällt und Sie mir weiterhin mitteilen, wie ich die App verbessern kann.</string>
+    <string name="wizard_welcome_clipboard_screen_description">Anzeige der Url in der Zwischenablage</string>
+    <string name="wizard_welcome_shorten_screen_description">Anzeige der Kürzungs Ergebnise</string>
+    <string name="wizard_welcome_recent_screen_description">Anzeige der kürzlichen Links</string>
+    <string name="wizard_welcome_clipboard">Erkenne automatisch URLs in der Zwischenablage für einfaches kürzen</string>
+    <string name="wizard_welcome_recent_links">Mit bit.ly anmelden, um kürzliche erstellte Links anzuzeigen</string>
+    <string name="wizard_welcome_pop_over">Von jeder App aus kürzen, ohne unterbrechen zu müssen!</string>
+    <string name="menu_action_previous">Vorheriges</string>
+    <string name="menu_action_next">Nächstes</string>
+    <string name="about_welcome">Willkommens Screen</string>
+
+    <string name="action_bundle">Bundles</string>
+    <string name="loading_title">Loading Title…</string>
+    <string name="error_loading_search">Error loading search results</string>
+    <string name="open_link_details">Open Link Details</string>
+    <string name="search_private_include">Include Private</string>
+    <string name="search_private_exclude">Exclude Private</string>
+    <string name="search_private_only">Private Only</string>
+    <string name="search_archive_include">Include Archive</string>
+    <string name="search_archive_exclude">Exclude Archive</string>
+    <string name="search_archive_only">Archive Only</string>
+    <string name="action_history">History</string>
+    <string name="clicks_total_your_link">Total clicks from your link</string>
+    <string name="clicks_total_global_link">Total clicks from global link</string>
+    <string name="search_no_results">No results found.</string>
+</resources>

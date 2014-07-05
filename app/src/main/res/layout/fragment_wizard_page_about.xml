@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wizard_page_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="350dp"
+            android:scaleType="centerInside"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/brevos_medium_wings"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/wizard_about_info"
+            style="?android:textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/wizard_welcome_about_history" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wizard_page_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
+        <TextView
+            style="?android:textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/wizard_welcome" />
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="500dp"
+            android:src="@drawable/brevos_screen_shortened_result_fade"
+            android:contentDescription="@string/wizard_welcome_shorten_screen_description" />
+
+        <TextView
+            style="?android:textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="16dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingMultiplier="1.2"
+            android:text="@string/wizard_welcome_about_brevos" />
+    </LinearLayout>
+</ScrollView>

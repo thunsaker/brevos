@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayoutExpandResultWrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/now_background"
+    android:visibility="gone"
+    android:padding="5dp"
+    tools:showIn="@layout/activity_main">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_shadow_height"
+        android:layout_marginLeft="@dimen/card_side_margin"
+        android:layout_marginRight="@dimen/card_side_margin"
+        android:layout_marginTop="@dimen/card_shadow_top_margin"
+        android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
+        android:background="@drawable/card_shadow"
+        android:layout_below="@+id/linearLayoutExpandResultWrapperInner"/>
+    <LinearLayout
+        android:id="@+id/linearLayoutExpandResultWrapperInner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_background"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:layout_marginTop="@dimen/card_side_margin"
+        android:layout_marginLeft="@dimen/card_side_margin"
+        android:layout_marginRight="@dimen/card_side_margin"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutExpandResultUrlWrapper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewExpandResultUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/gray_dark"
+                android:maxLines="2"
+                android:text=""
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textViewExpandShortUrl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:layout_marginRight="@dimen/padding_small"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/gray_dark"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButtonExpandResultCopy"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_content_copy"
+            android:scaleType="centerInside"
+            style="?attr/buttonBarButtonStyle"
+            android:contentDescription="@string/shorten"
+            android:background="@drawable/default_layout_selector_gray" />
+
+        <ImageButton
+            android:id="@+id/imageButtonExpandResultBrowse"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/open_in_browser"
+            android:src="@drawable/ic_content_chrome"
+            android:scaleType="centerInside"
+            style="?attr/buttonBarButtonStyle"
+            android:background="@drawable/default_layout_selector_gray" />
+    </LinearLayout>
+</RelativeLayout>

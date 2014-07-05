@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.thunsaker.brevos.ui.custom.PopOverView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_over_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:gravity="right">
+        <LinearLayout
+            android:id="@+id/pop_over_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="20dp">
+            <ImageButton
+                android:id="@+id/pop_over_btn_action_primary"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_popover_share"
+                android:clickable="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/action_share" />
+            <ImageButton
+                android:id="@+id/pop_over_btn_action_secondary"
+                android:layout_width="55dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:background="@android:color/transparent"
+                android:src="@drawable/btn_popover_copy"
+                android:clickable="true"
+                android:adjustViewBounds="true"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/action_copy" />
+            <ImageButton
+                android:id="@+id/pop_over_btn_main"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/btn_popover_main"
+                android:clickable="true"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/action_open_main"/>
+        </LinearLayout>
+    </RelativeLayout>
+</com.thunsaker.brevos.ui.custom.PopOverView>

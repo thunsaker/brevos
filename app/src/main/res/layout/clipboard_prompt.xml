@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutMainUrlInClipboardWrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/linearLayoutMainWrapper"
+    android:background="@color/holo_orange_light"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:visibility="gone"
+    android:animateLayoutChanges="true"
+    tools:showIn="@layout/activity_main"
+    tools:ignore="UnusedAttribute">
+
+    <TextView
+        android:id="@+id/textViewMainClipboardText"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/padding_small"
+        android:layout_marginRight="@dimen/padding_small"
+        android:layout_weight="4"
+        android:ellipsize="end"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/gray_dark"
+        android:maxLines="2"
+        android:text="@string/clipboard_url_text"
+        android:textSize="12sp" />
+
+    <ImageButton
+        android:id="@+id/buttonPasteFromClipboard"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_content_paste"
+        android:scaleType="centerInside"
+        android:tint="@color/white"
+        style="?attr/buttonBarButtonStyle"
+        android:contentDescription="@string/shorten"
+        android:background="@drawable/default_layout_selector_gray" />
+
+    <ImageButton
+        android:id="@+id/buttonShortenUrlFromClipboard"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/btn_arrow_right"
+        android:scaleType="centerInside"
+        android:tint="@color/white"
+        style="?attr/buttonBarButtonStyle"
+        android:contentDescription="@string/shorten"
+        android:background="@drawable/default_layout_selector_gray" />
+</LinearLayout>

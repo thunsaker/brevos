@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">5dp</dimen>
+    <dimen name="activity_vertical_margin">5dp</dimen>
+    <dimen name="activity_vertical_margin_overlay_actionbar">60dp</dimen>
+    <dimen name="padding_small">5dp</dimen>
+    <dimen name="padding_medium">10dp</dimen>
+    <dimen name="padding_large">20dp</dimen>
+    <dimen name="padding_xlarge">25dp</dimen>
+    <dimen name="list_item_padding">0dp</dimen>
+    <dimen name="list_divider_height">2dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="card_side_margin">10dp</dimen>
+    <dimen name="card_shadow_height">5dp</dimen>
+    <dimen name="card_shadow_side_margin">12dp</dimen>
+    <dimen name="card_radius">2dp</dimen>
+    <dimen name="card_shadow_top_margin">-3dp</dimen>
+    <dimen name="card_shadow_bottom_margin">5dp</dimen>
+    <dimen name="card_shadow_radius">20dp</dimen>
+
+    <dimen name="top_padding">0dp</dimen>
+
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_size_shadow">65dp</dimen>
+    <dimen name="fab_size_mini">56dp</dimen>
+    <dimen name="fab_icon_padding">10dp</dimen>
+    <dimen name="fab_side_margin">16dp</dimen>
+    <dimen name="progress_padding">0dp</dimen>
+</resources>
