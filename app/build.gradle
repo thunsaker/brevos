@@ -6,12 +6,10 @@ buildscript {
         }
     }
     dependencies {
-//        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.9.+'
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
 
-//apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
@@ -59,24 +57,13 @@ android {
             signingConfig signingConfigs.debugSigning
         }
 
-//        pro {
-//            zipAlign true
-//            debuggable false
-//            runProguard false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            signingConfig signingConfigs.proReleaseSigning
-//        }
-
         release {
             zipAlign true
             debuggable false
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            if (android.productFlavors == "pro") {
 //            signingConfig signingConfigs.proReleaseSigning
-//            } else {
-                signingConfig signingConfigs.releaseSigning
-//            }
+            signingConfig signingConfigs.releaseSigning
         }
     }
 
