@@ -41,6 +41,10 @@
         <item name="android:textSelectHandleLeft">@drawable/brevos_text_select_handle_left</item>
         <item name="android:textSelectHandleRight">@drawable/brevos_text_select_handle_right</item>
         <item name="android:textSelectHandle">@drawable/brevos_text_select_handle_middle</item>
+
+        <item name="colorPrimary">@color/brevos_green</item>
+        <item name="colorPrimaryDark">@color/brevos_green_dark</item>
+        <item name="colorAccent">@color/brevos_pink</item>
     </style>
 
     <style name="_Theme.Brevos.Dark" parent="@style/Theme.AppCompat">

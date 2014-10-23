@@ -1,5 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:brevos="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.thunsaker.brevos.ui.HistoryActivity" >
     <!--<item android:id="@+id/action_search"-->
@@ -13,6 +13,6 @@
         android:title="@string/action_filter"
         android:orderInCategory="101"
         android:icon="@drawable/ic_action_filter"
-        brevos:showAsAction="always"
+        app:showAsAction="always"
         android:visible="false"/>
 </menu>

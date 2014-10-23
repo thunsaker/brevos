@@ -43,6 +43,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
+import com.thunsaker.BuildConfig;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
 import com.thunsaker.android.common.util.Util;
@@ -65,6 +66,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnFragmentInteractionListener, LinkFragment.OnFragmentListViewScrollListener {
 
@@ -137,7 +139,8 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        if(!BuildConfig.DEBUG)
+            Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.activity_main);
 
@@ -459,7 +462,8 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
             mTogglePrivate.setVisibility(View.VISIBLE);
             mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 
-            isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
+            isBitlyConnected = true;
+//            isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
         } else {
             removeLinkFragment();
             if (event.resultMessage.length() > 0) {

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:brevos="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.thunsaker.brevos.ui.WizardActivity">
     <item android:id="@+id/action_previous"
         android:title="@string/menu_action_previous"
         android:orderInCategory="99"
         android:icon="@drawable/ic_arrow_left_white"
-        brevos:showAsAction="always|withText"
+        app:showAsAction="always|withText"
         android:visible="false"/>
     <item android:id="@+id/action_next"
         android:title="@string/menu_action_next"
         android:orderInCategory="100"
         android:icon="@drawable/ic_arrow_right_white"
-        brevos:showAsAction="always|withText" />
+        app:showAsAction="always|withText" />
 </menu>

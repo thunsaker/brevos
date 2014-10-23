@@ -164,7 +164,7 @@ public class BitlyAuthActivity extends BaseBrevosActivity {
 					PreferencesHelper.setBitlyToken(myContext, accessToken);
 					PreferencesHelper.setBitlyLogin(myContext, login);
 					PreferencesHelper.setBitlyApiKey(myContext, apikey);
-					PreferencesHelper.setBitlyConnected(myContext, result);
+					PreferencesHelper.setBitlyConnected(myContext, true);
 				}
 			} else {
 				PreferencesHelper.setBitlyConnected(myContext, result);

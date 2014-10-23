@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:brevos="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_search_view"
         android:title="@string/action_search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_action_search"
-        brevos:actionViewClass="android.support.v7.widget.SearchView"
-        brevos:showAsAction="always"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always"
         android:visible="true" />
 </menu>
