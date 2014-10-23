@@ -150,13 +150,8 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 
         ButterKnife.inject(this);
 
-        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            mImageButtonShortenUrl.setEnabled(true);
-            mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_gray));
-        } else {
-            mImageButtonShortenUrl.setEnabled(false);
-            mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-        }
+        mImageButtonShortenUrl.setEnabled(false);
+        mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
 
         mEditTextUrl.addTextChangedListener(mTextEditorWatcher);
         mEditTextUrl.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -393,21 +388,11 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             hideClipboardPrompt();
             if (count > 0) {
-                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_green));
-                } else {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-                }
+                mImageButtonShortenUrl.setEnabled(true);
+                mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
             } else {
-                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_gray));
-                } else {
-                    mImageButtonShortenUrl.setEnabled(false);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-                }
+                mImageButtonShortenUrl.setEnabled(false);
+                mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
             }
         }
 
