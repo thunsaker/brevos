@@ -1,0 +1,6 @@
+[submodule "holographlibrary"]
+	path = holographlibrary
+	url = https://github.com/thunsaker/holographlibrary
+[submodule "aboutlibraries"]
+	path = aboutlibraries
+	url = https://github.com/thunsaker/aboutlibraries
