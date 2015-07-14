@@ -49,18 +49,18 @@ android {
 
     buildTypes {
         debug {
-            zipAlign true
+            zipAlignEnabled true
             debuggable true
-            runProguard false
+            minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             signingConfig signingConfigs.debugSigning
         }
 
         release {
-            zipAlign true
+            zipAlignEnabled true
             debuggable false
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
 //            signingConfig signingConfigs.proReleaseSigning
             signingConfig signingConfigs.releaseSigning
@@ -76,6 +76,10 @@ android {
             applicationId "com.thunsaker.BitDroid.Donate"
         }
     }
+
+    compileOptions {
+        encoding "UTF-8"
+    }
 }
 
 repositories {
@@ -85,13 +89,13 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':HoloGraphLibrary')
-    compile project(':AboutLibraries')
+    compile project(':HoloGraphLibrary:HoloGraphLibrary')
+    compile project(':AboutLibraries:library')
 
     provided 'com.squareup.dagger:dagger-compiler:1.2.1'
 
-    compile 'com.android.support:support-v4:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.android.support:support-v4:22.+'
+    compile 'com.android.support:appcompat-v7:22.+'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.google.android.gms:play-services:+'
     compile 'joda-time:joda-time:+'
