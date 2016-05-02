@@ -7,10 +7,12 @@
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
     <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
+        app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
         android:minHeight="?attr/actionBarSize" />
 
     <LinearLayout
