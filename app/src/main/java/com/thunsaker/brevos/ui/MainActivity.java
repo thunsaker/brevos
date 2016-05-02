@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
@@ -217,10 +218,10 @@ public class MainActivity extends BaseBrevosActivity
 //            }
         }
 
-        if(getIsPro())
+//        if(getIsPro())
             hideAds();
-        else
-            showAds();
+//        else
+//            showAds();
 
         checkClipboardForUrl();
     }
@@ -389,7 +390,6 @@ public class MainActivity extends BaseBrevosActivity
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            hideClipboardPrompt();
             if (count > 0) {
                 if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                     mImageButtonShortenUrl.setEnabled(true);
@@ -409,9 +409,7 @@ public class MainActivity extends BaseBrevosActivity
             }
         }
 
-        public void afterTextChanged(Editable s) {
-            hideClipboardPrompt();
-        }
+        public void afterTextChanged(Editable s) { }
     };
 
     @OnClick(R.id.buttonShortenUrl)
@@ -547,7 +545,6 @@ public class MainActivity extends BaseBrevosActivity
         mImageViewPrivaticon.setVisibility(bitmark.getIs_private() ? View.VISIBLE : View.GONE);
 
         hideExpandLinkResult();
-        hideClipboardPrompt();
 
         mResultLayoutWrapper.startAnimation(slideDownFromTopAnimation);
         mResultLayoutWrapper.setOnTouchListener(new SwipeDismissTouchListener(
@@ -624,7 +621,6 @@ public class MainActivity extends BaseBrevosActivity
         });
 
         hideLinkResult();
-        hideClipboardPrompt();
 
         mExpandResultLayoutWrapper.startAnimation(slideDownFromTopAnimation);
     }
@@ -689,71 +685,31 @@ public class MainActivity extends BaseBrevosActivity
         super.onDestroy();
     }
 
-    @OnClick(R.id.buttonPasteFromClipboard)
-    public void pasteFromClipboard() {
-        mEditTextUrl.setText(getClipboardText());
-        hideClipboardPrompt();
-    }
+//    @OnClick(R.id.buttonPasteFromClipboard)
+//    public void pasteFromClipboard() {
+//        mEditTextUrl.setText(getClipboardText());
+//        hideClipboardPrompt();
+//    }
 
-    @OnClick(R.id.buttonShortenUrlFromClipboard)
     public void shortenFromClipboard(){
         shorten(getClipboardText());
-        hideClipboardPrompt();
-    }
-
-    @OnClick(R.id.linearLayoutMainUrlInClipboardWrapper)
-    public void dismissClipboardPrompt() {
-        hideClipboardPrompt();
-    }
-
-    public void hideClipboardPrompt() {
-        if(clipboardPromptCountDown != null)
-            clipboardPromptCountDown.cancel();
-
-        if(mClipboardWrapper.getVisibility() == View.VISIBLE) {
-            Animation slideUpAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_up);
-            slideUpAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) { }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mClipboardWrapper.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) { }
-            });
-            mClipboardWrapper.startAnimation(slideUpAnimation);
-            mClipboardWrapper.setVisibility(View.GONE);
-        }
-    }
-
-    private void showClipboardPrompt(String clipText) {
-        if(mClipboardWrapper.getVisibility() == View.GONE) {
-            mClipboardWrapper.setVisibility(View.VISIBLE);
-            mTextViewClipboard.setText(String.format(getString(R.string.clipboard_url_text), clipText));
-            final Animation slideDown = AnimationUtils.loadAnimation(mContext, R.anim.slide_down);
-            mClipboardWrapper.startAnimation(slideDown);
-
-            clipboardPromptCountDown = new CountDownTimer(20000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) { }
-
-                @Override
-                public void onFinish() {
-                    hideClipboardPrompt();
-                }
-            }.start();
-        }
     }
 
     private void checkClipboardForUrl() {
         if(!ignoreClipboard) {
             String clipText = getClipboardText();
 
+            assert clipText != null;
             if (clipText.length() > 0 && BitlyUtil.isValidUrl(clipText) && !BitlyUtil.isBitlyUrl(clipText))
-                showClipboardPrompt(clipText);
+                Snackbar
+                        .make(mMainLayoutWrapperOuter, String.format(getString(R.string.clipboard_url_text), clipText), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.shorten, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                shortenFromClipboard();
+                            }
+                        })
+                        .show();
         }
     }
 
@@ -919,8 +875,6 @@ public class MainActivity extends BaseBrevosActivity
     @SuppressLint("InlinedApi")
     @Override
     public void onFragmentListViewScrollListener(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        hideClipboardPrompt();
-
         if(view != null) {
             View first = view.getChildAt(0);
             if(first != null) {
