@@ -37,8 +37,8 @@
             android:layout_marginRight="8dp"
             android:textColor="@color/white"
             android:checked="false"
-            style="@style/CheckBox.Brevos.White"
             android:text="@string/search_archive_only"/>
+        <!--style="@style/CheckBox.Brevos.White"-->
         <CheckBox
             android:id="@+id/checkBoxSearchPrivateOnly"
             android:layout_width="wrap_content"
@@ -47,8 +47,8 @@
             android:layout_marginLeft="8dp"
             android:textColor="@color/white"
             android:checked="false"
-            style="@style/CheckBox.Brevos.White"
             android:text="@string/search_private_only"/>
+        <!--style="@style/CheckBox.Brevos.White"-->
     </LinearLayout>
 
 </LinearLayout>

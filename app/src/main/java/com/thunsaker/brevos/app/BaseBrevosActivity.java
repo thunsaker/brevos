@@ -11,7 +11,6 @@ public class BaseBrevosActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_PROGRESS);
-//        supportRequestWindowFeature(Window.FEATURE_PROGRESS);
     }
 
     @Override
@@ -23,13 +22,10 @@ public class BaseBrevosActivity extends BaseActivity {
 
     public void showProgress() {
         setProgressBarVisibility(true);
-//        setSupportProgressBarVisibility(true);
         setProgressBarIndeterminate(true);
-//        setSupportProgressBarIndeterminate(true);
     }
 
     public void hideProgress() {
         setProgressBarVisibility(false);
-//        setSupportProgressBarIndeterminate(false);
     }
 }

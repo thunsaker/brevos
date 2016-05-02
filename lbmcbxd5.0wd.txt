@@ -1,0 +1,4 @@
+✨ New Share Dialog/Pop Over
+🐎 Update dependencies
+🐎 Remove unneeded resources
+✨ Convert to Toolbar/AppCompatActivity

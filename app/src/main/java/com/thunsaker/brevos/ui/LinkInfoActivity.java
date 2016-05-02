@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,8 +52,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
@@ -70,26 +70,28 @@ public class LinkInfoActivity extends BaseBrevosActivity {
     @Inject EventBus mBus;
     @Inject android.text.ClipboardManager mClipboardManagerLegacy;
 
-    @InjectView(R.id.linearLayoutLinkDetailWrapper) LinearLayout mLinkDetailWrapper;
-    @InjectView(R.id.textViewLinkDetailTitle) TextView mTextViewLinkTitle;
-    @InjectView(R.id.textViewLinkDetailLongUrl) TextView mTextViewLinkLongUrl;
-    @InjectView(R.id.textViewLinkDetailShortUrl) TextView mTextViewLinkShortUrl;
-    @InjectView(R.id.imageViewLinkDetailFavicon) ImageView mImageViewFavicon;
-    @InjectView(R.id.imageViewLinkDetailPrivaticon) ImageView mImageViewPrivate;
-    @InjectView(R.id.textViewLinkDetailClickCountTotal) TextView mTextViewClicksTotal;
-    @InjectView(R.id.textViewLinkDetailClickCountTotalGlobal) TextView mTextViewClicksTotalGlobal;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
-    @InjectView(R.id.lineChartLinkDetailClickCountHourly) LineGraph mLineGraphClickHour;
-    @InjectView(R.id.progressBarLinkDetailClickCountHour) ProgressBar mProgressHour;
-    @InjectView(R.id.textViewLinkDetailClickCountHourEmpty) TextView mTextViewClickHourEmpty;
-    @InjectView(R.id.barChartLinkDetailClickCountDay) BarGraph mBarViewClickDay;
-    @InjectView(R.id.progressBarLinkDetailClickCountDay) ProgressBar mProgressDay;
-    @InjectView(R.id.textViewLinkDetailClickCountDayEmpty) TextView mTextViewClickDayEmpty;
-    @InjectView(R.id.barChartLinkDetailClickCountMonth) BarGraph mBarViewClickMonth;
-    @InjectView(R.id.progressBarLinkDetailClickCountMonth) ProgressBar mProgressMonth;
-    @InjectView(R.id.textViewLinkDetailClickCountMonthEmpty) TextView mTextViewClickMonthEmpty;
+    @BindView(R.id.linearLayoutLinkDetailWrapper) LinearLayout mLinkDetailWrapper;
+    @BindView(R.id.textViewLinkDetailTitle) TextView mTextViewLinkTitle;
+    @BindView(R.id.textViewLinkDetailLongUrl) TextView mTextViewLinkLongUrl;
+    @BindView(R.id.textViewLinkDetailShortUrl) TextView mTextViewLinkShortUrl;
+    @BindView(R.id.imageViewLinkDetailFavicon) ImageView mImageViewFavicon;
+    @BindView(R.id.imageViewLinkDetailPrivaticon) ImageView mImageViewPrivate;
+    @BindView(R.id.textViewLinkDetailClickCountTotal) TextView mTextViewClicksTotal;
+    @BindView(R.id.textViewLinkDetailClickCountTotalGlobal) TextView mTextViewClicksTotalGlobal;
 
-    @InjectView(R.id.imageButtonLinkDetailRefresh) ImageButton mButtonRefresh;
+    @BindView(R.id.lineChartLinkDetailClickCountHourly) LineGraph mLineGraphClickHour;
+    @BindView(R.id.progressBarLinkDetailClickCountHour) ProgressBar mProgressHour;
+    @BindView(R.id.textViewLinkDetailClickCountHourEmpty) TextView mTextViewClickHourEmpty;
+    @BindView(R.id.barChartLinkDetailClickCountDay) BarGraph mBarViewClickDay;
+    @BindView(R.id.progressBarLinkDetailClickCountDay) ProgressBar mProgressDay;
+    @BindView(R.id.textViewLinkDetailClickCountDayEmpty) TextView mTextViewClickDayEmpty;
+    @BindView(R.id.barChartLinkDetailClickCountMonth) BarGraph mBarViewClickMonth;
+    @BindView(R.id.progressBarLinkDetailClickCountMonth) ProgressBar mProgressMonth;
+    @BindView(R.id.textViewLinkDetailClickCountMonthEmpty) TextView mTextViewClickMonthEmpty;
+
+    @BindView(R.id.imageButtonLinkDetailRefresh) ImageButton mButtonRefresh;
 
     private boolean infoEventDone = true;
     private boolean clicksHourEventDone = true;
@@ -106,15 +108,21 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         setContentView(R.layout.activity_link);
 
         mBus.register(this);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayUseLogoEnabled(true);
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setTitle(getString(R.string.title_activity_link));
-        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
+        setSupportActionBar(mToolbar);
+
+//        ActionBar ab = getSupportActionBar();
+//        ab.setDisplayUseLogoEnabled(true);
+//        ab.setDisplayShowHomeEnabled(true);
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
+//        ab.setTitle(getString(R.string.title_activity_link));
+//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
+
+        setTitle(getString(R.string.title_activity_link));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         showProgress();
 
@@ -368,9 +376,9 @@ public class LinkInfoActivity extends BaseBrevosActivity {
                     DateTimeZone tz = DateTimeZone.forOffsetHours(timeZoneOffset);
                     DateTime dt = new DateTime(link.dt * 1000, tz);
                     if (i == 0 || i == linkCLicksList.size() - 1)
-                        point.setXAxisLabel(dt.toString(hour));
+                        point.setLabel_string(dt.toString(hour));
                     else
-                        point.setXAxisLabel(dt.toString(hourWithAMPM));
+                        point.setLabel_string(dt.toString(hourWithAMPM));
                     line.addPoint(point);
                     line.setColor(Color.parseColor("#8fd400"));
 
@@ -406,14 +414,15 @@ public class LinkInfoActivity extends BaseBrevosActivity {
                 for (LinkClicks link : clicksList) {
                     Bar bar = new Bar();
                     bar.setColor(i % 2 == 0 ? Color.parseColor("#8fd400") : Color.parseColor("#b4006a"));
-                    bar.setLabelColor(Color.parseColor("#222222"));
-                    bar.setValueColor(Color.parseColor("#222222"));
+                    // TODO: Restore my forked changes that were never committed
+//                    bar.setLabelColor(Color.parseColor("#222222"));
+//                    bar.setValueColor(Color.parseColor("#222222"));
                     DateTimeFormatter format = DateTimeFormat.forPattern("E");
                     DateTimeZone tz = DateTimeZone.forOffsetHours(timeZoneOffset);
                     DateTime dt = new DateTime(link.dt * 1000, tz);
                     bar.setName(dt.toString(format));
                     bar.setValue((float)link.clicks);
-                    bar.setValueString(String.valueOf(link.clicks));
+//                    bar.setValueString(String.valueOf(link.clicks));
                     points.add(bar);
                     i++;
                 }
@@ -443,14 +452,14 @@ public class LinkInfoActivity extends BaseBrevosActivity {
                 for (LinkClicks link : clicksList) {
                     Bar bar = new Bar();
                     bar.setColor(i % 2 == 0 ? Color.parseColor("#b4006a") : Color.parseColor("#8fd400"));
-                    bar.setLabelColor(Color.parseColor("#222222"));
-                    bar.setValueColor(Color.parseColor("#222222"));
+//                    bar.setLabelColor(Color.parseColor("#222222"));
+//                    bar.setValueColor(Color.parseColor("#222222"));
                     DateTimeFormatter format = DateTimeFormat.forPattern("MMM");
                     DateTimeZone tz = DateTimeZone.forOffsetHours(timeZoneOffset);
                     DateTime dt = new DateTime(link.dt * 1000, tz);
                     bar.setName(dt.toString(format));
                     bar.setValue((float) link.clicks);
-                    bar.setValueString(String.valueOf(link.clicks));
+//                    bar.setValueString(String.valueOf(link.clicks));
                     points.add(bar);
                     i++;
                 }

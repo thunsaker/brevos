@@ -6,10 +6,19 @@
     android:background="@color/now_background"
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:minHeight="?attr/actionBarSize" />
+
     <LinearLayout
         android:id="@+id/linearLayoutMainWrapperOuter"
+        android:layout_below="@+id/toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@color/primary"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/relativeLayoutMainWrapperInner"
@@ -35,7 +44,6 @@
                     android:id="@+id/linearLayoutTextWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingLeft="10dp"
@@ -47,7 +55,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/toggle_private_lock"
+                        android:tint="@color/white"
                         style="?attr/buttonBarButtonStyle"
+                        android:visibility="gone"
                         android:textOff=""
                         android:textOn=""
                         android:text=""/>
@@ -58,6 +68,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="fill_horizontal|center_vertical"
                         android:layout_weight="10"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
                         android:hint="@string/shorten_hint_text"
                         android:inputType="textUri"
                         android:imeActionId="@+id/action_send_url"
@@ -68,6 +82,7 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:src="@drawable/btn_arrow_right"
+                        android:tint="@color/white"
                         android:scaleType="centerInside"
                         style="?attr/buttonBarButtonStyle"
                         android:contentDescription="@string/shorten"
@@ -75,7 +90,7 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/relativeLayoutResultWrapper"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -166,7 +181,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="33"
-                        android:src="@drawable/ic_content_copy"
+                        android:src="@drawable/ic_content_copy_white"
+                        android:tint="@color/primary"
                         style="?attr/buttonBarButtonStyle"
                         android:contentDescription="@string/shorten_copy"
                         android:text="@string/shorten_copy" />
@@ -184,7 +200,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="33"
-                        android:src="@drawable/ic_content_share"
+                        android:src="@drawable/ic_share_white"
+                        android:tint="@color/primary"
                         style="?attr/buttonBarButtonStyle"
                         android:contentDescription="@string/shorten_share"
                         android:text="@string/shorten_share" />
@@ -202,10 +219,6 @@
         android:orientation="vertical">
         <FrameLayout
             android:id="@+id/frameListContentHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <FrameLayout
-            android:id="@+id/frameListContentTrending"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

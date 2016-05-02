@@ -63,4 +63,10 @@ public class Util {
         float dp = px / (metrics.densityDpi / 160f);
         return dp;
     }
+
+	public static String extractParamFromUrl(String url, String paramName) {
+		String queryString = url.substring(url.indexOf("?", 0)+1,url.length());
+		QueryStringParser queryStringParser = new QueryStringParser(queryString);
+		return queryStringParser.getQueryParamValue(paramName);
+	}
 }

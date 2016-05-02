@@ -12,9 +12,9 @@
         android:drawableLeft="@drawable/ic_search_small"
         android:layout_gravity="center"
         android:hint="@string/search_hint"
-        style="@style/EditText.Brevos.White"
         android:inputType="textAutoComplete"
         android:imeOptions="actionSearch" />
+    <!--style="@style/EditText.Brevos.White"-->
     <ImageButton
         android:id="@+id/imageButtonSearch"
         android:layout_width="50dp"

@@ -1,263 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
-
-     Copyright (C) 2011 The Android Open Source Project
-     Copyright (C) 2012 readyState Software Ltd
-
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-
-          http://www.apache.org/licenses/LICENSE-2.0
-
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
--->
-
 <resources>
-    <style name="Theme.Brevos" parent="@style/_Theme.Brevos" />
-    <style name="Theme.Brevos.Dark" parent="@style/_Theme.Brevos.Dark" />
+    <style name="Theme.Brevos" parent="Theme.Brevos.Base" />
 
-    <style name="_Theme.Brevos" parent="@style/Theme.AppCompat.Light">
-        <item name="actionBarItemBackground">@drawable/selectable_background_brevos</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Brevos</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Brevos</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Brevos</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Brevos</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Brevos</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_brevos</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_brevos</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Brevos</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Brevos</item>
-        <item name="android:editTextStyle">@style/EditText.Brevos</item>
-        <item name="android:buttonStyle">@style/Button.Brevos</item>
-        <item name="android:imageButtonStyle">@style/ImageButton.Brevos</item>
-        <item name="android:icon">@android:color/transparent</item>
-        <item name="android:listViewStyle">@style/ListView.Brevos</item>
-        <item name="android:listViewWhiteStyle">@style/ListView.Brevos.White</item>
-        <item name="android:textSelectHandleLeft">@drawable/brevos_text_select_handle_left</item>
-        <item name="android:textSelectHandleRight">@drawable/brevos_text_select_handle_right</item>
-        <item name="android:textSelectHandle">@drawable/brevos_text_select_handle_middle</item>
-    </style>
+    <style name="Theme.Brevos.Base" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
 
-    <style name="_Theme.Brevos.Dark" parent="@style/Theme.AppCompat">
-        <item name="actionBarItemBackground">@drawable/selectable_background_brevos</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Brevos.Dark</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Brevos.Dark</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Brevos</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Brevos.Dark</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Brevos.Dark</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_brevos</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_brevos</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Brevos</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Brevos</item>
-        <item name="android:editTextStyle">@style/EditText.Brevos</item>
-        <item name="android:buttonStyle">@style/Button.Brevos</item>
-        <item name="android:imageButtonStyle">@style/ImageButton.Brevos</item>
-        <item name="android:icon">@android:color/transparent</item>
-        <item name="android:listViewStyle">@style/ListView.Brevos</item>
-        <item name="android:listViewWhiteStyle">@style/ListView.Brevos.White</item>
-        <item name="android:textSelectHandleLeft">@drawable/brevos_text_select_handle_left</item>
-        <item name="android:textSelectHandleRight">@drawable/brevos_text_select_handle_right</item>
-        <item name="android:textSelectHandle">@drawable/brevos_text_select_handle_middle</item>
-    </style>
-
-    <style name="ActionBar.Solid.Brevos" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="background">@drawable/ab_solid_brevos</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_brevos</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_brevos</item>
-        <item name="progressBarStyle">@style/ProgressBar.Brevos</item>
-        <item name="titleTextStyle">@style/ActionBar.Solid.Brevos.TitleTextStyle</item>
-    </style>
-
-    <style name="ActionBar.Solid.Brevos.Dark" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="background">@drawable/ab_solid_brevos</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_brevos</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_brevos</item>
-        <item name="progressBarStyle">@style/ProgressBar.Brevos</item>
-        <item name="titleTextStyle">@style/ActionBar.Solid.Brevos.TitleTextStyle</item>
-    </style>
-
-    <style name="ActionBar.Solid.Brevos.TitleTextStyle" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="ActionBar.Transparent.Brevos" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <item name="background">@drawable/ab_transparent_brevos</item>
-        <item name="progressBarStyle">@style/ProgressBar.Brevos</item>
-    </style>
-
-    <style name="ActionBar.Transparent.Brevos.Dark" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@drawable/ab_transparent_brevos</item>
-        <item name="progressBarStyle">@style/ProgressBar.Brevos</item>
-    </style>
-
-    <style name="PopupMenu.Brevos" parent="@style/Widget.AppCompat.Light.PopupMenu">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_brevos</item>
-    </style>
-
-    <style name="PopupMenu.Brevos.Dark" parent="@style/Widget.AppCompat.PopupMenu">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_brevos</item>
-    </style>
-
-    <style name="DropDownListView.Brevos" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_brevos</item>
-    </style>
-
-    <style name="DropDownListView.Brevos.Dark" parent="@style/Widget.AppCompat.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_brevos</item>
-    </style>
-
-    <style name="ActionBarTabStyle.Brevos" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_brevos</item>
-    </style>
-
-    <style name="ActionBarTabStyle.Brevos.Dark" parent="@style/Widget.AppCompat.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_brevos</item>
-    </style>
-
-    <style name="DropDownNav.Brevos" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_brevos</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_brevos</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_brevos</item>
-    </style>
-
-    <style name="DropDownNav.Brevos.Dark" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
-        <item name="android:background">@drawable/spinner_background_ab_brevos</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_brevos</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_brevos</item>
-    </style>
-
-    <!--<style name="ProgressBar.Brevos" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">-->
-        <!--<item name="android:progressDrawable">@drawable/progress_horizontal_brevos</item>-->
-    <!--</style>-->
-
-    <style name="ProgressBar.Brevos" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/white_progress_horizontal_holo_light</item>
-        <item name="android:indeterminateDrawable">@drawable/white_progress_indeterminate_horizontal_holo_light</item>
-        <item name="android:minHeight">16dip</item>
-        <item name="android:maxHeight">16dip</item>
-    </style>
-
-    <!--<style name="ProgressBar.Brevos" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">-->
-        <!--<item name="android:progressDrawable">@drawable/brevos_progress_horizontal_holo_light</item>-->
-        <!--<item name="android:indeterminateDrawable">@drawable/brevos_progress_indeterminate_horizontal_holo_light</item>-->
-        <!--<item name="android:minHeight">16dip</item>-->
-        <!--<item name="android:maxHeight">16dip</item>-->
-    <!--</style>-->
-
-    <style name="ActionButton.CloseMode.Brevos" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_brevos</item>
-    </style>
-
-    <style name="ActionButton.CloseMode.Brevos.Dark" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_brevos</item>
-    </style>
-
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Brevos.Widget" parent="@style/Theme.AppCompat">
-        <item name="popupMenuStyle">@style/PopupMenu.Brevos</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Brevos</item>
-    </style>
-
-    <style name="Theme.Brevos.PopOver">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
-
-    <style name="EditText.Brevos" parent="android:Widget.EditText">
-        <item name="android:background">@drawable/brevos_edit_text_holo_light</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="EditText.Brevos.White" parent="android:Widget.EditText">
-        <item name="android:background">@drawable/white_edit_text_holo_light</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorHint">@color/white_translucent</item>
-        <item name="android:textColorHintInverse">@color/gray_translucent</item>
-    </style>
-
-    <style name="Button.Brevos" parent="android:Widget.Button">
-        <item name="android:background">@drawable/brevos_btn_default_holo_light</item>
-        <item name="android:minHeight">48dip</item>
-        <item name="android:minWidth">64dip</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="ImageButton.Brevos" parent="android:Widget.ImageButton">
-        <item name="android:background">@drawable/brevos_btn_default_holo_light</item>
-    </style>
-
-    <style name="Spinner.Brevos" parent="android:Widget.Spinner">
-        <item name="android:background">@drawable/brevos_spinner_background_holo_light</item>
-        <item name="android:dropDownSelector">@drawable/brevos_list_selector_holo_light</item>
-        <!--<item name="android:popupBackground">@color/gray_dark</item>-->
-        <!--<item name="android:textColor">@color/white</item>-->
-    </style>
-
-    <style name="SpinnerItem.Brevos" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
         <item name="android:textColor">@color/body_text</item>
-        <item name="android:background">@color/white</item>
     </style>
 
-    <style name="SpinnerDropDownItemStyle">
-        <item name="android:textColor">@color/body_text</item>
-        <item name="android:background">@color/white</item>
+    <style name="Theme.Brevos.Bitly" parent="Theme.Brevos">
+        <item name="colorPrimary">@color/bitly</item>
+        <item name="colorPrimaryDark">@color/bitly_dark</item>
+        <item name="colorAccent">@color/white</item>
     </style>
 
-    <style name="Spinner.Brevos.White" parent="android:Widget.Spinner">
-        <item name="android:background">@drawable/white_spinner_background_holo_light</item>
-        <item name="android:dropDownSelector">@drawable/white_list_selector_holo_light</item>
-    </style>
-
-    <style name="ListView.Brevos" parent="android:Widget.ListView">
-        <item name="android:listSelector">@drawable/brevos_list_selector_holo_light</item>
-    </style>
-
-    <style name="ListView.Brevos.White" parent="android:Widget.ListView.White">
-        <item name="android:listSelector">@drawable/brevos_list_selector_holo_light</item>
-    </style>
-
-    <style name="Theme.Brevos.Transparent" parent="@style/Theme.AppCompat.Light">
+    <style name="Theme.Brevos.Transparent" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="Theme.Brevos.Transparent.Dark" parent="@style/Theme.AppCompat">
+    <style name="Theme.Brevos.Transparent.Dark" parent="@style/Theme.AppCompat.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
-
-    <style name="Button.Brevos.NowAction">
-        <item name="android:layout_height">35dp</item>
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/default_layout_selector_pink_base</item>
-    </style>
-
-    <style name="Button.Brevos.NowAction.Green" parent="Button.Brevos.NowAction">
-        <item name="android:background">@drawable/default_layout_selector_green_base</item>
-    </style>
-
-    <style name="SearchViewBrevos">
-        <item name="android:editTextStyle">@style/EditText.Brevos</item>
-    </style>
-
-    <style name="CheckBox.Brevos.White" parent="android:Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/white_btn_check_holo_light</item>
-    </style>
-
 </resources>

@@ -1,144 +1,159 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/now_background"
-    tools:context=".brevos.ui.AboutActivity">
-    <LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_height="match_parent"
+             android:layout_width="match_parent"
+             tools:context=".brevos.ui.AboutActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-        <TextView
-            android:textColor="@color/body_text"
-            android:text="@string/app_name"
-            android:textSize="50sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:minHeight="?attr/actionBarSize" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_marginTop="-50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="-20dp"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:src="@drawable/brevos_large_wings"
-            android:contentDescription="@string/app_name"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:background="@color/now_background">
 
-        <TextView
-            android:text="@string/prefs_bitly_about_version_summary"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="@color/body_text"/>
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"
-            android:text="@string/app_about"/>
-
-
-        <RelativeLayout
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/card_shadow_height"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="-3dp"
-                android:background="@drawable/card_shadow"
-                android:layout_below="@+id/button_about_other_apps"/>
-            <Button
-                android:id="@+id/button_about_other_apps"
-                android:layout_width="fill_parent"
+            <TextView
+                android:textColor="@color/body_text"
+                android:text="@string/app_name"
+                android:textSize="50sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="20dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_marginTop="-50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="-20dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/brevos_large_wings"
+                android:contentDescription="@string/app_name"/>
+
+            <TextView
+                android:text="@string/prefs_bitly_about_version_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/body_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/card_background_selector_green"
-                android:drawableLeft="@drawable/play_icon_small"
-                android:drawablePadding="5dp"
-                android:maxWidth="400dp"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/about_other_apps"
-                android:textColor="@color/black" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal">
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/card_shadow_height"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="-3dp"
-                android:background="@drawable/card_shadow"
-                android:layout_gravity="center_horizontal"
-                android:layout_below="@+id/button_about_open_source"/>
-            <Button
-                android:id="@+id/button_about_open_source"
-                android:layout_width="fill_parent"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:gravity="center"
+                android:text="@string/app_about"/>
+
+
+            <RelativeLayout
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/card_background_selector_green"
-                android:layout_gravity="center_horizontal"
-                android:drawablePadding="15dp"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/about_open_source_licences" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal">
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/card_shadow_height"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="-3dp"
-                android:background="@drawable/card_shadow"
-                android:layout_gravity="center_horizontal"
-                android:layout_below="@+id/button_about_welcome"/>
-            <Button
-                android:id="@+id/button_about_welcome"
-                android:layout_width="fill_parent"
+                android:layout_marginTop="20dp">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/card_shadow_height"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="-3dp"
+                    android:background="@drawable/card_shadow"
+                    android:layout_below="@+id/button_about_other_apps"/>
+                <Button
+                    android:id="@+id/button_about_other_apps"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/card_background_selector_green"
+                    android:drawableLeft="@drawable/play_icon_small"
+                    android:drawablePadding="5dp"
+                    android:maxWidth="400dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/about_other_apps"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/card_background_selector_green"
                 android:layout_gravity="center_horizontal"
-                android:drawablePadding="15dp"
-                android:paddingBottom="15dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingTop="15dp"
-                android:text="@string/about_welcome" />
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+                android:gravity="center_horizontal">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/card_shadow_height"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="-3dp"
+                    android:background="@drawable/card_shadow"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@+id/button_about_open_source"/>
+                <Button
+                    android:id="@+id/button_about_open_source"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/card_background_selector_green"
+                    android:layout_gravity="center_horizontal"
+                    android:drawablePadding="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/about_open_source_licences" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal">
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/card_shadow_height"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="-3dp"
+                    android:background="@drawable/card_shadow"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@+id/button_about_welcome"/>
+                <Button
+                    android:id="@+id/button_about_welcome"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/card_background_selector_green"
+                    android:layout_gravity="center_horizontal"
+                    android:drawablePadding="15dp"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/about_welcome" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

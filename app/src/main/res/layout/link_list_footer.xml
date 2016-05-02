@@ -12,8 +12,8 @@
         android:id="@+id/buttonHistoryLoadMore"
         android:layout_width="wrap_content"
         android:layout_margin="10dp"
-        style="@style/Button.Brevos.NowAction"
         android:text="@string/history_load_more"
         android:layout_gravity="center"
         android:gravity="center" />
+    <!--style="@style/Button.Brevos.NowAction"-->
 </LinearLayout>

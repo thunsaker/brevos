@@ -1,6 +1,7 @@
 package com.thunsaker.brevos.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
@@ -17,7 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -61,12 +62,15 @@ import java.util.TimeZone;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnFragmentInteractionListener, LinkFragment.OnFragmentListViewScrollListener {
+public class MainActivity extends BaseBrevosActivity
+        implements LinkFragment.OnFragmentInteractionListener,
+        LinkFragment.OnFragmentListViewScrollListener {
 
     @Inject @ForApplication Context mContext;
     @Inject EventBus mBus;
@@ -75,40 +79,40 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     @Inject android.text.ClipboardManager mClipboardManagerLegacy;
     @Inject NotificationManager mNotificationManager;
 
-    @InjectView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
-    @InjectView(R.id.editTextUrl) EditText mEditTextUrl;
-    @InjectView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
-    @InjectView(R.id.linearLayoutAuthButtonWrapper) LinearLayout mAuthButtonWrapper;
+    @BindView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
+    @BindView(R.id.editTextUrl) EditText mEditTextUrl;
+    @BindView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
 
-    @InjectView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
-    @InjectView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
-    @InjectView(R.id.linearLayoutMainWrapper) LinearLayout mMainLayoutWrapper;
+    @BindView(R.id.linearLayoutAuthButtonWrapper) LinearLayout mAuthButtonWrapper;
 
-    @InjectView(R.id.relativeLayoutResultWrapper) RelativeLayout mResultLayoutWrapper;
-    @InjectView(R.id.textViewShortenResultUrl) TextView mTextViewResultUrl;
-    @InjectView(R.id.textViewOriginalUrl) TextView mTextViewOriginalUrl;
-    @InjectView(R.id.imageViewFavicon) ImageView mImageViewFavicon;
-    @InjectView(R.id.imageViewPrivaticon) ImageView mImageViewPrivaticon;
+    @BindView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
+    @BindView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
+    @BindView(R.id.linearLayoutMainWrapper) LinearLayout mMainLayoutWrapper;
 
-    @InjectView(R.id.imageButtonResultActionCopyUrl) ImageButton mButtonCopy;
-    @InjectView(R.id.imageButtonResultActionInfo) ImageButton mButtonInfo;
-    @InjectView(R.id.imageButtonResultActionShare) ImageButton mButtonShare;
+    @BindView(R.id.relativeLayoutResultWrapper) RelativeLayout mResultLayoutWrapper;
+    @BindView(R.id.textViewShortenResultUrl) TextView mTextViewResultUrl;
+    @BindView(R.id.textViewOriginalUrl) TextView mTextViewOriginalUrl;
+    @BindView(R.id.imageViewFavicon) ImageView mImageViewFavicon;
+    @BindView(R.id.imageViewPrivaticon) ImageView mImageViewPrivaticon;
 
-    @InjectView(R.id.relativeLayoutExpandResultWrapper) RelativeLayout mExpandResultLayoutWrapper;
-    @InjectView(R.id.textViewExpandResultUrl) TextView mTextViewExpandResultUrl;
-    @InjectView(R.id.textViewExpandShortUrl) TextView mTextViewExpandShortUrl;
+    @BindView(R.id.imageButtonResultActionCopyUrl) ImageButton mButtonCopy;
+    @BindView(R.id.imageButtonResultActionInfo) ImageButton mButtonInfo;
+    @BindView(R.id.imageButtonResultActionShare) ImageButton mButtonShare;
 
-    @InjectView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
-    @InjectView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
+    @BindView(R.id.relativeLayoutExpandResultWrapper) RelativeLayout mExpandResultLayoutWrapper;
+    @BindView(R.id.textViewExpandResultUrl) TextView mTextViewExpandResultUrl;
+    @BindView(R.id.textViewExpandShortUrl) TextView mTextViewExpandShortUrl;
 
-    @InjectView(R.id.linearLayoutMainUrlInClipboardWrapper) LinearLayout mClipboardWrapper;
-    @InjectView(R.id.textViewMainClipboardText) TextView mTextViewClipboard;
+    @BindView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
+    @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
-    @InjectView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
+    @BindView(R.id.linearLayoutMainUrlInClipboardWrapper) LinearLayout mClipboardWrapper;
+    @BindView(R.id.textViewMainClipboardText) TextView mTextViewClipboard;
 
-//    @InjectView(R.id.relativeLayoutFabWrapper) RelativeLayout mFabWrapper;
-//    @InjectView(R.id.fabCreate) ImageButton mFabCreate;
+    @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
 
     public static String BREVOS_POP_OVER_BITMARK = "BREVOS_POP_OVER_BITMARK";
     private static String BREVOS_CURRENT_BITMARK = "BREVOS_CURRENT_BITMARK";
@@ -131,21 +135,18 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     private PendingIntent retryPendingIntent;
     private PendingIntent genericPendingIntent;
     private boolean createHidden = false;
-//    public static boolean mFabStateUp = false;
 
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.activity_main);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setTitle(null);
+        ButterKnife.bind(this);
 
-        ButterKnife.inject(this);
+        setSupportActionBar(mToolbar);
 
         if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             mImageButtonShortenUrl.setEnabled(true);
@@ -448,7 +449,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 
     @OnClick(R.id.linearLayoutAuthButton)
     public void showAuth() {
-        startActivity(new Intent(mContext, BitlyAuthActivity.class));
+        startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
     }
 
     public void onEvent(BitlyAuthEvent event) {
@@ -487,10 +488,10 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         if(event.result) {
             mCurrentBitmark = event.bitmark;
             switch (event.action) {
-                case 0: // SHORTENED_ACTION_POPOVER
-                    showPopOver(event.bitmark);
-                    hideShortenNotification();
-                    break;
+//                case 0: // SHORTENED_ACTION_POPOVER
+//                    showPopOver(event.bitmark);
+//                    hideShortenNotification();
+//                    break;
                 case 1: // SHORTENED_ACTION_DEFAULT
                     showLinkResult(event.bitmark);
                     break;
@@ -807,11 +808,9 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("2B0F45ECB7E319BC2500CD6AFF1353CC") // N7 - 4.4.4
                     .addTestDevice("D50AF454D0BF794B6A38811EEA1F21EE") // GS3 - 4.3
                     .addTestDevice("6287716BED76BCE3BB981DD19AA858E1") // GS3 - 4.1
-                    .addTestDevice("FDC26B2E6C049E2E9ECE7C97D42A4726") // G2 - 2.3.4
-                    .addTestDevice("1BF36BBC3C197AFF96AF3F9F305CAD48") // N5 - L
+                    .addTestDevice("EF2AC044641A83A5F1084ADC3828467B") // GS6 - 6.0.1
                     .build();
 
             if (adView != null)
@@ -906,7 +905,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         mNotificationManager.notify(MainActivity.NOTIFICATION_BREVOS_SHORTEN, mNotificationShorten.getNotification());
     }
 
-    private NotificationCompat.Builder createShorteningFailedNotification(String notificationText) {
+    public NotificationCompat.Builder createShorteningFailedNotification(String notificationText) {
         return new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_stat_brevos_wing)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
@@ -970,6 +969,19 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 //            });
             mMainLayoutWrapperInner.startAnimation(slideUpAnimation);
             createHidden = true;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN:
+                if(resultCode == Activity.RESULT_OK) {
+                    Toast.makeText(mContext, "Bit.ly Authorized", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "Auth error :(", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }

@@ -6,51 +6,185 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="20dp"
-        android:gravity="right">
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center">
         <LinearLayout
-            android:id="@+id/pop_over_buttons"
-            android:layout_width="wrap_content"
+            android:id="@+id/linearLayoutShortenCard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="20dp">
-            <ImageButton
-                android:id="@+id/pop_over_btn_action_primary"
-                android:layout_width="55dp"
+            android:layout_margin="@dimen/material_padding_quadruple"
+            android:elevation="16dp"
+            android:background="@color/white">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/material_keyline_1"
+                android:background="@color/white">
+                <ImageView
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/brevos_large"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/app_name"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/material_padding_double"
+                    android:layout_marginStart="@dimen/material_padding_double"
+                    android:layout_toRightOf="@+id/imageViewIcon"
+                    android:layout_toEndOf="@+id/imageViewIcon"
+                    android:textSize="@dimen/material_type_large"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="@string/app_name" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutShortenProgress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/primary"
+                android:padding="@dimen/material_padding"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_horizontal|center_vertical">
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="@dimen/material_padding_double"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:indeterminateTint="@color/white"
+                    android:progressTint="@color/white"
+                    android:indeterminate="true" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="@dimen/material_padding"
+                    android:textSize="@dimen/material_type_small"
+                    android:textColor="@color/white"
+                    android:text="@string/processing_link"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutShortenAction1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:src="@drawable/btn_popover_share"
-                android:clickable="true"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/action_share" />
-            <ImageButton
-                android:id="@+id/pop_over_btn_action_secondary"
-                android:layout_width="55dp"
+                android:background="@drawable/ripple_white_green_background"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/material_padding_double"
+                android:paddingBottom="@dimen/material_padding_double"
+                android:visibility="gone"
+                android:clickable="true" >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="@dimen/material_padding_half"
+                    android:layout_marginLeft="@dimen/material_keyline_1"
+                    android:layout_marginStart="@dimen/material_keyline_1"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_content_copy_white"
+                    android:contentDescription="@string/action_copy" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/material_padding_double"
+                    android:layout_marginStart="@dimen/material_padding_double"
+                    android:layout_marginRight="@dimen/material_keyline_1"
+                    android:layout_marginEnd="@dimen/material_keyline_1"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/material_type_small"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:text="@string/action_copy"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutShortenAction2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:src="@drawable/btn_popover_copy"
-                android:clickable="true"
-                android:adjustViewBounds="true"
-                android:layout_marginTop="10dp"
-                android:contentDescription="@string/action_copy" />
-            <ImageButton
-                android:id="@+id/pop_over_btn_main"
-                android:layout_width="75dp"
+                android:background="@drawable/ripple_white_green_background"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/material_padding_double"
+                android:paddingBottom="@dimen/material_padding_double"
+                android:visibility="gone"
+                android:clickable="true" >
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="@dimen/material_padding_half"
+                    android:layout_marginLeft="@dimen/material_keyline_1"
+                    android:layout_marginStart="@dimen/material_keyline_1"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_share_white"
+                    android:contentDescription="@string/action_copy" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/material_padding_double"
+                    android:layout_marginStart="@dimen/material_padding_double"
+                    android:layout_marginRight="@dimen/material_keyline_1"
+                    android:layout_marginEnd="@dimen/material_keyline_1"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/material_type_small"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:text="@string/action_share"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutShortenLink"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:background="@android:color/transparent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:src="@drawable/btn_popover_main"
-                android:clickable="true"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/action_open_main"/>
+                android:background="@color/primary_dark"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/material_padding_double"
+                android:paddingBottom="@dimen/material_padding_double"
+                android:visibility="gone"
+                android:clickable="true" >
+                <TextView
+                    android:id="@+id/textViewShortenShortUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/material_padding_double"
+                    android:layout_marginStart="@dimen/material_padding_double"
+                    android:layout_marginRight="@dimen/material_keyline_1"
+                    android:layout_marginEnd="@dimen/material_keyline_1"
+                    android:layout_marginBottom="@dimen/material_padding"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/material_type_small"
+                    android:text="@string/placeholder_url_short"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:textColor="@color/white" />
+                <TextView
+                    android:id="@+id/textViewShortenLongUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/material_padding_double"
+                    android:layout_marginStart="@dimen/material_padding_double"
+                    android:layout_marginRight="@dimen/material_keyline_1"
+                    android:layout_marginEnd="@dimen/material_keyline_1"
+                    android:layout_gravity="center_vertical"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textSize="@dimen/material_type_micro"
+                    android:text=""
+                    android:textColor="@color/white" />
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 </com.thunsaker.brevos.ui.custom.PopOverView>

@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.NFC" />
 
@@ -29,9 +28,10 @@
         </activity>
         <activity
             android:name=".brevos.ui.BitlyAuthActivity"
-            android:label="@string/title_activity_bitly_auth" />
+            android:label="@string/title_activity_bitly_auth"
+            android:theme="@style/Theme.Brevos.Bitly" />
 
-        <service android:name=".brevos.ui.BrevosPopOverService" />
+        <!--<service android:name=".brevos.ui.BrevosPopOverService" />-->
 
         <activity
             android:name=".brevos.ui.ShortenUrlReceiver"
@@ -98,29 +98,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.thunsaker.brevos.ui.MainActivity" />
         </activity>
-        <activity android:name="com.tundem.aboutlibraries.ui.LibsCompatActivity" />
+        <!-- <activity android:name="com.tundem.aboutlibraries.ui.LibsCompatActivity" /> -->
 
         <activity
             android:name=".brevos.ui.LinkSearchActivity"
             android:configChanges="orientation|keyboard"
             android:label="@string/title_activity_history_search"
-            android:parentActivityName="com.thunsaker.brevos.ui.HistoryActivity"
-            tools:ignore="UnusedAttribute">
+            android:parentActivityName=".brevos.ui.HistoryActivity"
+            tools:ignore="UnusedAttribute" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.thunsaker.brevos.ui.HistoryActivity" />
-
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
-
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".HistorySearchActivity" />
-
-
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

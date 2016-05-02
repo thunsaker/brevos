@@ -3,6 +3,7 @@ package com.thunsaker.brevos.ui;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,10 +32,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.Optional;
 import de.greenrobot.event.EventBus;
 
 public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFragment.OnFragmentInteractionListener {
@@ -43,15 +43,15 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
     @Inject SearchManager mSearchManager;
     @Inject EventBus mBus;
 
-    @InjectView(R.id.editTextSearchQuery) @Optional EditText mEditTextSearch;
-    @InjectView(R.id.imageButtonSearch) @Optional ImageButton mButtonSearch;
+    @BindView(R.id.editTextSearchQuery) @Nullable EditText mEditTextSearch;
+    @BindView(R.id.imageButtonSearch) @Nullable ImageButton mButtonSearch;
 
-    @InjectView(R.id.checkBoxSearchArchiveOnly) CheckBox mCheckBoxArchive;
-    @InjectView(R.id.checkBoxSearchPrivateOnly) CheckBox mCheckBoxPrivate;
-    @InjectView(R.id.frameLayoutHistorySearchListContainer) FrameLayout mListWrapper;
-    @InjectView(R.id.listViewHistorySearchResults) ListView mListViewResults;
-    @InjectView(R.id.linearLayoutHistorySearchResultsEmpty) LinearLayout mEmptyList;
-    @InjectView(R.id.linearLayoutHistorySearchNoResults) LinearLayout mNoResults;
+    @BindView(R.id.checkBoxSearchArchiveOnly) CheckBox mCheckBoxArchive;
+    @BindView(R.id.checkBoxSearchPrivateOnly) CheckBox mCheckBoxPrivate;
+    @BindView(R.id.frameLayoutHistorySearchListContainer) FrameLayout mListWrapper;
+    @BindView(R.id.listViewHistorySearchResults) ListView mListViewResults;
+    @BindView(R.id.linearLayoutHistorySearchResultsEmpty) LinearLayout mEmptyList;
+    @BindView(R.id.linearLayoutHistorySearchNoResults) LinearLayout mNoResults;
 
     private int mCount = 20;
     public static int mOffsetQuantity = 0;
@@ -67,7 +67,7 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
 
         SetupActionBar();
 
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mListViewResults.setAdapter(mAdapter);
         mListViewResults.setEmptyView(mEmptyList);

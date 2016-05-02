@@ -3,6 +3,7 @@ package com.thunsaker.brevos.services;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.thunsaker.BuildConfig;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
 import com.thunsaker.brevos.app.BrevosApp;
@@ -15,7 +16,6 @@ import com.thunsaker.brevos.data.api.LinkHistoryItem;
 import com.thunsaker.brevos.data.api.LinkInfoResponse;
 import com.thunsaker.brevos.data.api.ShortenResponse;
 import com.thunsaker.brevos.data.api.ShortenSaveResponse;
-import com.thunsaker.brevos.data.api.TrendingLinksResponse;
 import com.thunsaker.brevos.data.api.UserHistoryResponse;
 import com.thunsaker.brevos.data.events.ExpandUrlEvent;
 import com.thunsaker.brevos.data.events.GetClicksEvent;
@@ -23,7 +23,6 @@ import com.thunsaker.brevos.data.events.GetClicksListEvent;
 import com.thunsaker.brevos.data.events.GetClicksTotalEvent;
 import com.thunsaker.brevos.data.events.GetInfoEvent;
 import com.thunsaker.brevos.data.events.GetInfoTrendingEvent;
-import com.thunsaker.brevos.data.events.GetTrendingEvent;
 import com.thunsaker.brevos.data.events.GetUserHistoryEvent;
 import com.thunsaker.brevos.data.events.ShortenedUrlEvent;
 import com.thunsaker.brevos.ui.PreferencesHelper;
@@ -116,7 +115,7 @@ public class BitlyTasks {
                 if(accessToken != null && accessToken.length() > 0)
                     return mBitlyService.createBitmark(accessToken, sourceUrl, domain);
                 else
-                    return mBitlyService.createBitmarkWithoutAuth(BitlyPrefs.BITLY_DEFAULT_USERNAME, BitlyPrefs.BITLY_DEFAULT_APIKEY, sourceUrl, domain);
+                    return mBitlyService.createBitmarkWithoutAuth(BuildConfig.BITLY_DEFAULT_USERNAME, BuildConfig.BITLY_DEFAULT_KEY, sourceUrl, domain);
             } catch (Exception ex) {
                 return null;
             }
@@ -236,7 +235,7 @@ public class BitlyTasks {
                 if(accessToken != null && accessToken.length() > 0)
                     return mBitlyService.expandBitmark(accessToken, sourceUrl);
                 else
-                    return mBitlyService.expandBitmarkWithoutAuth(BitlyPrefs.BITLY_DEFAULT_USERNAME, BitlyPrefs.BITLY_DEFAULT_APIKEY, sourceUrl);
+                    return mBitlyService.expandBitmarkWithoutAuth(BuildConfig.BITLY_DEFAULT_USERNAME, BuildConfig.BITLY_DEFAULT_KEY, sourceUrl);
             } catch (Exception ex) {
                 return null;
             }
@@ -526,46 +525,6 @@ public class BitlyTasks {
                 }
             } else {
                 mBus.post(new GetUserHistoryEvent(false, mContext.getString(R.string.error_server), null, 0));
-            }
-        }
-    }
-
-    public class GetTrendingLinks extends AsyncTask<Void, Integer, TrendingLinksResponse> {
-        int limit = 10;
-
-        public GetTrendingLinks(int limit) {
-            this.limit = limit;
-        }
-
-        @Override
-        protected TrendingLinksResponse doInBackground(Void... params) {
-            try {
-                accessToken = PreferencesHelper.getBitlyToken(mContext);
-
-                if(accessToken.length() > 0)
-                    return mBitlyService.getTrendingLinks(accessToken, limit);
-                else
-                    return null;
-            } catch (Exception ex) {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(TrendingLinksResponse result) {
-            super.onPostExecute(result);
-
-            if(Integer.parseInt(result.status_code) == 200) {
-                if(result.data != null && result.data.values != null) {
-                    for(String link : result.data.values) {
-                        BitlyTasks mBitlyTasks = new BitlyTasks((BrevosApp) mContext);
-                        mBitlyTasks.new GetLinkInfo(link, GET_INFO_ACTION_MAIN).execute();
-                    }
-                } else {
-                    mBus.post(new GetTrendingEvent(false, mContext.getString(R.string.error_loading_history)));
-                }
-            } else {
-                mBus.post(new GetTrendingEvent(false, mContext.getString(R.string.error_server)));
             }
         }
     }
