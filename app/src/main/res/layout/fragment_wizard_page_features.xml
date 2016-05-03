@@ -4,55 +4,58 @@
     android:id="@+id/wizard_page_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-    <RelativeLayout
+    android:background="@color/primary">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/imageViewWizardClipboard"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:layout_marginTop="-20dp"
-            android:adjustViewBounds="true"
-            android:maxWidth="500dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/brevos_screen_clipboard_fade"
-            android:contentDescription="@string/wizard_welcome_clipboard_screen_description"
-            android:layout_below="@+id/textViewWizardClipboard"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewWizardClipboard"
             style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/material_padding_double"
             android:gravity="center"
+            android:fontFamily="sans-serif"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/wizard_welcome_clipboard" />
+
+        <ImageView
+            android:id="@+id/imageViewWizardClipboard"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/material_padding_double"
+            android:elevation="2dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="500dp"
+            android:src="@drawable/brevos_screen_clipboard_fade"
+            android:contentDescription="@string/wizard_welcome_clipboard_screen_description"/>
 
         <TextView
             android:id="@+id/textViewWizardRecent"
             style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/material_padding_double"
             android:gravity="center"
+            android:fontFamily="sans-serif"
             android:lineSpacingMultiplier="1.2"
-            android:text="@string/wizard_welcome_recent_links"
-            android:layout_below="@id/imageViewWizardClipboard" />
+            android:text="@string/wizard_welcome_recent_links" />
 
         <ImageView
             android:id="@+id/imageViewWizardRecent"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:padding="2dp"
+            android:layout_margin="@dimen/material_padding_double"
+            android:elevation="2dp"
             android:adjustViewBounds="true"
             android:maxWidth="500dp"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:src="@drawable/brevos_screen_recent_links_fade"
             android:contentDescription="@string/wizard_welcome_recent_screen_description"
             android:layout_below="@id/textViewWizardRecent" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

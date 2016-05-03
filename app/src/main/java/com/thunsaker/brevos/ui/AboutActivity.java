@@ -32,11 +32,10 @@ public class AboutActivity extends BaseBrevosActivity {
 
         ButterKnife.bind(this);
 
-//        ActionBar ab = getSupportActionBar();
-//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-//        ab.setTitle(R.string.action_about);
-//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
         setSupportActionBar(mToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @OnClick(R.id.button_about_open_source)

@@ -11,9 +11,11 @@
     <Button
         android:id="@+id/buttonHistoryLoadMore"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:padding="@dimen/material_padding_double"
         android:text="@string/history_load_more"
+        android:background="@color/accent"
         android:layout_gravity="center"
         android:gravity="center" />
-    <!--style="@style/Button.Brevos.NowAction"-->
 </LinearLayout>

@@ -23,9 +23,9 @@
         android:id="@+id/buttonLinkListHeaderSeeAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/accent"
         android:text="@string/links_see_more"
-        android:visibility="gone"/>
-
-    <!--style="@style/Button.Brevos.NowAction"-->
+        style="?android:button"
+        android:visibility="gone" />
 
 </LinearLayout>

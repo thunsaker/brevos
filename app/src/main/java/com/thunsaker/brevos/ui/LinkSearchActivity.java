@@ -4,8 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.view.KeyEvent;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
@@ -16,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thunsaker.R;
@@ -42,6 +40,9 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
     @Inject @ForApplication Context mContext;
     @Inject SearchManager mSearchManager;
     @Inject EventBus mBus;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @BindView(R.id.editTextSearchQuery) @Nullable EditText mEditTextSearch;
     @BindView(R.id.imageButtonSearch) @Nullable ImageButton mButtonSearch;
@@ -96,33 +97,33 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
     }
 
     private void SetupActionBar() {
-        ActionBar ab = getSupportActionBar();
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setDisplayUseLogoEnabled(true);
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
-        ab.setDisplayShowCustomEnabled(true);
-        ab.setCustomView(R.layout.search_layout_actionview);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
+//        ab.setDisplayUseLogoEnabled(true);
+//        ab.setDisplayShowHomeEnabled(true);
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
+//        ab.setDisplayShowCustomEnabled(true);
+//        ab.setCustomView(R.layout.search_layout_actionview);
 
-        View view = ab.getCustomView();
-        if(view != null) {
-            EditText editTextSearch = (EditText) view.findViewById(R.id.editTextSearchQuery);
-            if(editTextSearch != null) {
-                editTextSearch.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-                editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if(actionId == 3) {
-                            StartSearch();
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-            }
-        }
+//        View view = ab.getCustomView();
+//        if(view != null) {
+//            EditText editTextSearch = (EditText) view.findViewById(R.id.editTextSearchQuery);
+//            if(editTextSearch != null) {
+//                editTextSearch.requestFocus();
+//                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+//                editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//                    @Override
+//                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                        if(actionId == 3) {
+//                            StartSearch();
+//                            return true;
+//                        }
+//                        return false;
+//                    }
+//                });
+//            }
+//        }
     }
 
     @OnClick(R.id.imageButtonSearch)

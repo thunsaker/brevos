@@ -57,6 +57,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
+                android:textColor="@color/body_text"
                 android:gravity="center"
                 android:text="@string/app_about"/>
 
@@ -89,8 +90,8 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:paddingTop="15dp"
-                    android:text="@string/about_other_apps"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/body_text"
+                    android:text="@string/about_other_apps" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="250dp"
@@ -114,6 +115,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:textColor="@color/body_text"
                     android:background="@drawable/card_background_selector_green"
                     android:layout_gravity="center_horizontal"
                     android:drawablePadding="15dp"
@@ -145,6 +147,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:textColor="@color/body_text"
                     android:background="@drawable/card_background_selector_green"
                     android:layout_gravity="center_horizontal"
                     android:drawablePadding="15dp"

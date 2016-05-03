@@ -16,6 +16,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:textSize="20sp"
+        android:textColor="@color/body_text"
         android:gravity="center_vertical"
         android:text="@string/button_auth_bitly" />
 </LinearLayout>
