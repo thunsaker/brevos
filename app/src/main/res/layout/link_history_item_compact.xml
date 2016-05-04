@@ -1,50 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/relativeLayoutHistoryWrapper"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/now_background"
-    android:padding="5dp">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/card_shadow_height"
-        android:layout_marginLeft="@dimen/card_side_margin"
-        android:layout_marginRight="@dimen/card_side_margin"
-        android:layout_marginTop="@dimen/card_shadow_top_margin"
-        android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
-        android:background="@drawable/card_shadow"
-        android:layout_below="@+id/linearLayoutHistoryWrapperInner"/>
+                android:id="@+id/relativeLayoutHistoryWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
     <LinearLayout
         android:id="@+id/linearLayoutHistoryWrapperInner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/card_side_margin"
-        android:layout_marginLeft="@dimen/card_side_margin"
-        android:background="@drawable/card_background"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
         android:orientation="horizontal">
+
         <FrameLayout
             android:id="@+id/frameLayoutHistoryWrapper"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_gravity="center_vertical"
             android:foreground="@drawable/default_layout_selector">
+
+            <ImageView
+                android:id="@+id/imageViewFaviconLarge"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/material_keyline_1"
+                android:layout_marginStart="@dimen/material_keyline_1"
+                android:background="@drawable/gray_circle"
+                android:contentDescription="@string/favicon" />
+
             <LinearLayout
                 android:id="@+id/linearLayoutHistoryUrlWrapper"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="@dimen/material_keyline_2_offset"
+                android:paddingStart="@dimen/material_keyline_2_offset"
+                android:paddingRight="@dimen/material_padding"
+                android:paddingEnd="@dimen/material_padding"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/textViewHistoryTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/material_padding"
                     android:layout_marginLeft="@dimen/padding_small"
                     android:layout_marginRight="@dimen/padding_small"
                     android:ellipsize="end"
-                    android:gravity="center_vertical|left"
+                    android:text="@string/placeholder_title"
+                    android:gravity="start|center_vertical"
                     android:textColor="@color/gray_dark"
                     android:textStyle="bold"
                     android:maxLines="1"
@@ -56,8 +59,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/padding_small"
                     android:layout_marginRight="@dimen/padding_small"
+                    android:paddingBottom="@dimen/material_padding"
                     android:ellipsize="end"
-                    android:gravity="center_vertical|left"
+                    android:text="@string/placeholder_url_long"
+                    android:gravity="start|center_vertical"
                     android:textColor="@color/gray_dark"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -65,15 +70,18 @@
             </LinearLayout>
         </FrameLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/gray_translucent"/>
-
         <RelativeLayout
             android:id="@+id/relativeLayoutHistoryClicksWrapper"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:minWidth="40dp"
+            android:paddingRight="@dimen/material_padding"
+            android:paddingEnd="@dimen/material_padding"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingStart="@dimen/material_padding"
+            android:layout_marginRight="@dimen/material_padding"
+            android:layout_marginEnd="@dimen/material_padding"
+            android:gravity="center_vertical">
 
             <ProgressBar
                 android:id="@+id/progressHistoryClicks"
@@ -81,6 +89,9 @@
                 android:layout_height="16dp"
                 android:layout_marginLeft="@dimen/progress_padding"
                 android:layout_marginRight="@dimen/progress_padding"
+                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:indeterminate="true"
                 android:indeterminateOnly="true"
                 android:layout_centerInParent="true"
@@ -89,37 +100,32 @@
             <TextView
                 android:id="@+id/textViewHistoryClicks"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textColor="@color/gray_darkish"
+                android:textColor="@color/primary"
                 android:text="@string/default_click_count"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_centerInParent="true"
-                android:gravity="center"
+                android:padding="@dimen/material_padding"
+                android:layout_centerVertical="true"
+                android:gravity="center|center_vertical"
                 android:layout_gravity="center"
                 android:minWidth="40dp"
-                android:visibility="gone"
-                android:background="@drawable/default_layout_selector_gray" />
+                android:visibility="visible"
+                android:background="@drawable/default_layout_selector_gray_base" />
         </RelativeLayout>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/gray_translucent"/>
-
-        <ImageButton
-            android:id="@+id/imageButtonHistoryShare"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
-            android:contentDescription="@string/action_share"
-            android:src="@drawable/ic_content_share"
-            android:scaleType="centerInside"
-            android:adjustViewBounds="true"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/default_layout_selector_gray"/>
+        <!--<ImageButton-->
+            <!--android:id="@+id/imageButtonHistoryShare"-->
+            <!--android:layout_width="52dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:contentDescription="@string/action_share"-->
+            <!--android:layout_marginRight="@dimen/material_padding"-->
+            <!--android:layout_marginEnd="@dimen/material_padding"-->
+            <!--android:src="@drawable/share"-->
+            <!--android:tint="@color/primary"-->
+            <!--android:scaleType="center"-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/default_layout_selector_gray" />-->
     </LinearLayout>
 </RelativeLayout>

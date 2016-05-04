@@ -45,7 +45,7 @@
                         android:textStyle="bold"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text=""
+                        android:text="@string/placeholder_title"
                         android:textSize="16sp" />
                     <TextView
                         android:id="@+id/textViewHistoryShortUrl"
@@ -58,7 +58,7 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/gray_dark"
                         android:singleLine="true"
-                        android:text=""
+                        android:text="@string/placeholder_url_short"
                         android:textSize="24sp" />
                     <ImageView
                         android:id="@+id/imageViewPrivaticon"
@@ -94,7 +94,7 @@
                             android:layout_marginRight="@dimen/padding_small"
                             android:layout_marginTop="5dp"
                             android:ellipsize="end"
-                            android:text=""
+                            android:text="@string/placeholder_url_long"
                             android:gravity="center_vertical|left"
                             android:textColor="@color/gray_dark"
                             android:maxLines="1"

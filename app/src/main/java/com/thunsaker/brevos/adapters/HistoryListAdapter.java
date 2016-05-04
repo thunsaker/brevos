@@ -60,9 +60,9 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
         this.listType = listType;
 
         int layoutType = R.layout.link_history_item;
-        if(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT)
+        if (listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT)
             layoutType = R.layout.link_history_item_compact;
-        else if(listType == BitlyTasks.HISTORY_LIST_TYPE_SEARCH)
+        else if (listType == BitlyTasks.HISTORY_LIST_TYPE_SEARCH)
             layoutType = R.layout.link_history_item_search;
         mResource = layoutType;
     }
@@ -70,12 +70,12 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View itemView = convertView;
-        if(itemView == null) {
+        if (itemView == null) {
             itemView = mInflater.inflate(mResource, null);
         }
 
         final LinkHistoryItem link = mItems.get(position);
-        if(link != null) {
+        if (link != null) {
             loadHistoryView(itemView, link);
         }
 
@@ -90,14 +90,14 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
         final long createDate = link.created_at;
         final long modifiedDate = link.modified_at;
 
-        final TextView titleTextView = (TextView)itemView.findViewById(R.id.textViewHistoryTitle);
-        if(titleTextView != null) {
-            if(title != null) {
+        final TextView titleTextView = (TextView) itemView.findViewById(R.id.textViewHistoryTitle);
+        if (titleTextView != null) {
+            if (title != null) {
                 titleTextView.setText(title);
                 titleTextView.setVisibility(View.VISIBLE);
             } else {
-                if(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
-                    if(shortUrl != null) {
+                if (listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
+                    if (shortUrl != null) {
                         titleTextView.setText(shortUrl.replace("http://", "").replace("https://", ""));
                         titleTextView.setVisibility(View.VISIBLE);
                     }
@@ -107,26 +107,26 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
             }
         }
 
-        TextView longUrlTextView = (TextView)itemView.findViewById(R.id.textViewHistoryUrl);
-        if(longUrlTextView != null) {
-            if(longUrl != null) {
-                longUrlTextView.setText(longUrl.replace("http://","").replace("https://",""));
+        TextView longUrlTextView = (TextView) itemView.findViewById(R.id.textViewHistoryUrl);
+        if (longUrlTextView != null) {
+            if (longUrl != null) {
+                longUrlTextView.setText(longUrl.replace("http://", "").replace("https://", ""));
             }
         }
 
         RelativeLayout clicksWrapper = (RelativeLayout) itemView.findViewById(R.id.relativeLayoutHistoryClicksWrapper);
         ProgressBar clicksProgress = (ProgressBar) itemView.findViewById(R.id.progressHistoryClicks);
         TextView clicksText = (TextView) itemView.findViewById(R.id.textViewHistoryClicks);
-        if(clicksWrapper != null) {
-            if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
+        if (clicksWrapper != null) {
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB)
                 clicksProgress.setVisibility(View.VISIBLE);
 
-            if(link.clicks > -1) {
+            if (link.clicks > -1) {
                 clicksProgress.setVisibility(View.GONE);
                 clicksText.setVisibility(View.VISIBLE);
                 clicksText.setText(BitlyUtil.getLinkClicksString(link.clicks));
             } else {
-                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+                if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
                     clicksProgress.setVisibility(View.VISIBLE);
                     clicksText.setVisibility(View.GONE);
                 } else {
@@ -150,22 +150,22 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
             });
         }
 
-        ImageButton shareButton = (ImageButton) itemView.findViewById(R.id.imageButtonHistoryShare);
-        if(shareButton != null) {
-            shareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openShareDialog(shortUrl);
-                }
-            });
-            shareButton.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(mContext, mContext.getString(R.string.action_share), Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-        }
+//        ImageButton shareButton = (ImageButton) itemView.findViewById(R.id.imageButtonHistoryShare);
+//        if(shareButton != null) {
+//            shareButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    openShareDialog(shortUrl);
+//                }
+//            });
+//            shareButton.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    Toast.makeText(mContext, mContext.getString(R.string.action_share), Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//            });
+//        }
 
         FrameLayout frameOverlay = (FrameLayout) itemView.findViewById(R.id.frameLayoutHistoryWrapper);
         frameOverlay.setOnClickListener(new View.OnClickListener() {
@@ -184,55 +184,57 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
                 if (listType == BitlyTasks.HISTORY_LIST_TYPE_SEARCH) {
                     Toast.makeText(mContext, mContext.getString(R.string.open_link_details), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, mContext.getString(R.string.open_in_browser), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, mContext.getString(R.string.open_in_browser), Toast.LENGTH_SHORT).show();
+                    openShareDialog(shortUrl);
                 }
                 return true;
             }
         });
 
-        if(listType != BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
-            final ImageView imageViewFavicon = (ImageView)itemView.findViewById(R.id.imageViewFavicon);
+        final ImageView imageViewFavicon = (ImageView) itemView.findViewById(R.id.imageViewFavicon);
+        final ImageView imageViewFaviconLarge = (ImageView) itemView.findViewById(R.id.imageViewFaviconLarge);
 
+        if (imageViewFavicon != null || imageViewFaviconLarge != null) {
             Picasso mPicasso = Picasso.with(mContext);
-            if(imageViewFavicon != null) {
-                mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl))
-                        .placeholder(mContext.getResources().getDrawable(R.drawable.brevos_favicon))
-                        .into(imageViewFavicon);
+            mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl))
+                    .placeholder(mContext.getResources().getDrawable(R.drawable.pink_circle))
+                    .into(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT ? imageViewFaviconLarge : imageViewFavicon);
 
-                // Set Title Color
-//                mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl)).into(new Target() {
-//                    @Override
-//                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                        Drawable faviconDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
-//                        imageViewFavicon.setImageDrawable(faviconDrawable);
-//
-//                        assert titleTextView != null;
-//                        int avgColor = -1;
-//                        if(link.average_color > -1) {
-//                            avgColor = link.average_color;
-//                        } else {
-//                            avgColor = getAverageColor(bitmap);
-//                            link.average_color = avgColor;
-//                        }
-//                        titleTextView.setTextColor(avgColor);
-//                    }
-//
-//                    @Override
-//                    public void onBitmapFailed(Drawable errorDrawable) {
-//                        Drawable defaultFaviconDrawable = mContext.getResources().getDrawable(R.drawable.favicon_default);
-//                        imageViewFavicon.setImageDrawable(defaultFaviconDrawable);
-//                    }
-//
-//                    @Override
-//                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-//                        Drawable placeholderFaviconDrawable = mContext.getResources().getDrawable(R.drawable.brevos_favicon);
-//                        imageViewFavicon.setImageDrawable(placeholderFaviconDrawable);
-//                    }
-//                });
-            }
+            // Set Title Color
+            //                mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl)).into(new Target() {
+            //                    @Override
+            //                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            //                        Drawable faviconDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
+            //                        imageViewFavicon.setImageDrawable(faviconDrawable);
+            //
+            //                        assert titleTextView != null;
+            //                        int avgColor = -1;
+            //                        if(link.average_color > -1) {
+            //                            avgColor = link.average_color;
+            //                        } else {
+            //                            avgColor = getAverageColor(bitmap);
+            //                            link.average_color = avgColor;
+            //                        }
+            //                        titleTextView.setTextColor(avgColor);
+            //                    }
+            //
+            //                    @Override
+            //                    public void onBitmapFailed(Drawable errorDrawable) {
+            //                        Drawable defaultFaviconDrawable = mContext.getResources().getDrawable(R.drawable.favicon_default);
+            //                        imageViewFavicon.setImageDrawable(defaultFaviconDrawable);
+            //                    }
+            //
+            //                    @Override
+            //                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+            //                        Drawable placeholderFaviconDrawable = mContext.getResources().getDrawable(R.drawable.brevos_favicon);
+            //                        imageViewFavicon.setImageDrawable(placeholderFaviconDrawable);
+            //                    }
+            //                });
+        }
 
+        if(listType != BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
             ImageButton copyButton = (ImageButton) itemView.findViewById(R.id.imageButtonHistoryCopy);
-            if(copyButton != null) {
+            if (copyButton != null) {
                 copyButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -248,19 +250,19 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
                 });
             }
 
-            ImageView imageViewPrivaticon = (ImageView)itemView.findViewById(R.id.imageViewPrivaticon);
+            ImageView imageViewPrivaticon = (ImageView) itemView.findViewById(R.id.imageViewPrivaticon);
             imageViewPrivaticon.setVisibility(link.isPrivate ? View.VISIBLE : View.GONE);
 
-            TextView shortUrlTextView = (TextView)itemView.findViewById(R.id.textViewHistoryShortUrl);
-            if(shortUrlTextView != null) {
-                if(shortUrl != null) {
-                    shortUrlTextView.setText(shortUrl.replace("http://","").replace("https://",""));
+            TextView shortUrlTextView = (TextView) itemView.findViewById(R.id.textViewHistoryShortUrl);
+            if (shortUrlTextView != null) {
+                if (shortUrl != null) {
+                    shortUrlTextView.setText(shortUrl.replace("http://", "").replace("https://", ""));
                 }
             }
 
-            TextView createDateTextView = (TextView)itemView.findViewById(R.id.textViewHistoryDate);
-            if(createDateTextView != null) {
-                if(createDate > 0) {
+            TextView createDateTextView = (TextView) itemView.findViewById(R.id.textViewHistoryDate);
+            if (createDateTextView != null) {
+                if (createDate > 0) {
 //                    DateTimeFormatter shortDate = DateTimeFormat.forPattern("d-MMM-YY");
                     DateTimeFormatter shortDate = DateTimeFormat.shortDate();
                     DateTimeZone tz = DateTimeZone.forOffsetHours(MainActivity.getTimeZoneOffset());

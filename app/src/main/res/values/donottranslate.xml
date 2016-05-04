@@ -48,4 +48,9 @@
     <string name="default_click_count">-</string>
 
     <string name="bitly" translatable="false">bit.ly</string>
+
+    <string name="placeholder_url_short" />
+    <string name="placeholder_title" />
+    <string name="placeholder_url_long" />
+    <string name="placeholder_date" />
 </resources>

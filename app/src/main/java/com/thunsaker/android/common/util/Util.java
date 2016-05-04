@@ -30,7 +30,8 @@ public class Util {
 		return HasConnection;
 	}
 
-    public static String faviconFetcherUrl = "http://g.etfv.co/%s?defaulticon=none";
+//    public static String faviconFetcherUrl = "http://g.etfv.co/%s?defaulticon=none";
+	public static String faviconFetcherUrl = "https://icons.better-idea.org/icon?url=%s&size=64&format=png";
 
     /**
      * This method convets dp unit to equivalent device specific value in pixels.

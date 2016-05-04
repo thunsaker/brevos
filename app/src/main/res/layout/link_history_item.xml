@@ -28,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:foreground="@drawable/default_layout_selector_gray">
+            android:foreground="@drawable/default_layout_selector">
             <RelativeLayout
                 android:id="@+id/relativeLayoutActionButtonWrapper"
                 android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                     android:textStyle="bold"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text=""
+                    android:text="@string/placeholder_title"
                     android:textSize="16sp" />
                 <TextView
                     android:id="@+id/textViewHistoryShortUrl"
@@ -60,7 +60,7 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/gray_dark"
                     android:singleLine="true"
-                    android:text=""
+                    android:text="@string/placeholder_url_short"
                     android:textSize="20sp" />
                 <ImageView
                     android:id="@+id/imageViewPrivaticon"
@@ -98,7 +98,7 @@
                         android:layout_marginLeft="@dimen/padding_small"
                         android:layout_marginRight="@dimen/padding_small"
                         android:ellipsize="end"
-                        android:text=""
+                        android:text="@string/placeholder_url_long"
                         android:gravity="center_vertical|left"
                         android:textColor="@color/gray_dark"
                         android:maxLines="1"
@@ -117,7 +117,7 @@
                     android:gravity="center_vertical|right"
                     android:textColor="@color/gray_dark"
                     android:singleLine="true"
-                    android:text=""
+                    android:text="@string/placeholder_date"
                     android:textSize="12sp" />
             </RelativeLayout>
         </FrameLayout>
@@ -182,7 +182,7 @@
                 android:adjustViewBounds="true"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/default_layout_selector_gray"/>
+                android:background="@drawable/default_layout_selector_gray" />
 
             <View
                 android:layout_width="fill_parent"
@@ -203,7 +203,7 @@
                 android:adjustViewBounds="true"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/default_layout_selector_gray"/>
+                android:background="@drawable/default_layout_selector_gray" />
         </LinearLayout>
         <!--<View-->
             <!--android:layout_width="1dp"-->
