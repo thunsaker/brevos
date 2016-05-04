@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:drawable="@drawable/ic_lock_closed_solid_gray" android:state_checked="true" android:state_pressed="true" />
-    <item android:drawable="@drawable/ic_lock_closed_solid" android:state_checked="true" android:state_pressed="false" />
-    <item android:drawable="@drawable/ic_lock_closed_solid_disabled" android:state_enabled="false" />
-    <item android:drawable="@drawable/ic_lock_open_solid_gray" android:state_checked="false" android:state_pressed="true" />
-    <item android:drawable="@drawable/ic_lock_open_solid" android:state_checked="false" android:state_pressed="false" />
-    <item android:drawable="@drawable/ic_lock_open_solid_disabled" android:state_enabled="false" />
+    <item android:drawable="@drawable/ic_lock_closed" android:state_checked="true" android:state_pressed="true" />
+    <!--<item android:drawable="@drawable/ic_lock_closed_solid" android:state_checked="true" android:state_pressed="false" />-->
+    <!--<item android:drawable="@drawable/ic_lock_closed_solid_disabled" android:state_enabled="false" />-->
+    <!--<item android:drawable="@drawable/ic_lock_open_solid_gray" android:state_checked="false" android:state_pressed="true" />-->
+    <item android:drawable="@drawable/ic_lock_open" android:state_checked="false" android:state_pressed="false" />
+    <!--<item android:drawable="@drawable/ic_lock_open_solid_disabled" android:state_enabled="false" />-->
 </selector>

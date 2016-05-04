@@ -3,14 +3,15 @@ package com.thunsaker.brevos.ui;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.SearchView;
+import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -35,17 +36,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
-public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFragment.OnFragmentInteractionListener {
+public class LinkSearchActivity extends BaseBrevosActivity {
 
-    @Inject @ForApplication Context mContext;
-    @Inject SearchManager mSearchManager;
-    @Inject EventBus mBus;
+    @Inject
+    @ForApplication
+    Context mContext;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    @Inject
+    SearchManager mSearchManager;
 
-    @BindView(R.id.editTextSearchQuery) @Nullable EditText mEditTextSearch;
-    @BindView(R.id.imageButtonSearch) @Nullable ImageButton mButtonSearch;
+    @Inject
+    EventBus mBus;
+
+    @BindView(R.id.linearLayoutHistorySearchMainWrapper) LinearLayout mLayoutWrapper;
+    @BindView(R.id.search_view) SearchView mSearchView;
+    @BindView(R.id.imageButtonSearch) ImageButton mButtonSearchBack;
+    @BindView(R.id.frameLayoutSearchCloseContainer) FrameLayout mButtonClearSearchContainer;
+    @BindView(R.id.imageButtonSearchClear) ImageButton mButtonClearSearch;
 
     @BindView(R.id.checkBoxSearchArchiveOnly) CheckBox mCheckBoxArchive;
     @BindView(R.id.checkBoxSearchPrivateOnly) CheckBox mCheckBoxPrivate;
@@ -66,9 +73,12 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_search);
 
-        SetupActionBar();
-
         ButterKnife.bind(this);
+
+        setupSearchView();
+
+//        mButtonSearchBack.setImageDrawable(
+//                VectorDrawableCompat.create(getResources(), R.drawable.back_arrow, getTheme()));
 
         mListViewResults.setAdapter(mAdapter);
         mListViewResults.setEmptyView(mEmptyList);
@@ -96,54 +106,51 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
         mBus.register(this);
     }
 
-    private void SetupActionBar() {
-//        ActionBar ab = getSupportActionBar();
-//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-//        ab.setDisplayUseLogoEnabled(true);
-//        ab.setDisplayShowHomeEnabled(true);
-//        ab.setDisplayHomeAsUpEnabled(true);
-//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
-//        ab.setDisplayShowCustomEnabled(true);
-//        ab.setCustomView(R.layout.search_layout_actionview);
+    private void setupSearchView() {
+        mSearchView.setIconified(false);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setFocusable(true);
+        mSearchView.requestFocusFromTouch();
 
-//        View view = ab.getCustomView();
-//        if(view != null) {
-//            EditText editTextSearch = (EditText) view.findViewById(R.id.editTextSearchQuery);
-//            if(editTextSearch != null) {
-//                editTextSearch.requestFocus();
-//                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-//                editTextSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//                    @Override
-//                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                        if(actionId == 3) {
-//                            StartSearch();
-//                            return true;
-//                        }
-//                        return false;
-//                    }
-//                });
-//            }
-//        }
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(getComponentName()));
+        mSearchView.setQueryHint(getString(R.string.search_hint));
+        mSearchView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        mSearchView.setImeOptions(mSearchView.getImeOptions() | EditorInfo.IME_ACTION_SEARCH |
+                EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchQuery = query;
+                StartSearch(true);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(mButtonClearSearchContainer.getVisibility() == View.GONE)
+                    mButtonClearSearchContainer.setVisibility(View.VISIBLE);
+
+                if(newText.length() >= 3) {
+                    searchQuery = newText;
+                    StartSearch(false);
+                }
+                return false;
+            }
+        });
     }
 
-    @OnClick(R.id.imageButtonSearch)
-    public void searchButtonClick() {
-        StartSearch();
-    }
-
-    private void StartSearch() {
-        mEditTextSearch.clearFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+    private void StartSearch(boolean hideKeyboard) {
+        if(hideKeyboard) {
+            mSearchView.clearFocus();
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }
 
         if(mList != null)
             mList.clear();
 
         if(mAdapter != null)
             mAdapter.notifyDataSetInvalidated();
-
-        if(mEditTextSearch != null && mEditTextSearch.getText().toString().trim().length() > 0) {
-            searchQuery = mEditTextSearch.getText().toString().trim();
-        }
 
         if(searchQuery.length() > 0) {
             mList = null;
@@ -183,30 +190,53 @@ public class LinkSearchActivity extends BaseBrevosActivity { //implements LinkFr
 //            }
 
             BitlyTasks bitlyTasks = new BitlyTasks((BrevosApp) mContext);
-            bitlyTasks.new GetUserHistory(mCount, mOffsetQuantity * mCount, searchQuery, BitlyTasks.HISTORY_LIST_TYPE_SEARCH, privateFlag, archiveFlag).execute();
+            bitlyTasks.new GetUserHistory(mCount, mOffsetQuantity * mCount, searchQuery,
+                    BitlyTasks.HISTORY_LIST_TYPE_SEARCH, privateFlag, archiveFlag).execute();
         }
     }
 
     public void onEvent(GetUserHistoryEvent event) {
         if (event != null) {
             if (event.listType == BitlyTasks.HISTORY_LIST_TYPE_SEARCH) {
-//                if (mSwipeLayout != null)
-//                    mSwipeLayout.setRefreshing(false);
-
                 if (event.userHistoryList != null && event.userHistoryList.size() > 0) {
                     mList = event.userHistoryList;
-                    mAdapter = new HistoryListAdapter(mContext, mList, BitlyTasks.HISTORY_LIST_TYPE_SEARCH);
+                    mAdapter = new HistoryListAdapter(mContext, mList,
+                            BitlyTasks.HISTORY_LIST_TYPE_SEARCH);
                     mListViewResults.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                     mNoResults.setVisibility(View.GONE);
                 } else {
                     mListWrapper.setVisibility(View.GONE);
                     mNoResults.setVisibility(View.VISIBLE);
-                    mNoResults.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
+                    mNoResults.startAnimation(
+                            AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
                 }
             }
         } else {
             Toast.makeText(mContext, getString(R.string.error_loading_search), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @OnClick(R.id.imageButtonSearch)
+    protected void closeSearch() {
+        finish();
+    }
+
+    @OnClick(R.id.imageButtonSearchClear)
+    protected void clearSearch() {
+        mSearchView.setQuery("", false);
+        if(mList != null)
+            mList.clear();
+        if(mAdapter != null)
+            mAdapter.notifyDataSetChanged();
+
+        mButtonClearSearchContainer.setVisibility(View.GONE);
+
+        Snackbar.make(mLayoutWrapper, "Clearing Search", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        closeSearch();
     }
 }

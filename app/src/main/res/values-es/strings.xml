@@ -135,4 +135,7 @@
     <string name="clicks_total_your_link">Total clicks from your link</string>
     <string name="clicks_total_global_link">Total clicks from global link</string>
     <string name="search_no_results">No results found.</string>
+    <string name="bitly_auth_success">Bit.ly Authorized</string>
+    <string name="bitly_auth_error">Authorization error :(</string>
+    <string name="bitly_auth_prompt_info">Sign in to bit.ly to see link info.</string>
 </resources>

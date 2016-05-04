@@ -4,6 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/now_background"
+    android:id="@+id/relativeLayoutMainContainer"
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -26,8 +27,6 @@
             android:id="@+id/relativeLayoutMainWrapperInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <include layout="@layout/clipboard_prompt" />
 
             <View
                 android:layout_width="match_parent"
@@ -55,8 +54,10 @@
 
                     <ToggleButton
                         android:id="@+id/toggleButtonOptionsPrivateUrl"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:padding="@dimen/material_padding_double"
+                        android:layout_gravity="center_vertical"
                         android:background="@drawable/toggle_private_lock"
                         android:tint="@color/white"
                         style="?attr/buttonBarButtonStyle"
@@ -75,9 +76,9 @@
                         android:layout_marginLeft="@dimen/material_padding"
                         android:layout_marginEnd="@dimen/material_padding"
                         android:layout_marginRight="@dimen/material_padding"
-                        android:foregroundTint="@color/white"
                         android:hint="@string/shorten_hint_text"
                         android:inputType="textUri"
+                        android:theme="@style/Widget.Brevos.EditText"
                         android:imeActionId="@+id/action_send_url"
                         android:imeActionLabel="@string/shorten" />
 

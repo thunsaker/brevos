@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/brevos_green_dark">
+    android:elevation="4dp"
+    android:background="@color/primary">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,21 +35,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="@dimen/material_padding"
+            android:layout_marginEnd="@dimen/material_padding"
             android:textColor="@color/white"
             android:checked="false"
+            android:buttonTint="@color/white"
             android:text="@string/search_archive_only"/>
-        <!--style="@style/CheckBox.Brevos.White"-->
         <CheckBox
             android:id="@+id/checkBoxSearchPrivateOnly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
+            android:layout_marginRight="@dimen/material_padding"
+            android:layout_marginEnd="@dimen/material_padding"
             android:textColor="@color/white"
             android:checked="false"
+            android:buttonTint="@color/white"
             android:text="@string/search_private_only"/>
-        <!--style="@style/CheckBox.Brevos.White"-->
     </LinearLayout>
 
 </LinearLayout>

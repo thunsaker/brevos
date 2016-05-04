@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/brevos_green">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/primary">
     <EditText
         android:id="@+id/editTextSearchQuery"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawablePadding="5dp"
-        android:drawableLeft="@drawable/ic_search_small"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/material_padding"
         android:hint="@string/search_hint"
         android:inputType="textAutoComplete"
         android:imeOptions="actionSearch" />
     <!--style="@style/EditText.Brevos.White"-->
+    <!--<ImageButton-->
+        <!--android:id="@+id/imageButtonSearch"-->
+        <!--android:layout_width="50dp"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="6dp"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:adjustViewBounds="true"-->
+        <!--style="?attr/buttonBarButtonStyle"-->
+        <!--android:background="@drawable/default_layout_selector_gray"-->
+        <!--android:src="@drawable/ic_action_search"-->
+        <!--android:contentDescription="@string/action_search" />-->
+
     <ImageButton
-        android:id="@+id/imageButtonSearch"
-        android:layout_width="50dp"
-        android:layout_height="45dp"
+        android:id="@+id/imageButtonClose"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:padding="6dp"
-        android:scaleType="fitCenter"
+        android:padding="@dimen/material_padding_half"
+        android:layout_margin="@dimen/material_padding"
+        android:scaleType="center"
         android:adjustViewBounds="true"
         style="?attr/buttonBarButtonStyle"
         android:background="@drawable/default_layout_selector_gray"
-        android:src="@drawable/ic_action_search"
+        android:src="@drawable/ic_action_close_white"
         android:contentDescription="@string/action_search" />
 </LinearLayout>

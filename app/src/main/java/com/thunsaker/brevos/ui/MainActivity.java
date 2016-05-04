@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -37,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.crashlytics.android.Crashlytics;
@@ -83,6 +81,8 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.relativeLayoutMainContainer) RelativeLayout mMainLayoutContainer;
+
     @BindView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
     @BindView(R.id.editTextUrl) EditText mEditTextUrl;
     @BindView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
@@ -110,9 +110,6 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
     @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
-    @BindView(R.id.linearLayoutMainUrlInClipboardWrapper) LinearLayout mClipboardWrapper;
-    @BindView(R.id.textViewMainClipboardText) TextView mTextViewClipboard;
-
     @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
 
     public static String BREVOS_POP_OVER_BITMARK = "BREVOS_POP_OVER_BITMARK";
@@ -128,7 +125,6 @@ public class MainActivity extends BaseBrevosActivity
     private boolean isPrivate = false;
     private String domain = BitlyClient.BITLY_DOMAIN_DEFAULT;
     private static boolean ignoreClipboard = false;
-    private CountDownTimer clipboardPromptCountDown;
     public static int COMPACT_LINK_LIST_COUNT = 20;
 
     private AdView adView;
@@ -272,7 +268,7 @@ public class MainActivity extends BaseBrevosActivity
                 mEditTextUrl.invalidate();
                 mTogglePrivate.setVisibility(View.GONE);
             } else {
-                mTogglePrivate.setVisibility(View.VISIBLE);
+//                mTogglePrivate.setVisibility(View.VISIBLE);
                 mTogglePrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -357,7 +353,8 @@ public class MainActivity extends BaseBrevosActivity
 //                } else {
 //                    showUpsellDialog();
 //                }
-                Toast.makeText(mContext, "Bundles coming soon!", Toast.LENGTH_SHORT).show();
+                // TODO: BUNDLES?!
+                Snackbar.make(mMainLayoutContainer, "Bundles coming soon!", Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.action_search:
                 startActivity(new Intent(mContext, LinkSearchActivity.class));
@@ -381,7 +378,7 @@ public class MainActivity extends BaseBrevosActivity
         PreferencesHelper.setBitlyApiKey(mContext, null);
         PreferencesHelper.setBitlyLogin(mContext, null);
         PreferencesHelper.setBrevosWelcomeWizard(mContext, false);
-        Toast.makeText(mContext, "Clearing all Settings", Toast.LENGTH_SHORT).show();
+        Snackbar.make(mMainLayoutContainer, "Clearing all Settings", Snackbar.LENGTH_SHORT).show();
         mBus.post(new BitlyAuthEvent(false, ""));
     }
 
@@ -428,14 +425,14 @@ public class MainActivity extends BaseBrevosActivity
                 }
             } else {
                 showProgress();
-                if (isPrivate)
+                if (isPrivate) {
                     bitlyTasks.new SaveBitmark(linkToShorten, BitlyClient.SHORTENED_ACTION_DEFAULT, isPrivate).execute();
-                else {
+                } else {
                     bitlyTasks.new CreateBitmark(linkToShorten, BitlyClient.SHORTENED_ACTION_DEFAULT, domain, false).execute();
                 }
             }
         } else {
-            Toast.makeText(mContext, getString(R.string.error_invalid_url), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.error_invalid_url, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -455,7 +452,7 @@ public class MainActivity extends BaseBrevosActivity
             showLinkFragment();
             mAuthButtonWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
             mAuthButtonWrapper.setVisibility(View.GONE);
-            mTogglePrivate.setVisibility(View.VISIBLE);
+//            mTogglePrivate.setVisibility(View.VISIBLE);
             mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 
             isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
@@ -465,10 +462,10 @@ public class MainActivity extends BaseBrevosActivity
                 if (event.resultMessage.equals(CLEAR_BITLY_DATA)) {
                     clearBitlyData();
                 } else if (event.resultMessage.length() > 0) {
-                    Toast.makeText(mContext, String.format(getString(R.string.error_placeholder), event.resultMessage), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(mContext, getString(R.string.bitly_connection_error), Toast.LENGTH_SHORT).show();
+                Snackbar.make(mMainLayoutContainer, R.string.bitly_connection_error, Snackbar.LENGTH_SHORT).show();
             }
 
             mAuthButtonWrapper.setVisibility(View.VISIBLE);
@@ -486,10 +483,6 @@ public class MainActivity extends BaseBrevosActivity
         if(event.result) {
             mCurrentBitmark = event.bitmark;
             switch (event.action) {
-//                case 0: // SHORTENED_ACTION_POPOVER
-//                    showPopOver(event.bitmark);
-//                    hideShortenNotification();
-//                    break;
                 case 1: // SHORTENED_ACTION_DEFAULT
                     showLinkResult(event.bitmark);
                     break;
@@ -501,13 +494,15 @@ public class MainActivity extends BaseBrevosActivity
             if(event.action.equals(BitlyClient.SHORTENED_ACTION_POPOVER)) {
                 setupNotificationIntents(event.longUrl);
                 showShorteningFailedNotification(event.longUrl);
-            } else
-                Toast.makeText(mContext, "Error: " + event.resultMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void showLinkResult(final Bitmark bitmark) {
-        mClipboardWrapper.setVisibility(View.GONE);
+        copyToClipboard(bitmark.getUrl());
+
         mExpandResultLayoutWrapper.setVisibility(View.GONE);
         mEditTextUrl.setText(null);
 
@@ -557,17 +552,6 @@ public class MainActivity extends BaseBrevosActivity
                     }
                 }
         ));
-
-        mClipboardWrapper.setOnTouchListener(new SwipeDismissTouchListener(
-                mClipboardWrapper,
-                null,
-                new SwipeDismissTouchListener.OnDismissCallback() {
-                    @Override
-                    public void onDismiss(View view, Object token) {
-                        mMainLayoutWrapperOuter.removeView(mClipboardWrapper);
-                    }
-                }
-        ));
     }
 
     private void hideLinkResult() {
@@ -591,12 +575,11 @@ public class MainActivity extends BaseBrevosActivity
                     break;
             }
         } else {
-            Toast.makeText(mContext, "Error: " + event.resultMessage, Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     private void showExpandLinkResult(final Bitmark bitmark) {
-        mClipboardWrapper.setVisibility(View.GONE);
         mResultLayoutWrapper.setVisibility(View.GONE);
         mEditTextUrl.setText(null);
 
@@ -655,7 +638,7 @@ public class MainActivity extends BaseBrevosActivity
             linkInfo.putExtra(LinkInfoActivity.EXTRA_LINK, myBitmark.toString());
             startActivity(linkInfo);
         } else {
-            Toast.makeText(mContext, "Sign in to bit.ly to see link info.", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_prompt_info, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -684,12 +667,6 @@ public class MainActivity extends BaseBrevosActivity
     protected void onDestroy() {
         super.onDestroy();
     }
-
-//    @OnClick(R.id.buttonPasteFromClipboard)
-//    public void pasteFromClipboard() {
-//        mEditTextUrl.setText(getClipboardText());
-//        hideClipboardPrompt();
-//    }
 
     public void shortenFromClipboard(){
         shorten(getClipboardText());
@@ -748,9 +725,9 @@ public class MainActivity extends BaseBrevosActivity
                 mClipboardManagerLegacy.setText(shortUrlString);
             }
             ignoreClipboard = true;
-            Toast.makeText(this, String.format(getString(R.string.link_copied), shortUrlString), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.link_copied), shortUrlString), Snackbar.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, getString(R.string.error_copy_nothing), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.error_copy_nothing, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -931,9 +908,9 @@ public class MainActivity extends BaseBrevosActivity
         switch (requestCode) {
             case BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN:
                 if(resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(mContext, "Bit.ly Authorized", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_success, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(mContext, "Auth error :(", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_error, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
         }
