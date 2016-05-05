@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/now_background"
+    android:background="@color/gray_light"
     tools:context=".brevos.ui.LinkSearchActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -85,6 +85,8 @@
             android:id="@+id/listViewHistorySearchResults"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@color/divider"
+            android:dividerHeight="1dp"
             android:listSelector="@drawable/default_layout_selector" />
 
         <LinearLayout
@@ -107,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:background="@color/now_background">
+        android:background="@color/gray_light">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

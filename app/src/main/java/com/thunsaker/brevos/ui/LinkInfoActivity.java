@@ -28,9 +28,9 @@ import com.echo.holographlibrary.LinePoint;
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
-import com.thunsaker.android.common.util.Util;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.app.BrevosApp;
+import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
 import com.thunsaker.brevos.data.api.BitmarkInfo;
 import com.thunsaker.brevos.data.api.LinkClicks;
@@ -156,7 +156,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
                 Picasso mPicasso = Picasso.with(mContext);
                 if(mImageViewFavicon != null) {
-                    mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl))
+                    mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl))
                             .placeholder(mContext.getResources().getDrawable(R.drawable.brevos_favicon))
                             .into(mImageViewFavicon);
                 }

@@ -239,4 +239,11 @@ public class LinkSearchActivity extends BaseBrevosActivity {
     public void onBackPressed() {
         closeSearch();
     }
+
+
+    @OnClick({R.id.checkBoxSearchArchiveOnly, R.id.checkBoxSearchPrivateOnly})
+    protected void searchArchiveOnly() {
+        if(searchQuery != null && searchQuery.length() > 0)
+            StartSearch(true);
+    }
 }

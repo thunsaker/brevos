@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutHistoryFooterWrapper"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="@color/now_background">
+    android:layout_height="72dp">
 
     <Button
         android:id="@+id/buttonHistoryLoadMore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="@dimen/material_padding_double"
         android:text="@string/history_load_more"
         android:background="@color/accent"
+        android:textSize="@dimen/material_type_small"
+        android:fontFamily="sans-serif-condensed"
         android:layout_gravity="center"
         android:gravity="center" />
-</LinearLayout>
+</FrameLayout>

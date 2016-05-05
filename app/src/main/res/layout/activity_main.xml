@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/now_background"
+    android:background="@color/gray_light"
     android:id="@+id/relativeLayoutMainContainer"
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
@@ -27,12 +27,6 @@
             android:id="@+id/relativeLayoutMainWrapperInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/hard_shadow"
-                android:layout_below="@+id/linearLayoutMainWrapper"/>
 
             <include layout="@layout/expand_result" />
 
@@ -59,7 +53,7 @@
                         android:padding="@dimen/material_padding_double"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/toggle_private_lock"
-                        android:tint="@color/white"
+                        android:tint="@android:color/white"
                         style="?attr/buttonBarButtonStyle"
                         android:visibility="gone"
                         android:textOff=""
@@ -87,7 +81,7 @@
                         android:layout_width="40dp"
                         android:layout_height="wrap_content"
                         android:src="@drawable/btn_arrow_right"
-                        android:tint="@color/white"
+                        android:tint="@android:color/white"
                         android:scaleType="centerInside"
                         style="?attr/buttonBarButtonStyle"
                         android:contentDescription="@string/shorten"
@@ -99,7 +93,7 @@
             android:id="@+id/relativeLayoutResultWrapper"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/now_background"
+            android:background="@color/gray_light"
             android:padding="5dp"
             android:clickable="true"
             android:visibility="gone">

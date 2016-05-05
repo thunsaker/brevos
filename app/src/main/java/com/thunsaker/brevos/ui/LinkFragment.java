@@ -2,7 +2,6 @@ package com.thunsaker.brevos.ui;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -132,7 +131,7 @@ public class LinkFragment extends BaseBrevosFragment implements AbsListView.OnIt
 
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutLinkList);
         mSwipeLayout.setOnRefreshListener(this);
-        mSwipeLayout.setColorScheme(R.color.brevos_green, R.color.brevos_pink, R.color.brevos_green_secondary, R.color.brevos_yellow);
+        mSwipeLayout.setColorSchemeResources(R.color.primary, R.color.accent);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
@@ -216,52 +215,52 @@ public class LinkFragment extends BaseBrevosFragment implements AbsListView.OnIt
 
                     GetClickCountsForList(event.userHistoryList);
 
-                    if (event.listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
-                        if (mNewList) {
-                            mAdapter = new HistoryListAdapter(mContext, mList, event.listType);
-                            if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                                ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-                        }
-
-                        if (mListView.getClass() == ListView.class) {
-                            if (((ListView) mListView).getHeaderViewsCount() == 0) {
-                                View headerView = LayoutInflater.from(mContext).inflate(R.layout.link_list_header, null);
-
-                                Button showButton = (Button) headerView.findViewById(R.id.buttonLinkListHeaderSeeAll);
-                                showButton.setVisibility(View.VISIBLE);
-                                showButton.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent history = new Intent(mContext, HistoryActivity.class);
-                                        history.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        mContext.startActivity(history);
-                                    }
-                                });
-                                ((ListView) mListView).addHeaderView(headerView, null, false);
-                            }
-                        } else {
-                            View headerView = getActivity().findViewById(R.id.linearLayoutLinkListHeaderWrapper);
-
-                            Button showButton = (Button) headerView.findViewById(R.id.buttonLinkListHeaderSeeAll);
-                            showButton.setVisibility(View.VISIBLE);
-                            showButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent history = new Intent(mContext, HistoryActivity.class);
-                                    history.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    mContext.startActivity(history);
-                                }
-                            });
-
-                            LinearLayout footerWrapper = (LinearLayout) getActivity().findViewById(R.id.linearLayoutHistoryFooterWrapper);
-                            footerWrapper.setVisibility(View.GONE);
-                        }
-                        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                            if (mNewList) {
-                                ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-                            }
-                        }
-                    } else {
+//                    if (event.listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
+//                        if (mNewList) {
+//                            mAdapter = new HistoryListAdapter(mContext, mList, event.listType);
+//                            if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+//                                ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+//                        }
+//
+//                        if (mListView.getClass() == ListView.class) {
+//                            if (((ListView) mListView).getHeaderViewsCount() == 0) {
+//                                View headerView = LayoutInflater.from(mContext).inflate(R.layout.link_list_header, null);
+//
+//                                Button showButton = (Button) headerView.findViewById(R.id.buttonLinkListHeaderSeeAll);
+//                                showButton.setVisibility(View.VISIBLE);
+//                                showButton.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        Intent history = new Intent(mContext, HistoryActivity.class);
+//                                        history.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                        mContext.startActivity(history);
+//                                    }
+//                                });
+//                                ((ListView) mListView).addHeaderView(headerView, null, false);
+//                            }
+//                        } else {
+//                            View headerView = getActivity().findViewById(R.id.linearLayoutLinkListHeaderWrapper);
+//
+//                            Button showButton = (Button) headerView.findViewById(R.id.buttonLinkListHeaderSeeAll);
+//                            showButton.setVisibility(View.VISIBLE);
+//                            showButton.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    Intent history = new Intent(mContext, HistoryActivity.class);
+//                                    history.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    mContext.startActivity(history);
+//                                }
+//                            });
+//
+//                            LinearLayout footerWrapper = (LinearLayout) getActivity().findViewById(R.id.linearLayoutHistoryFooterWrapper);
+//                            footerWrapper.setVisibility(View.GONE);
+//                        }
+//                        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//                            if (mNewList) {
+//                                ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+//                            }
+//                        }
+//                    } else {
                         if (mNewList) {
                             mAdapter = new HistoryListAdapter(mContext, mList, event.listType);
                             if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -313,7 +312,7 @@ public class LinkFragment extends BaseBrevosFragment implements AbsListView.OnIt
                                 ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
                             }
                         }
-                    }
+//                    }
                 } else {
                     Toast.makeText(mContext, getString(R.string.error_loading_history), Toast.LENGTH_SHORT).show();
                 }

@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayoutLinkListFooterWrapper"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/now_background"
-    android:paddingRight="20dp"
-    android:paddingLeft="20dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="20dp"
-    android:orientation="horizontal">
+    android:layout_height="72dp">
     <Button
         android:id="@+id/buttonLinkListFooterSeeAll"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="@string/links_see_more"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="@dimen/material_type_med"
+        android:background="@color/primary"
         android:visibility="visible" />
-    <!--style="@style/Button.Brevos.NowAction.Green"-->
-</LinearLayout>
+</FrameLayout>

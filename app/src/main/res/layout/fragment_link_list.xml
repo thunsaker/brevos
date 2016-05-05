@@ -10,13 +10,14 @@
         android:id="@+id/swipeLayoutLinkList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/now_background">
+        android:background="@color/gray_light">
 
         <ListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/gray_translucent"
+            android:divider="@color/divider"
+            android:dividerHeight="1dp"
             android:listSelector="@drawable/default_layout_selector"
             android:fastScrollEnabled="true" />
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -5,8 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -23,7 +21,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
-import com.thunsaker.android.common.util.Util;
+import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
 import com.thunsaker.brevos.data.api.BitmarkInfo;
 import com.thunsaker.brevos.data.api.LinkHistoryItem;
@@ -32,6 +30,7 @@ import com.thunsaker.brevos.services.BitlyUtil;
 import com.thunsaker.brevos.ui.LinkInfoActivity;
 import com.thunsaker.brevos.ui.LinkInfoActivityNfc;
 import com.thunsaker.brevos.ui.MainActivity;
+import com.thunsaker.brevos.ui.custom.RoundedCornerTransform;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -196,43 +195,14 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
 
         if (imageViewFavicon != null || imageViewFaviconLarge != null) {
             Picasso mPicasso = Picasso.with(mContext);
-            mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl))
-                    .placeholder(mContext.getResources().getDrawable(R.drawable.pink_circle))
+//            Util.randInt(0,10) % 2 == 0 ? R.drawable.pink_circle : R.drawable.yellow_circle;
+            mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl))
+                    .placeholder(R.drawable.yellow_circle)
+                    .transform(new RoundedCornerTransform(40, 0))
                     .into(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT ? imageViewFaviconLarge : imageViewFavicon);
-
-            // Set Title Color
-            //                mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl)).into(new Target() {
-            //                    @Override
-            //                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            //                        Drawable faviconDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
-            //                        imageViewFavicon.setImageDrawable(faviconDrawable);
-            //
-            //                        assert titleTextView != null;
-            //                        int avgColor = -1;
-            //                        if(link.average_color > -1) {
-            //                            avgColor = link.average_color;
-            //                        } else {
-            //                            avgColor = getAverageColor(bitmap);
-            //                            link.average_color = avgColor;
-            //                        }
-            //                        titleTextView.setTextColor(avgColor);
-            //                    }
-            //
-            //                    @Override
-            //                    public void onBitmapFailed(Drawable errorDrawable) {
-            //                        Drawable defaultFaviconDrawable = mContext.getResources().getDrawable(R.drawable.favicon_default);
-            //                        imageViewFavicon.setImageDrawable(defaultFaviconDrawable);
-            //                    }
-            //
-            //                    @Override
-            //                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-            //                        Drawable placeholderFaviconDrawable = mContext.getResources().getDrawable(R.drawable.brevos_favicon);
-            //                        imageViewFavicon.setImageDrawable(placeholderFaviconDrawable);
-            //                    }
-            //                });
         }
 
-        if(listType != BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
+        if(listType == BitlyTasks.HISTORY_LIST_TYPE_DEFAULT) {
             ImageButton copyButton = (ImageButton) itemView.findViewById(R.id.imageButtonHistoryCopy);
             if (copyButton != null) {
                 copyButton.setOnClickListener(new View.OnClickListener() {
@@ -270,20 +240,6 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
                     createDateTextView.setText(dt.toString(shortDate));
                 }
             }
-
-//            frameOverlay.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent linkInfoIntent = new Intent(mContext, LinkInfoActivity.class);
-//                    linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK, new Bitmark(link.link, link.long_url).toString());
-//                    linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK_INFO, new BitmarkInfo(link.link, link.long_url, link.title).toString());
-//                    linkInfoIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    if(!isCompact) {
-//                        linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK_INFO_SOURCE, LinkInfoActivity.EXTRA_SOURCE_HISTORY);
-//                    }
-//                    mContext.startActivity(linkInfoIntent);
-//                }
-//            });
         }
     }
 
@@ -302,32 +258,6 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(shortUrl));
         launchBrowser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(launchBrowser);
-    }
-
-    /*
-        http://stackoverflow.com/questions/12408431/how-can-i-get-the-average-colour-of-an-image
-     */
-    private int getAverageColor(Bitmap bitmap) {
-        long red = 0;
-        long green = 0;
-        long blue = 0;
-        long pixelCount = 0;
-
-        for (int y = 0; y < bitmap.getHeight(); y++) {
-            for (int x = 0; x < bitmap.getWidth(); x++) {
-                int c = bitmap.getPixel(x, y);
-                pixelCount++;
-                red += Color.red(c);
-                green += Color.green(c);
-                blue += Color.blue(c);
-            }
-        }
-
-        int redAverage = (int)(red / pixelCount);
-        int greenAverage = (int)(green / pixelCount);
-        int blueAverage = (int)(blue / pixelCount);
-
-        return Color.rgb(redAverage, greenAverage, blueAverage);
     }
 
     private void openShareDialog(String shortUrlString) {

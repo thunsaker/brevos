@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.thunsaker.brevos.ui.LinkInfoActivity"
-    android:background="@color/now_background">
+    android:background="@color/gray_light">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/now_background">
+            android:background="@color/gray_light">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -24,7 +24,7 @@
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:layout_below="@id/toolbar"
-                android:background="@color/white">
+                android:background="@android:color/white">
                 <TextView
                     android:id="@+id/textViewLinkDetailTitle"
                     android:text="@string/loading_title"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@id/linearLayoutLinkDetailWrapper"
-            android:background="@color/now_background">
+            android:background="@color/gray_light">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -181,7 +181,7 @@
                 android:id="@+id/linearLayoutLinkDetailClickCountHourWrapper"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/now_background"
+                android:background="@color/gray_light"
                 android:padding="5dp">
                 <View
                     android:layout_width="match_parent"
@@ -238,7 +238,7 @@
                 android:id="@+id/linearLayoutLinkDetailClickCountDayWrapper"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/now_background"
+                android:background="@color/gray_light"
                 android:padding="5dp">
                 <View
                     android:layout_width="match_parent"
@@ -295,7 +295,7 @@
                 android:id="@+id/linearLayoutLinkDetailClickCountMonthWrapper"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/now_background"
+                android:background="@color/gray_light"
                 android:padding="5dp">
                 <View
                     android:layout_width="match_parent"

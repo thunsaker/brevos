@@ -4,7 +4,7 @@
     android:id="@+id/linearLayoutLinkListHeaderWrapper"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/now_background"
+    android:background="@color/gray_light"
     android:paddingRight="20dp"
     android:paddingLeft="20dp"
     android:paddingTop="15dp"

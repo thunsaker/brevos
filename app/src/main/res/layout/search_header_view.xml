@@ -21,14 +21,14 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_gravity="center"-->
             <!--style="@style/Spinner.Brevos.White"-->
-            <!--android:textColor="@color/white" />-->
+            <!--android:textColor="@android:color/white" />-->
 
         <!--<Spinner-->
             <!--android:id="@+id/spinnerSearchPrivate"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_gravity="center"-->
-            <!--android:textColor="@color/white" />-->
+            <!--android:textColor="@android:color/white" />-->
 
         <CheckBox
             android:id="@+id/checkBoxSearchArchiveOnly"
@@ -37,9 +37,9 @@
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/material_padding"
             android:layout_marginEnd="@dimen/material_padding"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:checked="false"
-            android:buttonTint="@color/white"
+            android:buttonTint="@android:color/white"
             android:text="@string/search_archive_only"/>
         <CheckBox
             android:id="@+id/checkBoxSearchPrivateOnly"
@@ -48,9 +48,9 @@
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/material_padding"
             android:layout_marginEnd="@dimen/material_padding"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:checked="false"
-            android:buttonTint="@color/white"
+            android:buttonTint="@android:color/white"
             android:text="@string/search_private_only"/>
     </LinearLayout>
 

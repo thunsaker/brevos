@@ -54,7 +54,7 @@ public class BrevosAppModule {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(BitlyClient.BITLY_BASE_URL)
                 .setRequestInterceptor(requestInterceptor)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
 
         return restAdapter.create(BitlyService.class);

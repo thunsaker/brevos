@@ -2,10 +2,14 @@ package com.thunsaker.android.common.util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.util.DisplayMetrics;
+
+import java.util.Random;
 
 public class Util {
 	private static final String LOG_TAG = "Util";
@@ -30,8 +34,29 @@ public class Util {
 		return HasConnection;
 	}
 
-//    public static String faviconFetcherUrl = "http://g.etfv.co/%s?defaulticon=none";
-	public static String faviconFetcherUrl = "https://icons.better-idea.org/icon?url=%s&size=64&format=png";
+	/**
+	 * Returns a pseudo-random number between min and max, inclusive.
+	 * The difference between min and max can be at most
+	 * <code>Integer.MAX_VALUE - 1</code>.
+	 * From StackOverflow: http://stackoverflow.com/questions/363681/generating-random-integers-in-a-range-with-java
+	 *
+	 * @param min Minimum value
+	 * @param max Maximum value.  Must be greater than min.
+	 * @return Integer between min and max, inclusive.
+	 * @see java.util.Random#nextInt(int)
+	 */
+	public static int randInt(int min, int max) {
+
+		// NOTE: Usually this should be a field rather than a method
+		// variable so that it is not re-seeded every call.
+		Random rand = new Random();
+
+		// nextInt is normally exclusive of the top value,
+		// so add 1 to make it inclusive
+		int randomNum = rand.nextInt((max - min) + 1) + min;
+
+		return randomNum;
+	}
 
     /**
      * This method convets dp unit to equivalent device specific value in pixels.
@@ -64,6 +89,32 @@ public class Util {
         float dp = px / (metrics.densityDpi / 160f);
         return dp;
     }
+
+	/*
+        http://stackoverflow.com/questions/12408431/how-can-i-get-the-average-colour-of-an-image
+     */
+	private int getAverageColor(Bitmap bitmap) {
+		long red = 0;
+		long green = 0;
+		long blue = 0;
+		long pixelCount = 0;
+
+		for (int y = 0; y < bitmap.getHeight(); y++) {
+			for (int x = 0; x < bitmap.getWidth(); x++) {
+				int c = bitmap.getPixel(x, y);
+				pixelCount++;
+				red += Color.red(c);
+				green += Color.green(c);
+				blue += Color.blue(c);
+			}
+		}
+
+		int redAverage = (int)(red / pixelCount);
+		int greenAverage = (int)(green / pixelCount);
+		int blueAverage = (int)(blue / pixelCount);
+
+		return Color.rgb(redAverage, greenAverage, blueAverage);
+	}
 
 	public static String extractParamFromUrl(String url, String paramName) {
 		String queryString = url.substring(url.indexOf("?", 0)+1,url.length());

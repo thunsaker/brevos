@@ -45,9 +45,9 @@ import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
-import com.thunsaker.android.common.util.Util;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.app.BrevosApp;
+import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
 import com.thunsaker.brevos.data.events.BitlyAuthEvent;
 import com.thunsaker.brevos.data.events.ExpandUrlEvent;
@@ -515,7 +515,7 @@ public class MainActivity extends BaseBrevosActivity
         mTextViewOriginalUrl.setText(longUrl);
 
         // Use favicon fetcher url
-        mPicasso.load(String.format(Util.faviconFetcherUrl, longUrl)).into(mImageViewFavicon);
+        mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl)).into(mImageViewFavicon);
         // .placeholder(getResources().getColor(android.R.color.transparent))
 
         mButtonCopy.setOnClickListener(new View.OnClickListener() {

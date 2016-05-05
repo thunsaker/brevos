@@ -4,7 +4,7 @@
     android:id="@+id/relativeLayoutExpandResultWrapper"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/now_background"
+    android:background="@color/gray_light"
     android:visibility="gone"
     android:padding="5dp"
     tools:showIn="@layout/activity_main">

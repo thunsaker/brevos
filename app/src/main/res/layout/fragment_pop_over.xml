@@ -16,13 +16,13 @@
             android:orientation="vertical"
             android:layout_margin="@dimen/material_padding_quadruple"
             android:elevation="16dp"
-            android:background="@color/white">
+            android:background="@android:color/white">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
                 android:padding="@dimen/material_keyline_1"
-                android:background="@color/white">
+                android:background="@android:color/white">
                 <ImageView
                     android:id="@+id/imageViewIcon"
                     android:layout_width="80dp"
@@ -61,8 +61,8 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_marginTop="@dimen/material_padding_double"
                     style="?android:attr/progressBarStyleLarge"
-                    android:indeterminateTint="@color/white"
-                    android:progressTint="@color/white"
+                    android:indeterminateTint="@android:color/white"
+                    android:progressTint="@android:color/white"
                     android:indeterminate="true" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:gravity="center_horizontal"
                     android:layout_margin="@dimen/material_padding"
                     android:textSize="@dimen/material_type_small"
-                    android:textColor="@color/white"
+                    android:textColor="@android:color/white"
                     android:text="@string/processing_link"/>
             </LinearLayout>
 
@@ -106,7 +106,7 @@
                     android:textAllCaps="true"
                     android:textStyle="bold"
                     android:text="@string/action_copy"
-                    android:textColor="@color/white" />
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -140,7 +140,7 @@
                     android:textAllCaps="true"
                     android:textStyle="bold"
                     android:text="@string/action_share"
-                    android:textColor="@color/white" />
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +169,7 @@
                     android:textStyle="bold"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@color/white" />
+                    android:textColor="@android:color/white" />
                 <TextView
                     android:id="@+id/textViewShortenLongUrl"
                     android:layout_width="match_parent"
@@ -183,7 +183,7 @@
                     android:ellipsize="end"
                     android:textSize="@dimen/material_type_micro"
                     android:text=""
-                    android:textColor="@color/white" />
+                    android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
