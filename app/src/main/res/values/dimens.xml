@@ -37,6 +37,11 @@
     <dimen name="material_padding_quadruple">32dp</dimen>
     <dimen name="material_padding_quintuple">40dp</dimen>
     <dimen name="material_padding_sextuple">48dp</dimen>
+
+    <dimen name="material_elevation_default">4dp</dimen>
+    <dimen name="material_elevation_touch_focus">8dp</dimen>
+    <dimen name="material_elevation_touch_up">16dp</dimen>
+
     <dimen name="material_type_xlarge">45sp</dimen>
     <dimen name="material_type_large">34sp</dimen>
     <dimen name="material_type_med">24sp</dimen>

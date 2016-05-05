@@ -8,7 +8,6 @@ import com.tale.prettysharedpreferences.StringEditor;
 
 public class BrevosPrefsManager extends PrettySharedPreferences<BrevosPrefsManager> {
     private SharedPreferences mPreferences;
-    private boolean firstLaunch;
 
     public BrevosPrefsManager(SharedPreferences sharedPreferences) {
         super(sharedPreferences);
@@ -34,7 +33,7 @@ public class BrevosPrefsManager extends PrettySharedPreferences<BrevosPrefsManag
         return getStringEditor("brevos_bitly_apikey");
     }
 
-    public BooleanEditor<BrevosPrefsManager> isFirstLaunch() {
+    public BooleanEditor<BrevosPrefsManager> showWizard() {
         return getBooleanEditor("brevos_first_launch");
     }
 }

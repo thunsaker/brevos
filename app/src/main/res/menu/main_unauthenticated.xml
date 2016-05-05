@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:brevos="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.thunsaker.brevos.ui.MainActivity" >
+
+    <item android:id="@+id/action_sign_in"
+          android:title="@string/action_sign_in"
+          android:orderInCategory="102"
+          brevos:showAsAction="never" />
+</menu>

@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,6 +46,7 @@ import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
+import com.thunsaker.brevos.BrevosPrefsManager;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.app.BrevosApp;
 import com.thunsaker.brevos.app.BrevosUtil;
@@ -78,6 +80,9 @@ public class MainActivity extends BaseBrevosActivity
     @Inject android.text.ClipboardManager mClipboardManagerLegacy;
     @Inject NotificationManager mNotificationManager;
 
+    @Inject
+    BrevosPrefsManager mPreferences;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -87,7 +92,8 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.editTextUrl) EditText mEditTextUrl;
     @BindView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
 
-    @BindView(R.id.linearLayoutAuthButtonWrapper) LinearLayout mAuthButtonWrapper;
+    @BindView(R.id.buttonBitlyAuth) Button mButtonAuth;
+    @BindView(R.id.linearLayoutMainEmptyWrapper) LinearLayout mLinearLayoutEmpty;
 
     @BindView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
     @BindView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
@@ -167,7 +173,7 @@ public class MainActivity extends BaseBrevosActivity
 
 //        raiseFabCreate();
 
-        isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
+        isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         configureLayout();
 
         if(mBus != null && !mBus.isRegistered(this))
@@ -178,7 +184,7 @@ public class MainActivity extends BaseBrevosActivity
             Bitmark bitmark = Bitmark.GetBitmarkFromJson(intentShortUrlRaw);
             mBus.post(new ShortenedUrlEvent(true, "", bitmark, BitlyClient.SHORTENED_ACTION_DEFAULT, bitmark.getLong_url()));
         } else {
-            if(!PreferencesHelper.getBrevosWelcomeWizard(mContext)) {
+            if(mPreferences.showWizard().getOr(true)) {
                 showWizardActivity();
                 return;
             }
@@ -257,11 +263,13 @@ public class MainActivity extends BaseBrevosActivity
 
     private void configureLayout() {
         if (!isBitlyConnected) {
-            mAuthButtonWrapper.setVisibility(View.VISIBLE);
+            mButtonAuth.setVisibility(View.VISIBLE);
             mTogglePrivate.setVisibility(View.GONE);
             mLinkListWrapper.setVisibility(View.GONE);
         } else {
-            mAuthButtonWrapper.setVisibility(View.GONE);
+            invalidateOptionsMenu();
+
+            mButtonAuth.setVisibility(View.GONE);
             if (PreferencesHelper.getBitlyIsPrivateAlways(mContext)) {
                 isPrivate = true;
                 mEditTextUrl.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_lock_closed_tiny), null);
@@ -282,6 +290,8 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     private void showLinkFragment() {
+        mLinearLayoutEmpty.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
+        mLinearLayoutEmpty.setVisibility(View.GONE);
         mLinkListWrapper.setVisibility(View.VISIBLE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         LinkFragment linkFragmentHistory = LinkFragment.newInstance(getResources().getInteger(R.integer.recent_items_count), BitlyTasks.HISTORY_LIST_TYPE_COMPACT);
@@ -321,12 +331,10 @@ public class MainActivity extends BaseBrevosActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        if(isBitlyConnected) {
+        if(isBitlyConnected)
             getMenuInflater().inflate(R.menu.main_authenticated, menu);
-
-//            if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD && android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
-//                getMenuInflater().inflate(R.menu.main_history, menu);
-        }
+        else
+            getMenuInflater().inflate(R.menu.main_unauthenticated, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -373,11 +381,12 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     private void clearBrevosSettings() {
-        PreferencesHelper.setBitlyConnected(mContext, false);
-        PreferencesHelper.setBitlyToken(mContext, null);
-        PreferencesHelper.setBitlyApiKey(mContext, null);
-        PreferencesHelper.setBitlyLogin(mContext, null);
-        PreferencesHelper.setBrevosWelcomeWizard(mContext, false);
+        mPreferences
+                .bitlyEnabled().put(false)
+                .bitlyToken().put("")
+                .bitlyUsername().put("")
+                .bitlyApiKey().put("")
+                .commit();
         Snackbar.make(mMainLayoutContainer, "Clearing all Settings", Snackbar.LENGTH_SHORT).show();
         mBus.post(new BitlyAuthEvent(false, ""));
     }
@@ -442,7 +451,7 @@ public class MainActivity extends BaseBrevosActivity
         startService(popOverServiceTest);
     }
 
-    @OnClick(R.id.linearLayoutAuthButton)
+    @OnClick(R.id.buttonBitlyAuth)
     public void showAuth() {
         startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
     }
@@ -450,12 +459,12 @@ public class MainActivity extends BaseBrevosActivity
     public void onEvent(BitlyAuthEvent event) {
         if (event.result) {
             showLinkFragment();
-            mAuthButtonWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
-            mAuthButtonWrapper.setVisibility(View.GONE);
+            mButtonAuth.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
+            mButtonAuth.setVisibility(View.GONE);
 //            mTogglePrivate.setVisibility(View.VISIBLE);
             mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 
-            isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
+            isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         } else {
             removeLinkFragment();
             if (event.resultMessage.length() > 0) {
@@ -468,7 +477,7 @@ public class MainActivity extends BaseBrevosActivity
                 Snackbar.make(mMainLayoutContainer, R.string.bitly_connection_error, Snackbar.LENGTH_SHORT).show();
             }
 
-            mAuthButtonWrapper.setVisibility(View.VISIBLE);
+            mButtonAuth.setVisibility(View.VISIBLE);
             mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
             mTogglePrivate.setVisibility(View.GONE);
         }
@@ -763,10 +772,13 @@ public class MainActivity extends BaseBrevosActivity
 
     private void clearBitlyData() {
         isBitlyConnected = false;
-        PreferencesHelper.setBitlyConnected(mContext, false);
-        PreferencesHelper.setBitlyToken(mContext, "");
-        PreferencesHelper.setBitlyLogin(mContext, "");
-        PreferencesHelper.setBitlyApiKey(mContext, "");
+
+        mPreferences
+                .bitlyEnabled().put(false)
+                .bitlyToken().put("")
+                .bitlyUsername().put("")
+                .bitlyApiKey().put("")
+                .commit();
 
         PreferencesHelper.setBitlyIsPrivateAlways(mContext, false);
         PreferencesHelper.setBitlyDomain(mContext, BitlyClient.BITLY_DOMAIN_DEFAULT);

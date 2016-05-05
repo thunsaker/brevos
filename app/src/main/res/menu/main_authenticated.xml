@@ -19,5 +19,6 @@
         android:title="@string/action_sign_out"
         android:orderInCategory="102"
         brevos:showAsAction="never"
-        android:visible="false"/>
+        android:visible="true"/>
+
 </menu>

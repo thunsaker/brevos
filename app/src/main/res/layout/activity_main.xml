@@ -14,6 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
         app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:elevation="@dimen/material_elevation_default"
         android:minHeight="?attr/actionBarSize" />
 
     <LinearLayout
@@ -22,6 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
+        android:elevation="@dimen/material_elevation_default"
         android:orientation="vertical">
         <RelativeLayout
             android:id="@+id/relativeLayoutMainWrapperInner"
@@ -128,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="bit.ly/Sh0R7urL"
+                        android:text="@string/placeholder_url_short"
                         android:textSize="24sp"
                         android:textIsSelectable="true"
                         android:textStyle="bold" />
@@ -149,8 +151,9 @@
                         android:singleLine="true"
                         android:ellipsize="end"
                         android:textSize="12sp"
-                        android:text="http://cyrilmottier.com/2014/05/20/custom-animations-with-fragments/"
+                        android:text="@string/placeholder_url_long"
                         android:layout_toRightOf="@id/imageViewFavicon"
+                        android:layout_toEndOf="@id/imageViewFavicon"
                         android:layout_below="@+id/textViewShortenResultUrl"
                         android:layout_marginTop="5dp"
                         android:textIsSelectable="true"
@@ -161,6 +164,7 @@
                         android:layout_height="20dp"
                         android:src="@drawable/ic_lock_closed_solid_gray"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:contentDescription="@string/private_link"
                         android:visibility="gone"/>
@@ -211,9 +215,8 @@
     <LinearLayout
         android:id="@+id/linearLayoutMainLinkListWrapper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/linearLayoutMainWrapperOuter"
-        android:layout_above="@+id/linearLayoutFooterWrapper"
         android:layout_alignWithParentIfMissing="true"
         android:orientation="vertical">
         <FrameLayout
@@ -221,58 +224,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/linearLayoutFooterWrapper"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayoutMainEmptyWrapper"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical">
-        <LinearLayout
-            android:id="@+id/linearLayoutAuthButtonWrapper"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal|center_vertical">
-            <!--android:layout_above="@+id/adViewBanner"-->
+        android:orientation="vertical"
+        android:paddingTop="@dimen/material_padding_double"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
-            <include layout="@layout/bitly_auth_button" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/adViewLayoutWrapper"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|bottom"
-            android:gravity="center_horizontal|bottom"
-            android:orientation="vertical"
-            android:background="@color/gray_dark" />
+            android:layout_gravity="center"
+            android:padding="@dimen/material_padding_triple"
+            android:background="@drawable/gray_circle" >
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_link" />
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/no_links"
+            android:textSize="@dimen/material_type_med"
+            android:textColor="@color/gray_darkish"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_margin="@dimen/material_padding"/>
     </LinearLayout>
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/relativeLayoutFabWrapper"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginRight="@dimen/fab_side_margin"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:layout_marginBottom="@dimen/fab_side_margin"-->
-        <!--android:visibility="gone">-->
-        <!--<ImageView-->
-            <!--android:layout_width="@dimen/fab_size_shadow"-->
-            <!--android:layout_height="@dimen/fab_size_shadow"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:src="@drawable/shadow_fab"-->
-            <!--android:contentDescription="@string/create_short_url"/>-->
+    <Button
+        android:id="@+id/buttonBitlyAuth"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/material_padding_double"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        style="@style/Widget.AppCompat.Button.Colored"
+        app:backgroundTint="@color/bitly"
+        android:theme="@style/Theme.Brevos.Bitly"
+        android:text="@string/button_auth_bitly" />
 
-        <!--<ImageButton-->
-            <!--android:id="@+id/fabCreate"-->
-            <!--android:layout_width="@dimen/fab_size"-->
-            <!--android:layout_height="@dimen/fab_size"-->
-            <!--android:src="@drawable/ic_plus_white"-->
-            <!--android:scaleType="fitCenter"-->
-            <!--android:padding="@dimen/fab_icon_padding"-->
-            <!--android:background="@drawable/pink_circle"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:contentDescription="@string/create_short_url" />-->
-    <!--</RelativeLayout>-->
+    <LinearLayout
+        android:id="@+id/adViewLayoutWrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="vertical"
+        android:background="@color/gray_dark" />
 </RelativeLayout>

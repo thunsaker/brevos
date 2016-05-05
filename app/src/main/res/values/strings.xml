@@ -124,4 +124,6 @@
     <string name="bitly_auth_success">Bit.ly Authorized</string>
     <string name="bitly_auth_error">Authorization error :(</string>
     <string name="bitly_auth_prompt_info">Sign in to bit.ly to see link info.</string>
+    <string name="no_links">No Links Found</string>
+    <string name="action_sign_in">Sign In to Bitly</string>
 </resources>

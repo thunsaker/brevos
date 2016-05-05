@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
+import com.thunsaker.brevos.BrevosPrefsManager;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 
 import javax.inject.Inject;
@@ -28,6 +29,9 @@ public class WizardActivity extends BaseBrevosActivity {
     @Inject
     @ForApplication
     Context mContext;
+
+    @Inject
+    BrevosPrefsManager mPreferences;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -91,7 +95,7 @@ public class WizardActivity extends BaseBrevosActivity {
 
     private boolean handleNextButton() {
         if(mPager.getCurrentItem() == 2) {
-            PreferencesHelper.setBrevosWelcomeWizard(mContext, true);
+            mPreferences.showWizard().put(false).commit();
             finish();
         } else {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);
