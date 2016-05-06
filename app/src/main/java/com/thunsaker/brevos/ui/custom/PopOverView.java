@@ -4,9 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-public class PopOverView extends LinearLayout implements View.OnClickListener {
+public class PopOverView extends RelativeLayout implements View.OnClickListener {
     public PopOverView(Context context) {
         this(context, null);
     }

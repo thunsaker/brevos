@@ -8,6 +8,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 public class ShortenUrlReceiver extends BaseBrevosActivity {
@@ -52,7 +55,9 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
     NotificationManager mNotificationManager;
 
     @BindView(R.id.pop_over_wrapper) PopOverView mPopOverWrapper;
+    @BindView(R.id.relativeLayoutShortenOverlay) RelativeLayout mPopOverOverlay;
     @BindView(R.id.linearLayoutShortenProgress) LinearLayout mProgress;
+    @BindView(R.id.linearLayoutShortenEmpty) LinearLayout mEmptyView;
     @BindView(R.id.linearLayoutShortenCard) LinearLayout mPopOverCard;
     @BindView(R.id.linearLayoutShortenAction2) LinearLayout mButtonShare;
     @BindView(R.id.linearLayoutShortenAction1) LinearLayout mButtonCopy;
@@ -83,17 +88,26 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
 
         setTitle("");
 
-        mPopOverWrapper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         Intent intent = getIntent();
-        if(intent.getAction().equals(Intent.ACTION_SEND)) {
-            handleIntent(intent);
+
+        switch (intent.getAction()) {
+            case Intent.ACTION_SEND:
+                handleIntent(intent, false);
+                break;
+            case Intent.ACTION_PROCESS_TEXT:
+                handleIntent(intent, true);
+                break;
+            default:
+                hideProgressSpinner();
+                showEmpty();
+                break;
         }
+    }
+
+    private void showEmpty() {
+        final Animation fadeInAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+        mEmptyView.startAnimation(fadeInAnimation);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -101,15 +115,19 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
         super.onNewIntent(intent);
 
         if(intent.getAction().equals(Intent.ACTION_SEND)) {
-            handleIntent(intent);
+            handleIntent(intent, true);
         }
     }
 
-    private void handleIntent(Intent intent) {
+    private void handleIntent(Intent intent, boolean isProcessText) {
         String receivedUrl;
 
-        if(intent.hasExtra(Intent.EXTRA_TEXT)) {
-            receivedUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if(intent.hasExtra(Intent.EXTRA_TEXT) || isProcessText && intent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
+            if(isProcessText && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                receivedUrl = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString();
+            } else {
+                receivedUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
+            }
             if(BitlyUtil.isValidUrl(receivedUrl)) {
                 if (BitlyUtil.isBitlyUrl(receivedUrl)) {
                     expandUrl(receivedUrl);
@@ -125,11 +143,15 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
                         showPopOverMultiple(linksList);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_no_url), Toast.LENGTH_SHORT).show();
+                    hideProgressSpinner();
+                    showEmpty();
+//                    Toast.makeText(getApplicationContext(), getString(R.string.error_no_url), Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
-            Toast.makeText(mContext, String.format(mContext.getString(R.string.error_placeholder), mContext.getString(R.string.error_no_url)), Toast.LENGTH_SHORT).show();
+            hideProgressSpinner();
+            showEmpty();
+//            Toast.makeText(mContext, String.format(mContext.getString(R.string.error_placeholder), mContext.getString(R.string.error_no_url)), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -219,13 +241,10 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
     }
 
     private void setupPopOverCard(final Bitmark bitmark) {
-        final Animation spinUpAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.spin_up);
         final Animation fadeInAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-        final Animation fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
         final Animation slideDownAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down);
 
-        mProgress.startAnimation(fadeOutAnimation);
-        mProgress.setVisibility(View.GONE);
+        hideProgressSpinner();
 
         mTextShortUrl.setText(bitmark.getUrl());
         if(bitmark.getLong_url() != null) {
@@ -274,6 +293,12 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
         });
     }
 
+    private void hideProgressSpinner() {
+        final Animation fadeOutAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
+        mProgress.startAnimation(fadeOutAnimation);
+        mProgress.setVisibility(View.GONE);
+    }
+
     private void openBrevos(Bitmark bitmark) {
         buzz(300);
         Intent shortenedUrlIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -300,7 +325,7 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
     }
 
     public void onEvent(ShortenedUrlEvent event) {
-        hideProgress();
+        hideProgressSpinner();
 
         assert event != null;
         if(event.result) {
@@ -336,5 +361,10 @@ public class ShortenUrlReceiver extends BaseBrevosActivity {
                 .setContentIntent(genericPendingIntent)
                 .setAutoCancel(true)
                 .addAction(R.drawable.ic_action_refresh_white, getString(R.string.notification_retry), retryPendingIntent);
+    }
+
+    @OnClick({ R.id.relativeLayoutShortenOverlay, R.id.pop_over_wrapper })
+    public void ClosePopover() {
+        finish();
     }
 }

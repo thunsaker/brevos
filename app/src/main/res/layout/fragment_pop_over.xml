@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:id="@+id/relativeLayoutShortenOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -20,20 +21,20 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_gravity="center_vertical"
                 android:padding="@dimen/material_keyline_1"
                 android:background="@android:color/white">
                 <ImageView
                     android:id="@+id/imageViewIcon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/brevos_large"
+                    android:src="@drawable/web_hi_res_512"
                     android:layout_centerVertical="true"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/app_name"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/primary"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/material_padding_double"
                     android:layout_marginStart="@dimen/material_padding_double"
@@ -43,6 +44,27 @@
                     android:fontFamily="sans-serif-thin"
                     android:text="@string/app_name" />
             </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutShortenEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/primary"
+                android:padding="@dimen/material_padding"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="@dimen/material_padding"
+                    android:textSize="@dimen/material_type_small"
+                    android:textColor="@android:color/white"
+                    android:text="@string/error_no_url"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayoutShortenProgress"

@@ -31,18 +31,20 @@
             android:label="@string/title_activity_bitly_auth"
             android:theme="@style/Theme.Brevos.Bitly" />
 
-        <!--<service android:name=".brevos.ui.BrevosPopOverService" />-->
-
         <activity
             android:name=".brevos.ui.ShortenUrlReceiver"
             android:exported="true"
-            android:label="@string/create_short_url"
+            android:label="@string/shorten_url"
             android:theme="@style/Theme.Brevos.Transparent" >
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
 
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
