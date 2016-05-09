@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutTextWrapper"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:paddingRight="@dimen/material_keyline_1"
+    android:paddingEnd="@dimen/material_keyline_1"
+    android:visibility="gone"
+    android:orientation="horizontal" >
+
+    <ToggleButton
+        android:id="@+id/toggleButtonOptionsPrivateUrl"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="@dimen/material_padding_double"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/toggle_private_lock"
+        android:tint="@android:color/white"
+        style="?attr/buttonBarButtonStyle"
+        android:visibility="gone"
+        android:textOff=""
+        android:textOn=""
+        android:text=""/>
+
+    <EditText
+        android:id="@+id/editTextUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal|center_vertical"
+        android:layout_weight="10"
+        android:layout_marginStart="@dimen/material_padding"
+        android:layout_marginLeft="@dimen/material_padding"
+        android:layout_marginEnd="@dimen/material_padding"
+        android:layout_marginRight="@dimen/material_padding"
+        android:hint="@string/shorten_hint_text"
+        android:inputType="textUri"
+        android:theme="@style/Widget.Brevos.EditText"
+        android:imeActionId="@+id/action_send_url"
+        android:imeActionLabel="@string/shorten" />
+
+    <ImageButton
+        android:id="@+id/buttonShortenUrl"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_arrow_right"
+        android:tint="@android:color/white"
+        android:scaleType="centerInside"
+        style="?attr/buttonBarButtonStyle"
+        android:contentDescription="@string/shorten"
+        android:background="@drawable/default_layout_selector_gray" />
+</LinearLayout>

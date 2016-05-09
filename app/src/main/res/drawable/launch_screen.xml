@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/gray_light" />
+    </item>
+    <item>
+        <bitmap android:src="@drawable/brevos_wings_small"
+                android:tileMode="disabled"
+                android:gravity="center" />
+    </item>
+</layer-list>

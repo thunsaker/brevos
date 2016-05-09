@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/gray_light"
-    android:id="@+id/relativeLayoutMainContainer"
+    android:id="@+id/coordinatorLayoutMainContainer"
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
     <android.support.v7.widget.Toolbar
@@ -13,9 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
+        app:layout_collapseMode="pin"
         app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
         android:elevation="@dimen/material_elevation_default"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize"/>
 
     <LinearLayout
         android:id="@+id/linearLayoutMainWrapperOuter"
@@ -23,6 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
+        android:layout_marginTop="?attr/actionBarSize"
         android:elevation="@dimen/material_elevation_default"
         android:orientation="vertical">
         <RelativeLayout
@@ -38,57 +43,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
                 android:orientation="vertical" >
-                <LinearLayout
-                    android:id="@+id/linearLayoutTextWrapper"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="10dp"
-                    android:orientation="horizontal" >
-
-                    <ToggleButton
-                        android:id="@+id/toggleButtonOptionsPrivateUrl"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:padding="@dimen/material_padding_double"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/toggle_private_lock"
-                        android:tint="@android:color/white"
-                        style="?attr/buttonBarButtonStyle"
-                        android:visibility="gone"
-                        android:textOff=""
-                        android:textOn=""
-                        android:text=""/>
-
-                    <EditText
-                        android:id="@+id/editTextUrl"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="fill_horizontal|center_vertical"
-                        android:layout_weight="10"
-                        android:layout_marginStart="@dimen/material_padding"
-                        android:layout_marginLeft="@dimen/material_padding"
-                        android:layout_marginEnd="@dimen/material_padding"
-                        android:layout_marginRight="@dimen/material_padding"
-                        android:hint="@string/shorten_hint_text"
-                        android:inputType="textUri"
-                        android:theme="@style/Widget.Brevos.EditText"
-                        android:imeActionId="@+id/action_send_url"
-                        android:imeActionLabel="@string/shorten" />
-
-                    <ImageButton
-                        android:id="@+id/buttonShortenUrl"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/btn_arrow_right"
-                        android:tint="@android:color/white"
-                        android:scaleType="centerInside"
-                        style="?attr/buttonBarButtonStyle"
-                        android:contentDescription="@string/shorten"
-                        android:background="@drawable/default_layout_selector_gray" />
-                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -195,6 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="33"
                         android:src="@drawable/ic_content_info"
+                        android:tint="@color/primary"
                         style="?attr/buttonBarButtonStyle"
                         android:contentDescription="@string/shorten_info"
                         android:text="@string/shorten_info" />
@@ -216,8 +171,8 @@
         android:id="@+id/linearLayoutMainLinkListWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearLayoutMainWrapperOuter"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical">
         <FrameLayout
             android:id="@+id/frameListContentHistory"
@@ -227,14 +182,14 @@
 
     <LinearLayout
         android:id="@+id/linearLayoutMainEmptyWrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="@dimen/material_padding_double"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:gravity="center"
+        android:paddingTop="@dimen/material_padding_double">
 
         <FrameLayout
+            android:id="@+id/frameLayoutMainEmptyWrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -242,13 +197,16 @@
             android:background="@drawable/gray_circle" >
 
             <ImageView
+                android:id="@+id/imageViewEmptyIcon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_link" />
+                android:src="@drawable/ic_link"
+                android:contentDescription="@string/link_icon" />
         </FrameLayout>
 
         <TextView
+            android:id="@+id/textViewEmptyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -264,15 +222,63 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center_horizontal|bottom"
         android:layout_margin="@dimen/material_padding_double"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        app:backgroundTint="@color/bitly"
         style="@style/Widget.AppCompat.Button.Colored"
         android:textColor="@android:color/white"
-        app:backgroundTint="@color/bitly"
         android:theme="@style/Theme.Brevos.Bitly"
         android:text="@string/button_auth_bitly" />
+
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fabMainBundle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:layout_gravity="top|center_horizontal"-->
+        <!--app:fabSize="mini"-->
+        <!--app:layout_anchor="@+id/viewFabPadding2"-->
+        <!--app:layout_anchorGravity="top|center_horizontal"-->
+        <!--app:backgroundTint="@color/brevos_yellow"-->
+        <!--android:src="@drawable/ic_share_white" />-->
+
+    <!--<View-->
+        <!--android:id="@+id/viewFabPadding2"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="@dimen/material_padding_quadruple"-->
+        <!--app:layout_anchor="@+id/fabMainClipboard"-->
+        <!--app:layout_anchorGravity="top|center_horizontal"-->
+        <!--android:background="@android:color/transparent"/>-->
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMainClipboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="top|center_horizontal"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/viewFabPadding"
+        app:layout_anchorGravity="top|center_horizontal"
+        app:backgroundTint="@color/brevos_green"
+        android:visibility="gone"
+        android:src="@drawable/ic_clipboard" />
+
+    <View
+        android:id="@+id/viewFabPadding"
+        android:layout_width="80dp"
+        android:layout_height="@dimen/material_padding_quadruple"
+        app:layout_anchor="@+id/fabMainCreate"
+        app:layout_anchorGravity="top|center_horizontal"
+        android:background="@android:color/transparent"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMainCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|right|end"
+        android:src="@drawable/ic_link" />
+    <!--app:layout_behavior="com.thunsaker.brevos.ui.custom.FloatingActionButtonBehavior"-->
 
     <LinearLayout
         android:id="@+id/adViewLayoutWrapper"
@@ -282,4 +288,4 @@
         android:gravity="center_horizontal|bottom"
         android:orientation="vertical"
         android:background="@color/gray_dark" />
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

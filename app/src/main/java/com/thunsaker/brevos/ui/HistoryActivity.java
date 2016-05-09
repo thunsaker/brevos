@@ -18,26 +18,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class HistoryActivity extends BaseBrevosActivity implements LinkFragment.OnFragmentInteractionListener, LinkFragment.OnFragmentListViewScrollListener {
+public class HistoryActivity extends BaseBrevosActivity
+        implements LinkFragment.OnFragmentInteractionListener,
+        LinkFragment.OnFragmentListViewScrollListener {
     @Inject EventBus mBus;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.container)
-    FrameLayout mContainer;
+
+    @BindView(R.id.container) FrameLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-
-//        ActionBar ab = getSupportActionBar();
-//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-//        ab.setTitle(getString(R.string.title_activity_history));
-//        ab.setDisplayUseLogoEnabled(true);
-//        ab.setDisplayShowHomeEnabled(true);
-//        ab.setDisplayHomeAsUpEnabled(true);
-//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
 
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);

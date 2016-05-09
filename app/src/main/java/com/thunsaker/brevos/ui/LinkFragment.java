@@ -37,7 +37,10 @@ import javax.inject.Inject;
 
 import de.greenrobot.event.EventBus;
 
-public class LinkFragment extends BaseBrevosFragment implements AbsListView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
+public class LinkFragment extends BaseBrevosFragment
+        implements AbsListView.OnItemClickListener,
+        SwipeRefreshLayout.OnRefreshListener,
+        AbsListView.OnScrollListener {
 
     @Inject @ForApplication Context mContext;
     @Inject EventBus mBus;

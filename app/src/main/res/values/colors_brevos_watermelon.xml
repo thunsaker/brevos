@@ -8,7 +8,7 @@
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="icons">#212121</color>
-    <color name="divider">#B6B6B6</color>
+    <color name="divider">#aaaaaa</color>
 
     <color name="brevos_green">#FF8BC34A</color>
     <color name="brevos_green_dark">#FF689F38</color>
@@ -18,8 +18,12 @@
     <color name="brevos_pink">#FFFF4081</color>
     <color name="brevos_pink_dark">#FFC2185B</color>
     <color name="brevos_pink_light">#FFF8BBD0</color>
+    <color name="brevos_pink_translucent">#AAFF4081</color>
 
     <color name="brevos_yellow">#FFFFEB3B</color>
+    <color name="brevos_blue">#FF2196F3</color>
+    <color name="brevos_blue_light">#FF03A9F4</color>
+    <color name="brevos_orange">#FFFF9800</color>
 
     <!--Bitly Colors-->
     <color name="bitly">#FFEB6126</color>

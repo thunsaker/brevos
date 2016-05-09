@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
+import com.thunsaker.android.common.util.Util;
 import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
 import com.thunsaker.brevos.data.api.BitmarkInfo;
@@ -190,17 +191,16 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
             }
         });
 
-        final ImageView imageViewFavicon = (ImageView) itemView.findViewById(R.id.imageViewFavicon);
-        final ImageView imageViewFaviconLarge = (ImageView) itemView.findViewById(R.id.imageViewFaviconLarge);
-
-        if (imageViewFavicon != null || imageViewFaviconLarge != null) {
-            Picasso mPicasso = Picasso.with(mContext);
-//            Util.randInt(0,10) % 2 == 0 ? R.drawable.pink_circle : R.drawable.yellow_circle;
-            mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl))
-                    .placeholder(R.drawable.yellow_circle)
-                    .transform(new RoundedCornerTransform(40, 0))
-                    .into(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT ? imageViewFaviconLarge : imageViewFavicon);
-        }
+//        final ImageView imageViewFavicon = (ImageView) itemView.findViewById(R.id.imageViewFavicon);
+//        final ImageView imageViewFaviconLarge = (ImageView) itemView.findViewById(R.id.imageViewFaviconLarge);
+//
+//        if (imageViewFavicon != null || imageViewFaviconLarge != null) {
+//            Picasso mPicasso = Picasso.with(mContext);
+//            mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl))
+//                    .placeholder(Util.randInt(0,10) % 2 == 0 ? Util.randInt(0,10) % 2 == 0 ? R.drawable.blue_circle : R.drawable.orange_circle : R.drawable.yellow_circle)
+//                    .transform(new RoundedCornerTransform(100, 0))
+//                    .into(listType == BitlyTasks.HISTORY_LIST_TYPE_COMPACT ? imageViewFaviconLarge : imageViewFavicon);
+//        }
 
         if(listType == BitlyTasks.HISTORY_LIST_TYPE_DEFAULT) {
             ImageButton copyButton = (ImageButton) itemView.findViewById(R.id.imageButtonHistoryCopy);

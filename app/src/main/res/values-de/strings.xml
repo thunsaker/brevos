@@ -140,4 +140,5 @@
     <string name="bitly_auth_prompt_info">Sign in to bit.ly to see link info.</string>
     <string name="no_links">No Links Found</string>
     <string name="action_sign_in">Sign In to Bitly</string>
+    <string name="link_icon">Link Icon</string>
 </resources>

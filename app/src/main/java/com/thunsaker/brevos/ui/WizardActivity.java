@@ -51,9 +51,7 @@ public class WizardActivity extends BaseBrevosActivity {
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
-//        ActionBar ab = getSupportActionBar();
-//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-//        ab.setTitle(R.string.title_activity_wizard);
+        setTitle("");
 
         mPagerAdapter = new WizardPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);

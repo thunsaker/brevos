@@ -13,16 +13,15 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,14 +29,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
@@ -66,6 +63,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 import de.greenrobot.event.EventBus;
 import io.fabric.sdk.android.Fabric;
 
@@ -86,14 +84,12 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    @BindView(R.id.relativeLayoutMainContainer) RelativeLayout mMainLayoutContainer;
-
-    @BindView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
-    @BindView(R.id.editTextUrl) EditText mEditTextUrl;
-    @BindView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
+    @BindView(R.id.coordinatorLayoutMainContainer) CoordinatorLayout mMainLayoutContainer;
 
     @BindView(R.id.buttonBitlyAuth) Button mButtonAuth;
     @BindView(R.id.linearLayoutMainEmptyWrapper) LinearLayout mLinearLayoutEmpty;
+    @BindView(R.id.imageViewEmptyIcon) ImageView mImageViewEmptyIcon;
+    @BindView(R.id.textViewEmptyText) TextView mTextViewEmptyText;
 
     @BindView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
     @BindView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
@@ -117,6 +113,9 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
     @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
+
+    @BindView(R.id.fabMainCreate) FloatingActionButton mFabCreate;
+    @BindView(R.id.fabMainClipboard) FloatingActionButton mFabClipboard;
 
     public static String BREVOS_POP_OVER_BITMARK = "BREVOS_POP_OVER_BITMARK";
     private static String BREVOS_CURRENT_BITMARK = "BREVOS_CURRENT_BITMARK";
@@ -151,27 +150,7 @@ public class MainActivity extends BaseBrevosActivity
 
         setSupportActionBar(mToolbar);
 
-        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-            mImageButtonShortenUrl.setEnabled(true);
-            mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_gray));
-        } else {
-            mImageButtonShortenUrl.setEnabled(false);
-            mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-        }
-
-        mEditTextUrl.addTextChangedListener(mTextEditorWatcher);
-        mEditTextUrl.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId == R.id.action_send_url) {
-                    shortenButtonClick();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-//        raiseFabCreate();
+        mFabCreate.show();
 
         isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         configureLayout();
@@ -189,9 +168,10 @@ public class MainActivity extends BaseBrevosActivity
                 return;
             }
 
-            if(getIntent().hasExtra(EXTRA_LONG_URL)) {
-                mEditTextUrl.setText(getIntent().getStringExtra(EXTRA_LONG_URL));
-            }
+            // TODO: Send link to edit screen
+//            if(getIntent().hasExtra(EXTRA_LONG_URL)) {
+//                mEditTextUrl.setText(getIntent().getStringExtra(EXTRA_LONG_URL));
+//            }
 
             if(savedInstanceState != null) {
                 String currentBitmarkRaw = savedInstanceState.getString(MainActivity.BREVOS_CURRENT_BITMARK);
@@ -202,22 +182,6 @@ public class MainActivity extends BaseBrevosActivity
                     }
                 }
             }
-
-            // TODO: FAB for a future release
-//            if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//                mFabWrapper.setVisibility(View.VISIBLE);
-//                mFabCreate.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        if (mFabStateUp) {
-//                            shortenButtonClick();
-//                        } else {
-//                            showCreateLink();
-//                            raiseFabCreate();
-//                        }
-//                    }
-//                });
-//            }
         }
 
 //        if(getIsPro())
@@ -227,30 +191,6 @@ public class MainActivity extends BaseBrevosActivity
 
         checkClipboardForUrl();
     }
-
-    // TODO: FAB for a future release
-//    @SuppressLint("InlinedApi")
-//    private void raiseFabCreate() {
-//        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//            float newY = mMainLayoutWrapperInner.getY() + mMainLayoutWrapperInner.getMeasuredHeight() - (mFabWrapper.getMeasuredHeight() / 2) + 24;
-//            mFabWrapper.animate().y(newY).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(200).rotation(360);
-//            mFabCreate.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_white));
-//            mFabStateUp = true;
-//        }
-//    }
-//
-//    @SuppressLint("InlinedApi")
-//    private void dropFabCreate() {
-//        if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-//            float y = mFabWrapper.getY();
-//            DisplayMetrics displayMetrics = new DisplayMetrics();
-//            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//            float newY = displayMetrics.heightPixels - y - mFabCreate.getMeasuredHeight() - Util.convertDpToPixel(56f, mContext);
-//            mFabWrapper.animate().y(newY).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(400).rotation(-360);
-//            mFabCreate.setImageDrawable(getResources().getDrawable(R.drawable.ic_plus_white));
-//            mFabStateUp = false;
-//        }
-//    }
 
     private void showWizardActivity() {
         startActivity(new Intent(mContext, WizardActivity.class));
@@ -264,35 +204,37 @@ public class MainActivity extends BaseBrevosActivity
     private void configureLayout() {
         if (!isBitlyConnected) {
             mButtonAuth.setVisibility(View.VISIBLE);
-            mTogglePrivate.setVisibility(View.GONE);
             mLinkListWrapper.setVisibility(View.GONE);
+            mLinearLayoutEmpty.setVisibility(View.VISIBLE);
+            // TODO: Change the empty layout for first time users not signed in
+//            mImageViewEmptyIcon.setImageResource(R.drawable.ic_add);
+//            mTextViewEmptyText.setText(R.string.create_short_url);
         } else {
             invalidateOptionsMenu();
 
             mButtonAuth.setVisibility(View.GONE);
-            if (PreferencesHelper.getBitlyIsPrivateAlways(mContext)) {
-                isPrivate = true;
-                mEditTextUrl.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.drawable.ic_lock_closed_tiny), null);
-                mEditTextUrl.invalidate();
-                mTogglePrivate.setVisibility(View.GONE);
-            } else {
-//                mTogglePrivate.setVisibility(View.VISIBLE);
-                mTogglePrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        isPrivate = isChecked;
-                    }
-                });
-            }
+            // TODO: Move to edit view
+//            if (PreferencesHelper.getBitlyIsPrivateAlways(mContext)) {
+//                isPrivate = true;
+//                mTogglePrivate.setVisibility(View.GONE);
+//            } else {
+////                mTogglePrivate.setVisibility(View.VISIBLE);
+//                mTogglePrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                    @Override
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                        isPrivate = isChecked;
+//                    }
+//                });
+//            }
 
             showLinkFragment();
         }
     }
 
     private void showLinkFragment() {
-        mLinearLayoutEmpty.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
         mLinearLayoutEmpty.setVisibility(View.GONE);
         mLinkListWrapper.setVisibility(View.VISIBLE);
+        mLinkListWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
         FragmentManager fragmentManager = getSupportFragmentManager();
         LinkFragment linkFragmentHistory = LinkFragment.newInstance(getResources().getInteger(R.integer.recent_items_count), BitlyTasks.HISTORY_LIST_TYPE_COMPACT);
         fragmentManager
@@ -305,7 +247,11 @@ public class MainActivity extends BaseBrevosActivity
         // TODO: Removing the fragment is killing eventbus...figure out the reason, hiding it is just a temporary fix.
 //        FragmentManager fragmentManager = getSupportFragmentManager();
 //        fragmentManager.beginTransaction().replace(R.id.frameListContentHistory, null).commit();
-        findViewById(R.id.frameListContentHistory).setVisibility(View.GONE);
+
+        FrameLayout mFrameLayout =
+                (FrameLayout) findViewById(R.id.frameListContentHistory);
+        if(mFrameLayout != null)
+            mFrameLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -352,6 +298,9 @@ public class MainActivity extends BaseBrevosActivity
             case R.id.action_about:
                 startActivity(new Intent(mContext, AboutActivity.class));
                 break;
+            case R.id.action_sign_in:
+                showAuth(false);
+                break;
             case R.id.action_sign_out:
                 showConfirmationDialog();
                 break;
@@ -391,37 +340,38 @@ public class MainActivity extends BaseBrevosActivity
         mBus.post(new BitlyAuthEvent(false, ""));
     }
 
-    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            if (count > 0) {
-                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_green));
-                } else {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-                }
-            } else {
-                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
-                    mImageButtonShortenUrl.setEnabled(true);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_gray));
-                } else {
-                    mImageButtonShortenUrl.setEnabled(false);
-                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
-                }
-            }
-        }
-
-        public void afterTextChanged(Editable s) { }
-    };
-
-    @OnClick(R.id.buttonShortenUrl)
-    public void shortenButtonClick() {
-        shorten(mEditTextUrl.getText().toString());
-    }
+    // TODO: Move to edit section
+//    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+//        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        }
+//
+//        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//            if (count > 0) {
+//                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//                    mImageButtonShortenUrl.setEnabled(true);
+//                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_green));
+//                } else {
+//                    mImageButtonShortenUrl.setEnabled(true);
+//                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
+//                }
+//            } else {
+//                if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+//                    mImageButtonShortenUrl.setEnabled(true);
+//                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.ic_arrow_right_gray));
+//                } else {
+//                    mImageButtonShortenUrl.setEnabled(false);
+//                    mImageButtonShortenUrl.setImageDrawable(getResources().getDrawable(R.drawable.btn_arrow_right));
+//                }
+//            }
+//        }
+//
+//        public void afterTextChanged(Editable s) { }
+//    };
+    // TODO: Move to edit section
+//    @OnClick(R.id.buttonShortenUrl)
+//    public void shortenButtonClick() {
+//        shorten(mEditTextUrl.getText().toString());
+//    }
 
     public void shorten(String linkToShorten) {
         if (linkToShorten != null && BitlyUtil.isValidUrl(linkToShorten)) {
@@ -452,8 +402,18 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     @OnClick(R.id.buttonBitlyAuth)
-    public void showAuth() {
-        startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
+    public void onClickAuthButton() {
+        showAuth(true);
+    }
+
+    public void showAuth(boolean animate) {
+        if(animate) {
+            
+            startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
+        } else {
+            startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
+
+        }
     }
 
     public void onEvent(BitlyAuthEvent event) {
@@ -462,7 +422,7 @@ public class MainActivity extends BaseBrevosActivity
             mButtonAuth.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
             mButtonAuth.setVisibility(View.GONE);
 //            mTogglePrivate.setVisibility(View.VISIBLE);
-            mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
+//            mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 
             isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         } else {
@@ -478,8 +438,8 @@ public class MainActivity extends BaseBrevosActivity
             }
 
             mButtonAuth.setVisibility(View.VISIBLE);
-            mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
-            mTogglePrivate.setVisibility(View.GONE);
+//            mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_out));
+//            mTogglePrivate.setVisibility(View.GONE);
         }
 
         supportInvalidateOptionsMenu();
@@ -513,7 +473,7 @@ public class MainActivity extends BaseBrevosActivity
         copyToClipboard(bitmark.getUrl());
 
         mExpandResultLayoutWrapper.setVisibility(View.GONE);
-        mEditTextUrl.setText(null);
+//        mEditTextUrl.setText(null);
 
         final Animation slideDownFromTopAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_down_from_top);
         final String shortUrl = bitmark.getUrl();
@@ -590,7 +550,7 @@ public class MainActivity extends BaseBrevosActivity
 
     private void showExpandLinkResult(final Bitmark bitmark) {
         mResultLayoutWrapper.setVisibility(View.GONE);
-        mEditTextUrl.setText(null);
+//        mEditTextUrl.setText(null);
 
         final Animation slideDownFromTopAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_down_from_top);
         final String shortUrl = bitmark.getUrl();
@@ -640,7 +600,7 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     public void openLinkInfoActivity(Bitmark myBitmark) {
-        mEditTextUrl.setText(null);
+//        mEditTextUrl.setText(null);
 
         if(isBitlyConnected) {
             Intent linkInfo = new Intent(mContext, android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ? LinkInfoActivityNfc.class : LinkInfoActivity.class);
@@ -677,8 +637,19 @@ public class MainActivity extends BaseBrevosActivity
         super.onDestroy();
     }
 
+    @OnClick(R.id.fabMainClipboard)
     public void shortenFromClipboard(){
         shorten(getClipboardText());
+        mFabClipboard.hide();
+    }
+
+    @OnLongClick(R.id.fabMainClipboard)
+    public boolean shortenFromClipboardHelp() {
+        Snackbar.make(
+                mMainLayoutContainer,
+                R.string.clipboard_action_paste_info,
+                Snackbar.LENGTH_SHORT).show();
+        return false;
     }
 
     private void checkClipboardForUrl() {
@@ -687,15 +658,8 @@ public class MainActivity extends BaseBrevosActivity
 
             assert clipText != null;
             if (clipText.length() > 0 && BitlyUtil.isValidUrl(clipText) && !BitlyUtil.isBitlyUrl(clipText))
-                Snackbar
-                        .make(mMainLayoutWrapperOuter, String.format(getString(R.string.clipboard_url_text), clipText), Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.shorten, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                shortenFromClipboard();
-                            }
-                        })
-                        .show();
+                mFabClipboard.setVisibility(View.VISIBLE);
+                mFabClipboard.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.spin_up));
         }
     }
 
@@ -794,18 +758,6 @@ public class MainActivity extends BaseBrevosActivity
         return TimeZone.getDefault().getRawOffset() / 3600000;
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE || newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            if(mResultLayoutWrapper.getVisibility() == View.VISIBLE) {
-//                Bundle outState = new Bundle();
-//                outState.putString(MainActivity.BREVOS_CURRENT_BITMARK, mCurrentBitmark.toString());
-//                super.onSaveInstanceState(outState);
-//            }
-//        }
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -869,19 +821,13 @@ public class MainActivity extends BaseBrevosActivity
             if(first != null) {
                 int distance = first.getTop() + view.getFirstVisiblePosition() * first.getHeight();
 
-//                Log.i("MainActivity", "Distance = " + distance);
                 if (distance > first.getHeight() * 3) {
-                    hideCreateLink();
                     mMainLayoutWrapperInner.setVisibility(View.GONE);
-//                    if(mFabStateUp)
-//                        dropFabCreate();
                     return;
                 }
 
                 if (distance < first.getHeight() * 2) {
                     showCreateLink();
-//                    if(!mFabStateUp)
-//                        raiseFabCreate();
                 }
             }
         }
@@ -892,26 +838,6 @@ public class MainActivity extends BaseBrevosActivity
             mMainLayoutWrapperInner.setVisibility(View.VISIBLE);
             mMainLayoutWrapperInner.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_down));
             createHidden = false;
-        }
-    }
-
-    private void hideCreateLink() {
-        if(!createHidden) {
-            Animation slideUpAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_up);
-//            slideUpAnimation.setAnimationListener(new Animation.AnimationListener() {
-//                @Override
-//                public void onAnimationStart(Animation animation) { }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//                    mMainLayoutWrapperInner.setVisibility(View.GONE);
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) { }
-//            });
-            mMainLayoutWrapperInner.startAnimation(slideUpAnimation);
-            createHidden = true;
         }
     }
 
@@ -926,5 +852,10 @@ public class MainActivity extends BaseBrevosActivity
                 }
                 break;
         }
+    }
+
+    @OnClick(R.id.fabMainCreate)
+    public void ShowCreateOptions() {
+        Snackbar.make(mMainLayoutContainer, "Show Create URL Screen", Snackbar.LENGTH_SHORT).show();
     }
 }

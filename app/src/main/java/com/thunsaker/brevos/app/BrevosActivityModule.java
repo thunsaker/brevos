@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import com.thunsaker.android.common.annotations.ForActivity;
+import com.thunsaker.brevos.adapters.LinkListAdapter;
 import com.thunsaker.brevos.ui.AboutActivity;
 import com.thunsaker.brevos.ui.BitlyAuthActivity;
 import com.thunsaker.brevos.ui.BrevosPopOverList;
@@ -40,7 +41,8 @@ import dagger.Provides;
                 HistoryActivity.class,
                 LinkSearchActivity.class,
                 AboutActivity.class,
-                WizardActivity.class
+                WizardActivity.class,
+                LinkListAdapter.class
         }
 )
 public class BrevosActivityModule {

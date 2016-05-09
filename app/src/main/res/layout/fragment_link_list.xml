@@ -2,8 +2,10 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_light"
     tools:context="com.thunsaker.brevos.ui.LinkFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -16,10 +18,16 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/divider"
+            android:divider="@color/brevos_green_light"
             android:dividerHeight="1dp"
             android:listSelector="@drawable/default_layout_selector"
             android:fastScrollEnabled="true" />
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@android:id/list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
