@@ -20,7 +20,8 @@
     <string name="dialog_please_wait">Please wait…</string>
     <string name="dialog_loading_authorization">Loading bit.ly authorization</string>
     <string name="dialog_abort">cancelled</string>
-    <string name="dialog_auth_bitly_required">You must be signed into bit.ly for this feature.</string>
+    <string name="dialog_auth_bitly_required">You must be signed into bit.ly for this feature.
+    </string>
     <string name="dialog_no">No Thank You</string>
     <string name="pop_over_open_app">Open Link in Brevos</string>
     <string name="link_copied">%s copied to clipboard.</string>
@@ -60,7 +61,8 @@
     <string name="yes">Yes</string>
     <string name="title_activity_about">About</string>
     <string name="about_other_apps">More apps!</string>
-    <string name="app_about">Brevos is a great tool for shortening links and sharing with friends.</string>
+    <string name="app_about">Brevos is a great tool for shortening links and sharing with friends.
+    </string>
     <string name="action_about">About</string>
     <string name="error_copy_nothing">Nothing to copy.</string>
     <string name="refresh">Refresh</string>
@@ -91,15 +93,28 @@
     <string name="notification_retry">Retry</string>
     <string name="title_activity_wizard">Welcome</string>
     <string name="wizard_welcome">Welcome to Brevos!</string>
-    <string name="wizard_welcome_about_history">BitDroid was my first Android app. It has evolved with the platform since Android 1.5 and has changed a lot over the years. \nI decided it was time to retire the BitDroid name in favor of something new. BitDroid (for bit.ly) is dead.</string>
-    <string name="wizard_welcome_about_brevos">Brevos is a completely redesigned version of BitDroid. Brevos is ALL new! New icon, new colors, new features, same great bit.ly link creation and stats.</string>
-    <string name="wizard_welcome_feedback">I hope that you enjoy the new version of BitDroid and continue sending feedback about things you would like to see.</string>
+    <string name="wizard_welcome_about_history">BitDroid was my first Android app. It has evolved
+        with the platform since Android 1.5 and has changed a lot over the years. \nI decided it was
+        time to retire the BitDroid name in favor of something new. BitDroid (for bit.ly) is dead.
+    </string>
+    <string name="wizard_welcome_about_brevos">Brevos is a completely redesigned version of
+        BitDroid. Brevos is ALL new! New icon, new colors, new features, same great bit.ly link
+        creation and stats.
+    </string>
+    <string name="wizard_welcome_feedback">I hope that you enjoy the new version of BitDroid and
+        continue sending feedback about things you would like to see.
+    </string>
     <string name="wizard_welcome_clipboard_screen_description">Clipboard url screen</string>
     <string name="wizard_welcome_shorten_screen_description">Shorten result screen</string>
     <string name="wizard_welcome_recent_screen_description">Recent links screen</string>
-    <string name="wizard_welcome_clipboard">Automatically detect URLs in clipboard for easy shortening.</string>
-    <string name="wizard_welcome_recent_links">Sign in to bit.ly to view your recent link history</string>
-    <string name="wizard_welcome_pop_over">Shorten from any app without leaving what you were doing!</string>
+    <string name="wizard_welcome_clipboard">Automatically detect URLs in clipboard for easy
+        shortening.
+    </string>
+    <string name="wizard_welcome_recent_links">Sign in to bit.ly to view your recent link history
+    </string>
+    <string name="wizard_welcome_pop_over">Shorten from any app without leaving what you were
+        doing!
+    </string>
     <string name="menu_action_previous">Previous</string>
     <string name="menu_action_next">Next</string>
     <string name="about_welcome">Welcome Screen</string>
@@ -128,4 +143,8 @@
     <string name="action_sign_in">Sign In to Bitly</string>
     <string name="clipboard_action_paste_info">Create link from clipboard contents</string>
     <string name="link_icon">Link Icon</string>
+    <string name="title_activity_edit_link">Edit Bitmark</string>
+    <string name="title_activity_create_link">Create Bitmark</string>
+    <string name="url_label">Url</string>
+    <string name="action_save">Save</string>
 </resources>

@@ -9,6 +9,7 @@ import com.thunsaker.brevos.ui.AboutActivity;
 import com.thunsaker.brevos.ui.BitlyAuthActivity;
 import com.thunsaker.brevos.ui.BrevosPopOverList;
 import com.thunsaker.brevos.ui.ConfirmSignOutDialogFragment;
+import com.thunsaker.brevos.ui.EditLinkActivity;
 import com.thunsaker.brevos.ui.HistoryActivity;
 import com.thunsaker.brevos.ui.LinkFragment;
 import com.thunsaker.brevos.ui.LinkInfoActivity;
@@ -42,7 +43,8 @@ import dagger.Provides;
                 LinkSearchActivity.class,
                 AboutActivity.class,
                 WizardActivity.class,
-                LinkListAdapter.class
+                LinkListAdapter.class,
+                EditLinkActivity.class
         }
 )
 public class BrevosActivityModule {

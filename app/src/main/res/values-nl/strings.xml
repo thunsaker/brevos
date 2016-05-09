@@ -124,4 +124,5 @@
     <string name="no_links">No Links Found</string>
     <string name="action_sign_in">Sign In to Bitly</string>
     <string name="link_icon">Link Icon</string>
+    <string name="url_label">Url</string>
 </resources>

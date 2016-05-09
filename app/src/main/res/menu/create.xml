@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:brevos="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.thunsaker.brevos.ui.EditLinkActivity" >
+    <item android:id="@+id/action_save"
+          android:title="@string/action_save"
+          android:orderInCategory="99"
+          android:icon="@drawable/ic_save"
+          brevos:showAsAction="always|withText" />
+</menu>

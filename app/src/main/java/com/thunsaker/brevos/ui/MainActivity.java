@@ -37,6 +37,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.fabtransitionactivity.SheetLayout;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -69,7 +70,8 @@ import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseBrevosActivity
         implements LinkFragment.OnFragmentInteractionListener,
-        LinkFragment.OnFragmentListViewScrollListener {
+        LinkFragment.OnFragmentListViewScrollListener,
+        SheetLayout.OnFabAnimationEndListener {
 
     @Inject @ForApplication Context mContext;
     @Inject EventBus mBus;
@@ -116,6 +118,7 @@ public class MainActivity extends BaseBrevosActivity
 
     @BindView(R.id.fabMainCreate) FloatingActionButton mFabCreate;
     @BindView(R.id.fabMainClipboard) FloatingActionButton mFabClipboard;
+    @BindView(R.id.bottomSheet) SheetLayout mSheetLayout;
 
     public static String BREVOS_POP_OVER_BITMARK = "BREVOS_POP_OVER_BITMARK";
     private static String BREVOS_CURRENT_BITMARK = "BREVOS_CURRENT_BITMARK";
@@ -131,6 +134,8 @@ public class MainActivity extends BaseBrevosActivity
     private String domain = BitlyClient.BITLY_DOMAIN_DEFAULT;
     private static boolean ignoreClipboard = false;
     public static int COMPACT_LINK_LIST_COUNT = 20;
+
+    private static final int REQUEST_CODE_TRANSITION = 1;
 
     private AdView adView;
     private Bitmark mCurrentBitmark;
@@ -151,6 +156,8 @@ public class MainActivity extends BaseBrevosActivity
         setSupportActionBar(mToolbar);
 
         mFabCreate.show();
+        mSheetLayout.setFab(mFabCreate);
+        mSheetLayout.setFabAnimationEndListener(this);
 
         isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         configureLayout();
@@ -299,7 +306,7 @@ public class MainActivity extends BaseBrevosActivity
                 startActivity(new Intent(mContext, AboutActivity.class));
                 break;
             case R.id.action_sign_in:
-                showAuth(false);
+                showAuth();
                 break;
             case R.id.action_sign_out:
                 showConfirmationDialog();
@@ -402,18 +409,8 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     @OnClick(R.id.buttonBitlyAuth)
-    public void onClickAuthButton() {
-        showAuth(true);
-    }
-
-    public void showAuth(boolean animate) {
-        if(animate) {
-            
-            startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
-        } else {
-            startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
-
-        }
+    public void showAuth() {
+        startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
     }
 
     public void onEvent(BitlyAuthEvent event) {
@@ -851,11 +848,23 @@ public class MainActivity extends BaseBrevosActivity
                     Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_error, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
+            case REQUEST_CODE_TRANSITION:
+                mSheetLayout.contractFab();
+                break;
         }
     }
 
     @OnClick(R.id.fabMainCreate)
     public void ShowCreateOptions() {
-        Snackbar.make(mMainLayoutContainer, "Show Create URL Screen", Snackbar.LENGTH_SHORT).show();
+        mSheetLayout.expandFab();
+//        Snackbar.make(mMainLayoutContainer, "Show Create URL Screen", Snackbar.LENGTH_SHORT).show();
+
+        Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
+        startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
+    }
+
+    @Override
+    public void onFabAnimationEnd() {
+
     }
 }

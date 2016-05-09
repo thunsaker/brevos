@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.thunsaker.brevos.ui.EditLinkActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transition_private">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </android.support.v7.widget.Toolbar>
+
+        <include layout="@layout/content_edit_link" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:src="@drawable/ic_link"
+        android:layout_marginBottom="@dimen/material_padding_triple"
+        android:tint="@color/brevos_yellow"
+        android:contentDescription="@string/link_icon"/>
+
+</android.support.design.widget.CoordinatorLayout>
