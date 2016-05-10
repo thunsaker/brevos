@@ -84,7 +84,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_lock_closed_solid_gray"
+                        android:src="@drawable/ic_lock_closed"
                         android:layout_gravity="center_vertical"
                         android:scaleType="centerInside"
                         android:contentDescription="@string/private_link"

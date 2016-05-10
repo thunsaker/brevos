@@ -655,8 +655,8 @@ public class MainActivity extends BaseBrevosActivity
 
             assert clipText != null;
             if (clipText.length() > 0 && BitlyUtil.isValidUrl(clipText) && !BitlyUtil.isBitlyUrl(clipText))
-                mFabClipboard.setVisibility(View.VISIBLE);
-                mFabClipboard.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.spin_up));
+                mFabClipboard.show();
+//                mFabClipboard.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.spin_up));
         }
     }
 
@@ -855,16 +855,17 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     @OnClick(R.id.fabMainCreate)
-    public void ShowCreateOptions() {
+    public void showCreateScreen() {
+        mFabClipboard.hide();
         mSheetLayout.expandFab();
-//        Snackbar.make(mMainLayoutContainer, "Show Create URL Screen", Snackbar.LENGTH_SHORT).show();
 
-        Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
-        startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
+//        Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
+//        startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
     }
 
     @Override
     public void onFabAnimationEnd() {
-
+        Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
+        startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
     }
 }

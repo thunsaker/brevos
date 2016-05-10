@@ -116,7 +116,7 @@
                         android:id="@+id/imageViewPrivaticon"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_lock_closed_solid_gray"
+                        android:src="@drawable/ic_lock_closed_tiny"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
@@ -277,6 +277,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|right|end"
+        android:elevation="2dp"
         android:src="@drawable/ic_link" />
     <!--app:layout_behavior="com.thunsaker.brevos.ui.custom.FloatingActionButtonBehavior"-->
 
@@ -296,5 +297,5 @@
         android:layout_gravity="bottom"
         app:ft_container_gravity="center"
         app:ft_color="@color/accent"
-        android:elevation="2dp"/>
+        android:elevation="4dp" />
 </android.support.design.widget.CoordinatorLayout>

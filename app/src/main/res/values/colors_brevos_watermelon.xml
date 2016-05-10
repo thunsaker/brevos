@@ -38,7 +38,9 @@
     <color name="body_text">#FF222222</color>
     <color name="header_text">#FF444444</color>
 
-    <color name="gray_dark">#FF2E2E2E</color>
+    <color name="gray_darker">#FF2E2E2E</color>
+    <color name="gray_dark">#FF333333</color>
+    <color name="gray_darky">#FF444444</color>
     <color name="gray_darkish">#FF7F7F7F</color>
     <color name="gray_translucent">#55AAAAAA</color>
     <color name="gray_translucent_pressed">#AAAAAAAA</color>

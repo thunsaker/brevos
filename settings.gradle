@@ -1,1 +1,1 @@
-include ':app', ':HoloGraphLibrary:HoloGraphLibrary'
+include ':app', ':HoloGraphLibrary:HoloGraphLibrary', ':material-animated-switch:materialanimatedswitch'

@@ -10,7 +10,7 @@
         android:key="@string/prefs_bitly_private_always"
         android:title="@string/pref_title_private"
         android:summary="@string/pref_description_private_always"
-        android:icon="@drawable/ic_lock_closed_solid_gray"
+        android:icon="@drawable/ic_lock_closed"
         android:defaultValue="false" />
 
     <ListPreference

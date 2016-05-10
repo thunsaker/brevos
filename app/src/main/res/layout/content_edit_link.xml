@@ -48,12 +48,27 @@
         android:layout_height="wrap_content"
         app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-    <CheckBox
-        android:id="@+id/checkboxCreatePrivate"
-        android:layout_width="match_parent"
+    <!--<CheckBox-->
+        <!--android:id="@+id/checkboxCreatePrivate"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/material_padding_double"-->
+        <!--android:background="?attr/selectableItemBackgroundBorderless"-->
+        <!--android:text="@string/private_link"/>-->
+
+    <com.github.glomadrian.materialanimatedswitch.MaterialAnimatedSwitch
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/switchPrivate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/material_padding_double"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:text="@string/private_link"/>
+        app:icon_release="@drawable/ic_lock_closed_outline_pink_36dp"
+        app:icon_press="@drawable/ic_lock_white_36dp"
+        app:base_release_color="@color/gray_light"
+        app:base_press_color="@color/brevos_pink_dark"
+        app:ball_release_color="@android:color/white"
+        app:ball_press_color="@color/brevos_pink"
+        android:contentDescription="@string/private_link"
+        android:background="?attr/selectableItemBackgroundBorderless" />
 
 </LinearLayout>

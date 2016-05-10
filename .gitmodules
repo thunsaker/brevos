@@ -4,3 +4,6 @@
 [submodule "aboutlibraries"]
 	path = aboutlibraries
 	url = https://github.com/thunsaker/aboutlibraries
+[submodule "material-animated-switch"]
+	path = material-animated-switch
+	url = https://github.com/thunsaker/material-animated-switch
