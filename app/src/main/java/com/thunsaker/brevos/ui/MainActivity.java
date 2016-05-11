@@ -16,10 +16,13 @@ import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.util.Pair;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -29,7 +32,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,18 +47,23 @@ import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
 import com.thunsaker.brevos.BrevosPrefsManager;
+import com.thunsaker.brevos.adapters.LinkListAdapter;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.app.BrevosApp;
 import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
+import com.thunsaker.brevos.data.api.BitmarkInfo;
+import com.thunsaker.brevos.data.api.LinkHistoryItem;
 import com.thunsaker.brevos.data.events.BitlyAuthEvent;
 import com.thunsaker.brevos.data.events.ExpandUrlEvent;
+import com.thunsaker.brevos.data.events.GetUserHistoryEvent;
 import com.thunsaker.brevos.data.events.ShortenedUrlEvent;
 import com.thunsaker.brevos.services.BitlyClient;
 import com.thunsaker.brevos.services.BitlyTasks;
 import com.thunsaker.brevos.services.BitlyUtil;
 import com.thunsaker.brevos.ui.custom.SwipeDismissTouchListener;
 
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -114,7 +121,8 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
     @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
-    @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
+//    @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
+    @BindView(R.id.recyclerLinks) RecyclerView mRecyclerLinks;
 
     @BindView(R.id.fabMainCreate) FloatingActionButton mFabCreate;
     @BindView(R.id.fabMainClipboard) FloatingActionButton mFabClipboard;
@@ -142,6 +150,10 @@ public class MainActivity extends BaseBrevosActivity
     private PendingIntent retryPendingIntent;
     private PendingIntent genericPendingIntent;
     private boolean createHidden = false;
+
+    public List<LinkHistoryItem> mLinkHistoryItems;
+    private LinkListAdapter mLinkListAdapter;
+    private boolean mNewList = true;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -211,7 +223,8 @@ public class MainActivity extends BaseBrevosActivity
     private void configureLayout() {
         if (!isBitlyConnected) {
             mButtonAuth.setVisibility(View.VISIBLE);
-            mLinkListWrapper.setVisibility(View.GONE);
+//            mLinkListWrapper.setVisibility(View.GONE);
+            mRecyclerLinks.setVisibility(View.GONE);
             mLinearLayoutEmpty.setVisibility(View.VISIBLE);
             // TODO: Change the empty layout for first time users not signed in
 //            mImageViewEmptyIcon.setImageResource(R.drawable.ic_add);
@@ -234,32 +247,40 @@ public class MainActivity extends BaseBrevosActivity
 //                });
 //            }
 
-            showLinkFragment();
+//            showLinkFragment();
+            showLinkList();
         }
     }
 
-    private void showLinkFragment() {
+    private void showLinkList() {
         mLinearLayoutEmpty.setVisibility(View.GONE);
-        mLinkListWrapper.setVisibility(View.VISIBLE);
-        mLinkListWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        LinkFragment linkFragmentHistory = LinkFragment.newInstance(getResources().getInteger(R.integer.recent_items_count), BitlyTasks.HISTORY_LIST_TYPE_COMPACT);
-        fragmentManager
-                .beginTransaction()
-                .replace(R.id.frameListContentHistory, linkFragmentHistory)
-                .commit();
+        BitlyTasks mBitlyTasks = new BitlyTasks((BrevosApp) mContext);
+        mBitlyTasks.new GetUserHistory(20, 0, "", BitlyTasks.HISTORY_LIST_TYPE_DEFAULT).execute();
+        mNewList = true;
     }
 
-    private void removeLinkFragment() {
-        // TODO: Removing the fragment is killing eventbus...figure out the reason, hiding it is just a temporary fix.
+//    private void showLinkFragment() {
+//        mLinearLayoutEmpty.setVisibility(View.GONE);
+//        mLinkListWrapper.setVisibility(View.VISIBLE);
+//        mLinkListWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 //        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.frameListContentHistory, null).commit();
+//        LinkFragment linkFragmentHistory = LinkFragment.newInstance(getResources().getInteger(R.integer.recent_items_count), BitlyTasks.HISTORY_LIST_TYPE_COMPACT);
+//        fragmentManager
+//                .beginTransaction()
+//                .replace(R.id.frameListContentHistory, linkFragmentHistory)
+//                .commit();
+//    }
 
-        FrameLayout mFrameLayout =
-                (FrameLayout) findViewById(R.id.frameListContentHistory);
-        if(mFrameLayout != null)
-            mFrameLayout.setVisibility(View.GONE);
-    }
+//    private void removeLinkFragment() {
+//        // TODO: Removing the fragment is killing eventbus...figure out the reason, hiding it is just a temporary fix.
+////        FragmentManager fragmentManager = getSupportFragmentManager();
+////        fragmentManager.beginTransaction().replace(R.id.frameListContentHistory, null).commit();
+//
+//        FrameLayout mFrameLayout =
+//                (FrameLayout) findViewById(R.id.frameListContentHistory);
+//        if(mFrameLayout != null)
+//            mFrameLayout.setVisibility(View.GONE);
+//    }
 
     @Override
     protected void onResume() {
@@ -415,7 +436,7 @@ public class MainActivity extends BaseBrevosActivity
 
     public void onEvent(BitlyAuthEvent event) {
         if (event.result) {
-            showLinkFragment();
+//            showLinkFragment();
             mButtonAuth.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
             mButtonAuth.setVisibility(View.GONE);
 //            mTogglePrivate.setVisibility(View.VISIBLE);
@@ -423,7 +444,7 @@ public class MainActivity extends BaseBrevosActivity
 
             isBitlyConnected = mPreferences.bitlyEnabled().getOr(false);
         } else {
-            removeLinkFragment();
+//            removeLinkFragment();
             if (event.resultMessage.length() > 0) {
                 if (event.resultMessage.equals(CLEAR_BITLY_DATA)) {
                     clearBitlyData();
@@ -858,14 +879,70 @@ public class MainActivity extends BaseBrevosActivity
     public void showCreateScreen() {
         mFabClipboard.hide();
         mSheetLayout.expandFab();
-
-//        Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
-//        startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
     }
 
     @Override
     public void onFabAnimationEnd() {
         Intent editLinkIntent = new Intent(this, EditLinkActivity.class);
         startActivityForResult(editLinkIntent, REQUEST_CODE_TRANSITION);
+    }
+
+
+    public void onEvent(GetUserHistoryEvent event) {
+        if (event != null) {
+            if (event.listType != BitlyTasks.HISTORY_LIST_TYPE_SEARCH) {
+                if(event.userHistoryList != null && event.userHistoryList.size() > 0) {
+                    mLinkHistoryItems = event.userHistoryList;
+
+                    if(mNewList) {
+                        mLinkListAdapter = new LinkListAdapter(mLinkHistoryItems);
+                        mLinkListAdapter.notifyDataSetChanged();
+                        mLinkListAdapter.setOnItemClickListener(new LinkListAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View itemView, int position) {
+                                LinkHistoryItem link = mLinkHistoryItems.get(position);
+                                if(link != null)
+                                    openLinkInfoActivity(link, itemView);
+                            }
+                        });
+                        mRecyclerLinks.setAdapter(mLinkListAdapter);
+                        mRecyclerLinks.setLayoutManager(new LinearLayoutManager(this));
+                        mRecyclerLinks.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
+    }
+
+    private void openLinkInfoActivity(LinkHistoryItem link, View view) {
+        Intent linkInfoIntent =
+                new Intent(mContext,
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
+                                ? LinkInfoActivityNfc.class : LinkInfoActivity.class);
+        linkInfoIntent.putExtra(
+                LinkInfoActivity.EXTRA_LINK,
+                new Bitmark(link.link, link.long_url, link.aggregate_link).toString());
+        linkInfoIntent.putExtra(
+                LinkInfoActivity.EXTRA_LINK_INFO,
+                new BitmarkInfo(link.link, link.long_url, link.title).toString());
+        linkInfoIntent.putExtra(
+                LinkInfoActivity.EXTRA_LINK_INFO_SOURCE,
+                LinkInfoActivity.EXTRA_SOURCE_MAIN);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            try {
+                Pair<View, String> pairWrapper = Pair.create(view, this.getString(R.string.transition_link_item));
+                Pair<View, String> pairClicks = Pair.create(view.findViewById(R.id.textViewHistoryClicks), this.getString(R.string.transition_text_clicks));
+                Pair<View, String> pairTitle = Pair.create(view.findViewById(R.id.textViewHistoryTitle), this.getString(R.string.transition_text_title));
+                ActivityOptionsCompat options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairClicks);
+
+                startActivity(linkInfoIntent, options.toBundle());
+            } catch (Exception ex) {
+                startActivity(linkInfoIntent);
+            }
+        } else {
+            startActivity(linkInfoIntent);
+        }
     }
 }

@@ -4,100 +4,108 @@
     android:layout_height="match_parent"
     tools:context="com.thunsaker.brevos.ui.LinkInfoActivity"
     android:background="@color/gray_light">
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/gray_light">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            android:minHeight="?attr/actionBarSize" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutLinkDetailWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_light">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/primary"
-                android:minHeight="?attr/actionBarSize" />
-
-            <LinearLayout
-                android:id="@+id/linearLayoutLinkDetailWrapper"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingStart="@dimen/material_padding"
+            android:paddingRight="@dimen/material_padding"
+            android:paddingEnd="@dimen/material_padding"
+            android:paddingBottom="@dimen/material_padding"
+            android:orientation="vertical"
+            android:transitionName="@string/transition_link_item"
+            android:visibility="visible"
+            android:layout_below="@id/toolbar"
+            android:background="@color/primary">
+            <TextView
+                android:id="@+id/textViewLinkDetailTitle"
+                android:text="@string/loading_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/material_keyline_1"
-                android:paddingStart="@dimen/material_keyline_1"
-                android:paddingRight="@dimen/material_keyline_1"
-                android:paddingEnd="@dimen/material_keyline_1"
-                android:paddingBottom="@dimen/material_padding"
-                android:orientation="vertical"
-                android:visibility="visible"
-                android:layout_below="@id/toolbar"
-                android:background="@color/primary">
+                android:layout_margin="@dimen/material_padding"
+                android:textIsSelectable="true"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:transitionName="@string/transition_text_title"
+                tools:ignore="UnusedAttribute" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/material_padding"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/imageViewLinkDetailFavicon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/material_padding_half"
+                    android:layout_marginEnd="@dimen/material_padding_half"
+                    android:background="@drawable/yellow_circle"
+                    android:transitionName="@string/transition_text_clicks"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/favicon" />
+
                 <TextView
-                    android:id="@+id/textViewLinkDetailTitle"
-                    android:text="@string/loading_title"
+                    android:id="@+id/textViewLinkDetailLongUrl"
+                    android:text="@string/placeholder_url_long"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/material_padding"
                     android:textIsSelectable="true"
+                    android:layout_marginLeft="@dimen/material_padding_and_a_half"
+                    android:layout_marginStart="@dimen/material_padding_and_a_half"
                     android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    tools:ignore="UnusedAttribute" />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/material_padding"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/imageViewLinkDetailFavicon"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="@dimen/material_padding"
-                        android:background="@drawable/yellow_circle"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"
-                        android:contentDescription="@string/favicon" />
+                    android:textSize="@dimen/material_type_micro"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="bottom"
+                    android:ellipsize="none" />
 
-                    <TextView
-                        android:id="@+id/textViewLinkDetailLongUrl"
-                        android:text="@string/placeholder_url_long"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        tools:ignore="UnusedAttribute" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/material_padding"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/textViewLinkDetailShortUrl"
-                        android:text="@string/placeholder_url_short"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true"
-                        android:gravity="center_vertical"
-                        android:textSize="24sp"
-                        android:textColor="@android:color/white"
-                        tools:ignore="UnusedAttribute" />
-                    <ImageView
-                        android:id="@+id/imageViewLinkDetailPrivaticon"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/ic_lock_closed"
-                        android:layout_gravity="center_vertical"
-                        android:scaleType="centerInside"
-                        android:contentDescription="@string/private_link"
-                        android:visibility="gone" />
-                </LinearLayout>
-
+                <!--android:transitionName="@string/transition_text_url"-->
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/material_padding"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textViewLinkDetailShortUrl"
+                    android:text="@string/placeholder_url_short"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:gravity="center_vertical"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    tools:ignore="UnusedAttribute" />
+                <ImageView
+                    android:id="@+id/imageViewLinkDetailPrivaticon"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/ic_lock_closed"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerInside"
+                    android:contentDescription="@string/private_link"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,16 +144,15 @@
                         android:text="@string/default_click_count"
                         android:textColor="@color/brevos_green"
                         android:textSize="24sp"
-                        android:transitionName="clicks"
                         android:background="@drawable/default_layout_selector_white"
-                        android:layout_gravity="center_vertical|right"
+                        android:layout_gravity="center_vertical|end"
                         android:paddingRight="@dimen/material_padding"
                         android:paddingEnd="@dimen/material_padding"
                         android:paddingLeft="@dimen/material_padding"
                         android:paddingStart="@dimen/material_padding"
-                        android:gravity="center_vertical|right"
+                        android:gravity="center_vertical|end"
                         android:visibility="visible"
-                        android:layout_marginLeft="8dp" />
+                        android:layout_marginLeft="@dimen/material_padding" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -183,121 +190,121 @@
                     android:src="@drawable/ic_action_refresh_white"
                     style="?attr/buttonBarButtonStyle"
                     android:contentDescription="@string/refresh" />
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/linearLayoutLinkDetailClickCountHourWrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_light"
+            android:padding="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_shadow_height"
+                android:layout_marginLeft="@dimen/card_side_margin"
+                android:layout_marginRight="@dimen/card_side_margin"
+                android:layout_marginTop="@dimen/card_shadow_top_margin"
+                android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
+                android:background="@drawable/card_shadow"
+                android:layout_below="@+id/linearLayoutLinkDetailClickCountHourWrapperInner"/>
+            <LinearLayout
+                android:id="@+id/linearLayoutLinkDetailClickCountHourWrapperInner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:layout_marginLeft="@dimen/card_side_margin"
+                android:layout_marginRight="@dimen/card_side_margin"
+                android:padding="10dp">
+                <TextView
+                    android:id="@+id/textViewLinkDetailClickCountHour"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/body_text"
+                    android:textSize="24sp"
+                    android:text="@string/clicks_last_few_hours" />
+                <ProgressBar
+                    android:id="@+id/progressBarLinkDetailClickCountHour"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:indeterminate="true" />
+                <com.echo.holographlibrary.LineGraph
+                    android:id="@+id/lineChartLinkDetailClickCountHourly"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/textViewLinkDetailClickCountHourEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="@string/no_clicks"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
             </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/linearLayoutLinkDetailClickCountHourWrapper"
-                android:layout_width="fill_parent"
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/linearLayoutLinkDetailClickCountDayWrapper"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_light"
+            android:padding="5dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_shadow_height"
+                android:layout_marginLeft="@dimen/card_side_margin"
+                android:layout_marginRight="@dimen/card_side_margin"
+                android:layout_marginTop="@dimen/card_shadow_top_margin"
+                android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
+                android:background="@drawable/card_shadow"
+                android:layout_below="@+id/linearLayoutLinkDetailClickCountDayWrapperInner"/>
+            <LinearLayout
+                android:id="@+id/linearLayoutLinkDetailClickCountDayWrapperInner"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_light"
-                android:padding="5dp">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/card_shadow_height"
-                    android:layout_marginLeft="@dimen/card_side_margin"
-                    android:layout_marginRight="@dimen/card_side_margin"
-                    android:layout_marginTop="@dimen/card_shadow_top_margin"
-                    android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
-                    android:background="@drawable/card_shadow"
-                    android:layout_below="@+id/linearLayoutLinkDetailClickCountHourWrapperInner"/>
-                <LinearLayout
-                    android:id="@+id/linearLayoutLinkDetailClickCountHourWrapperInner"
+                android:background="@drawable/card_background"
+                android:layout_marginLeft="@dimen/card_side_margin"
+                android:layout_marginRight="@dimen/card_side_margin"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewLinkDetailClickCountDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/card_background"
-                    android:layout_marginLeft="@dimen/card_side_margin"
-                    android:layout_marginRight="@dimen/card_side_margin"
-                    android:padding="10dp">
-                    <TextView
-                        android:id="@+id/textViewLinkDetailClickCountHour"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="11dp"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/body_text"
-                        android:textSize="24sp"
-                        android:text="@string/clicks_last_few_hours" />
-                    <ProgressBar
-                        android:id="@+id/progressBarLinkDetailClickCountHour"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_horizontal"
-                        style="?android:attr/progressBarStyleLarge"
-                        android:indeterminate="true" />
-                    <com.echo.holographlibrary.LineGraph
-                        android:id="@+id/lineChartLinkDetailClickCountHourly"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:visibility="gone" />
-                    <TextView
-                        android:id="@+id/textViewLinkDetailClickCountHourEmpty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_margin="10dp"
-                        android:text="@string/no_clicks"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-                </LinearLayout>
-                </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/linearLayoutLinkDetailClickCountDayWrapper"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_light"
-                android:padding="5dp">
-                <View
+                    android:layout_marginLeft="11dp"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/body_text"
+                    android:textSize="24sp"
+                    android:text="@string/clicks_last_seven_days" />
+                <ProgressBar
+                    android:id="@+id/progressBarLinkDetailClickCountDay"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:indeterminate="true" />
+                <com.echo.holographlibrary.BarGraph
+                    android:id="@+id/barChartLinkDetailClickCountDay"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/card_shadow_height"
-                    android:layout_marginLeft="@dimen/card_side_margin"
-                    android:layout_marginRight="@dimen/card_side_margin"
-                    android:layout_marginTop="@dimen/card_shadow_top_margin"
-                    android:layout_marginBottom="@dimen/card_shadow_bottom_margin"
-                    android:background="@drawable/card_shadow"
-                    android:layout_below="@+id/linearLayoutLinkDetailClickCountDayWrapperInner"/>
-                <LinearLayout
-                    android:id="@+id/linearLayoutLinkDetailClickCountDayWrapperInner"
+                    android:layout_height="200dp"
+                    android:visibility="gone" />
+                <TextView
+                    android:id="@+id/textViewLinkDetailClickCountDayEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/card_background"
-                    android:layout_marginLeft="@dimen/card_side_margin"
-                    android:layout_marginRight="@dimen/card_side_margin"
-                    android:padding="10dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/textViewLinkDetailClickCountDay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="11dp"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/body_text"
-                        android:textSize="24sp"
-                        android:text="@string/clicks_last_seven_days" />
-                    <ProgressBar
-                        android:id="@+id/progressBarLinkDetailClickCountDay"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_horizontal"
-                        style="?android:attr/progressBarStyleLarge"
-                        android:indeterminate="true" />
-                    <com.echo.holographlibrary.BarGraph
-                        android:id="@+id/barChartLinkDetailClickCountDay"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:visibility="gone" />
-                    <TextView
-                        android:id="@+id/textViewLinkDetailClickCountDayEmpty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_margin="10dp"
-                        android:text="@string/no_clicks"
-                        android:textSize="16sp"
-                        android:visibility="gone"/>
-                </LinearLayout>
-            </RelativeLayout>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:text="@string/no_clicks"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/linearLayoutLinkDetailClickCountMonthWrapper"
                 android:layout_width="fill_parent"

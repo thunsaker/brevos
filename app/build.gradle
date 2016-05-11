@@ -20,7 +20,8 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 15 // TODO: Temporarily upping this from 14, due to the circular reveal library...investigate
+        minSdkVersion 15
+        // TODO: Temporarily upping this from 14, due to the circular reveal library...investigate
         targetSdkVersion 23
         versionCode 21
         versionName "3.2"
@@ -141,4 +142,5 @@ dependencies {
     compile 'com.github.talenguyen:prettysharedpreferences:1.0.2'
     compile 'com.android.support:design:23.3.0'
     compile 'com.github.coyarzun89:fabtransitionactivity:0.2.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 }

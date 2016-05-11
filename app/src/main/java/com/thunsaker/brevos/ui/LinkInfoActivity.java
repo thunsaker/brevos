@@ -115,6 +115,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link);
 
@@ -122,14 +123,6 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
-
-//        ActionBar ab = getSupportActionBar();
-//        ab.setDisplayUseLogoEnabled(true);
-//        ab.setDisplayShowHomeEnabled(true);
-//        ab.setDisplayHomeAsUpEnabled(true);
-//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-//        ab.setTitle(getString(R.string.title_activity_link));
-//        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
 
         setTitle(getString(R.string.title_activity_link));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -258,7 +251,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 break;
             case R.id.action_share:
                 if(mCurrentBitmark != null)
@@ -330,11 +323,11 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         if(global) {
             mTextViewClicksTotalGlobal.setText(BitlyUtil.getLinkClicksString(count));
             mTextViewClicksTotalGlobal.setVisibility(View.VISIBLE);
-            mTextViewClicksTotalGlobal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
+//            mTextViewClicksTotalGlobal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
         } else {
             mTextViewClicksTotal.setText(BitlyUtil.getLinkClicksString(count));
             mTextViewClicksTotal.setVisibility(View.VISIBLE);
-            mTextViewClicksTotal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
+//            mTextViewClicksTotal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
         }
     }
 

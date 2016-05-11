@@ -10,16 +10,23 @@
     android:id="@+id/coordinatorLayoutMainContainer"
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbarCreate"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:elevation="@dimen/material_elevation_default"
-        android:minHeight="?attr/actionBarSize"/>
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            android:elevation="@dimen/material_elevation_default"
+            android:minHeight="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutMainWrapperOuter"
@@ -167,18 +174,25 @@
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/linearLayoutMainLinkListWrapper"
+    <!--<LinearLayout-->
+        <!--android:id="@+id/linearLayoutMainLinkListWrapper"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignWithParentIfMissing="true"-->
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
+        <!--android:orientation="vertical">-->
+        <!--<FrameLayout-->
+            <!--android:id="@+id/frameListContentHistory"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+    <!--</LinearLayout>-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerLinks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical">
-        <FrameLayout
-            android:id="@+id/frameListContentHistory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <LinearLayout
         android:id="@+id/linearLayoutMainEmptyWrapper"
