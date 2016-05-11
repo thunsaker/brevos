@@ -28,6 +28,7 @@ import com.echo.holographlibrary.LinePoint;
 import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
 import com.thunsaker.android.common.annotations.ForApplication;
+import com.thunsaker.android.common.util.Util;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.app.BrevosApp;
 import com.thunsaker.brevos.app.BrevosUtil;
@@ -40,6 +41,7 @@ import com.thunsaker.brevos.data.events.GetInfoEvent;
 import com.thunsaker.brevos.services.BitlyClient;
 import com.thunsaker.brevos.services.BitlyTasks;
 import com.thunsaker.brevos.services.BitlyUtil;
+import com.thunsaker.brevos.ui.custom.RoundedCornerTransform;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -66,9 +68,18 @@ public class LinkInfoActivity extends BaseBrevosActivity {
     public static String EXTRA_SOURCE_MAIN = "EXTRA_SOURCE_MAIN";
     public static String EXTRA_SOURCE_HISTORY = "EXTRA_SOURCE_HISTORY";
 
-    @Inject @ForApplication Context mContext;
-    @Inject EventBus mBus;
-    @Inject android.text.ClipboardManager mClipboardManagerLegacy;
+    @Inject
+    @ForApplication
+    Context mContext;
+
+    @Inject
+    EventBus mBus;
+
+    @Inject
+    Picasso mPicasso;
+
+    @Inject
+    android.text.ClipboardManager mClipboardManagerLegacy;
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
@@ -154,10 +165,10 @@ public class LinkInfoActivity extends BaseBrevosActivity {
                 else
                     mImageViewPrivate.setVisibility(View.GONE);
 
-                Picasso mPicasso = Picasso.with(mContext);
-                if(mImageViewFavicon != null) {
+                if (mImageViewFavicon != null) {
                     mPicasso.load(String.format(BrevosUtil.faviconFetcherUrl, longUrl))
-                            .placeholder(mContext.getResources().getDrawable(R.drawable.brevos_favicon))
+                            .placeholder(Util.randInt(0,10) % 2 == 0 ? Util.randInt(0,10) % 2 == 0 ? R.drawable.blue_circle : R.drawable.orange_circle : R.drawable.yellow_circle)
+                            .transform(new RoundedCornerTransform(100, 0))
                             .into(mImageViewFavicon);
                 }
 

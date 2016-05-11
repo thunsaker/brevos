@@ -19,10 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.thunsaker.R;
-import com.thunsaker.android.common.util.Util;
-import com.thunsaker.brevos.app.BrevosUtil;
 import com.thunsaker.brevos.data.api.Bitmark;
 import com.thunsaker.brevos.data.api.BitmarkInfo;
 import com.thunsaker.brevos.data.api.LinkHistoryItem;
@@ -31,7 +28,6 @@ import com.thunsaker.brevos.services.BitlyUtil;
 import com.thunsaker.brevos.ui.LinkInfoActivity;
 import com.thunsaker.brevos.ui.LinkInfoActivityNfc;
 import com.thunsaker.brevos.ui.MainActivity;
-import com.thunsaker.brevos.ui.custom.RoundedCornerTransform;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -244,13 +240,16 @@ public class HistoryListAdapter extends ArrayAdapter<LinkHistoryItem> {
     }
 
     private void openLinkInfoActivity(LinkHistoryItem link) {
-        Intent linkInfoIntent = new Intent(mContext, android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ? LinkInfoActivityNfc.class : LinkInfoActivity.class);
+        Intent linkInfoIntent = new Intent(mContext, Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH ? LinkInfoActivityNfc.class : LinkInfoActivity.class);
         linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK, new Bitmark(link.link, link.long_url, link.aggregate_link).toString());
         linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK_INFO, new BitmarkInfo(link.link, link.long_url, link.title).toString());
         linkInfoIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (listType != BitlyTasks.HISTORY_LIST_TYPE_COMPACT) {
             linkInfoIntent.putExtra(LinkInfoActivity.EXTRA_LINK_INFO_SOURCE, LinkInfoActivity.EXTRA_SOURCE_HISTORY);
         }
+//        ActivityOptionsCompat options =
+//                ActivityOptionsCompat.makeSceneTransitionAnimation(, view, "clicks");
+////        ContextCompat.startActivities(mContext, linkInfoIntent, options);
         mContext.startActivity(linkInfoIntent);
     }
 

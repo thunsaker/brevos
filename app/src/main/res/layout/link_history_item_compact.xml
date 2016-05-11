@@ -16,8 +16,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:minWidth="40dp"
-            android:layout_marginLeft="@dimen/material_keyline_1"
-            android:layout_marginStart="@dimen/material_keyline_1"
+            android:paddingLeft="@dimen/material_keyline_1"
+            android:paddingStart="@dimen/material_keyline_1"
+            android:paddingRight="@dimen/material_padding"
+            android:paddingEnd="@dimen/material_padding"
             android:gravity="center_vertical"
             android:background="@drawable/default_layout_selector_gray">
 
@@ -33,6 +35,7 @@
                 android:indeterminate="true"
                 android:indeterminateOnly="true"
                 android:layout_centerInParent="true"
+                android:background="@drawable/default_layout_selector_gray"
                 style="?android:attr/progressBarStyleSmall" />
 
             <TextView
@@ -42,6 +45,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/primary"
                 android:text="@string/default_click_count"
+                android:transitionName="clicks"
                 android:padding="@dimen/material_padding"
                 android:layout_centerVertical="true"
                 android:gravity="center|center_vertical"
@@ -73,8 +77,8 @@
                 android:id="@+id/linearLayoutHistoryUrlWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/material_padding"
-                android:paddingStart="@dimen/material_padding"
+                android:paddingLeft="@dimen/material_padding_half"
+                android:paddingStart="@dimen/material_padding_half"
                 android:paddingRight="@dimen/material_keyline_1"
                 android:paddingEnd="@dimen/material_keyline_1"
                 android:layout_gravity="center_vertical"

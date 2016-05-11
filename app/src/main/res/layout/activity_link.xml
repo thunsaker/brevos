@@ -20,65 +20,71 @@
                 android:id="@+id/linearLayoutLinkDetailWrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingLeft="@dimen/material_keyline_1"
+                android:paddingStart="@dimen/material_keyline_1"
+                android:paddingRight="@dimen/material_keyline_1"
+                android:paddingEnd="@dimen/material_keyline_1"
+                android:paddingBottom="@dimen/material_padding"
                 android:orientation="vertical"
                 android:visibility="visible"
                 android:layout_below="@id/toolbar"
-                android:background="@android:color/white">
+                android:background="@color/primary">
                 <TextView
                     android:id="@+id/textViewLinkDetailTitle"
                     android:text="@string/loading_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/material_padding"
                     android:textIsSelectable="true"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:singleLine="true"
                     android:ellipsize="end"
                     tools:ignore="UnusedAttribute" />
-                <!--android:text="Link Title"-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/material_padding"
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/imageViewLinkDetailFavicon"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginRight="@dimen/padding_small"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/material_padding"
+                        android:background="@drawable/yellow_circle"
                         android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/brevos_favicon"
                         android:contentDescription="@string/favicon" />
 
                     <TextView
                         android:id="@+id/textViewLinkDetailLongUrl"
-                        android:text=""
+                        android:text="@string/placeholder_url_long"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textIsSelectable="true"
-                        android:textColor="@color/gray_darkish"
+                        android:textColor="@android:color/white"
                         android:textSize="12sp"
                         android:layout_gravity="center_vertical"
                         android:gravity="center_vertical"
                         tools:ignore="UnusedAttribute" />
-                        <!--android:text="http://cyrilmottier.com/2014/05/20/custom-animations-with-fragments/"/>-->
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/material_padding"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/textViewLinkDetailShortUrl"
-                        android:text=""
+                        android:text="@string/placeholder_url_short"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:textIsSelectable="true"
+                        android:gravity="center_vertical"
                         android:textSize="24sp"
+                        android:textColor="@android:color/white"
                         tools:ignore="UnusedAttribute" />
-                    <!--android:text="bit.ly/Sh0R7urL"-->
                     <ImageView
                         android:id="@+id/imageViewLinkDetailPrivaticon"
                         android:layout_width="16dp"
@@ -98,24 +104,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@id/linearLayoutLinkDetailWrapper"
+            android:layout_marginTop="@dimen/material_padding"
             android:background="@color/gray_light">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/hard_shadow" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="6dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="11dp"
                     android:gravity="center_vertical"
                     android:layout_gravity="center_vertical"
+                    android:paddingRight="@dimen/material_keyline_1"
+                    android:paddingEnd="@dimen/material_keyline_1"
+                    android:paddingLeft="@dimen/material_keyline_1"
+                    android:paddingStart="@dimen/material_keyline_1"
                     android:textColor="@color/body_text"
                     android:textSize="24sp"
                     android:text="@string/link_info_clicks_title" />
@@ -133,9 +136,13 @@
                         android:text="@string/default_click_count"
                         android:textColor="@color/brevos_green"
                         android:textSize="24sp"
+                        android:transitionName="clicks"
                         android:background="@drawable/default_layout_selector_white"
                         android:layout_gravity="center_vertical|right"
-                        android:paddingRight="8dp"
+                        android:paddingRight="@dimen/material_padding"
+                        android:paddingEnd="@dimen/material_padding"
+                        android:paddingLeft="@dimen/material_padding"
+                        android:paddingStart="@dimen/material_padding"
                         android:gravity="center_vertical|right"
                         android:visibility="visible"
                         android:layout_marginLeft="8dp" />
