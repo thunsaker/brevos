@@ -238,6 +238,7 @@ public class LinkSearchActivity extends BaseBrevosActivity {
     @Override
     public void onBackPressed() {
         closeSearch();
+        super.onBackPressed();
     }
 
 

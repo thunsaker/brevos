@@ -16,7 +16,8 @@ import com.thunsaker.R;
 import com.thunsaker.android.common.util.NfcUtils;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class LinkInfoActivityNfc extends LinkInfoActivity implements NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
+public class LinkInfoActivityNfc extends LinkInfoActivity
+        implements NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
     NfcAdapter mNfcAdapter;
 
     @Override

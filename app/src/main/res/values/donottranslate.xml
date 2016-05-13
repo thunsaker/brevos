@@ -53,9 +53,11 @@
     <string name="placeholder_title" />
     <string name="placeholder_url_long" />
     <string name="placeholder_date" />
+    <string name="placeholder_created_by"/>
+
     <string name="transition_text_clicks">clicks</string>
     <string name="transition_text_url">longurl</string>
-    <string name="title"/>
     <string name="transition_text_title">title</string>
     <string name="transition_link_item">list_item</string>
+    <string name="transition_text_fab_main_edit">fab_main_edit</string>
 </resources>

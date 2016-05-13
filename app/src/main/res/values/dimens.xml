@@ -44,6 +44,7 @@
     <dimen name="material_elevation_touch_focus">8dp</dimen>
     <dimen name="material_elevation_touch_up">16dp</dimen>
 
+    <dimen name="material_type_xxlarge">56sp</dimen>
     <dimen name="material_type_xlarge">45sp</dimen>
     <dimen name="material_type_large">34sp</dimen>
     <dimen name="material_type_med">24sp</dimen>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutLinkGraph"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_link">
+
+    <ImageView
+        android:id="@+id/imageViewGraph"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="fitCenter"
+        android:paddingRight="@dimen/material_keyline_1"
+        android:paddingEnd="@dimen/material_keyline_1"
+        android:paddingLeft="@dimen/material_keyline_1"
+        android:paddingStart="@dimen/material_keyline_1"
+        android:src="@drawable/chart_lines"/>
+
+    <TextView
+        android:id="@+id/textViewGraphClickCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_click_count"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/material_padding_triple"
+        android:textColor="@color/white_translucent"
+        android:textSize="@dimen/material_type_xxlarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/material_keyline_1"
+        android:layout_marginStart="@dimen/material_keyline_1"
+        android:layout_marginRight="@dimen/material_keyline_1"
+        android:layout_marginEnd="@dimen/material_keyline_1"
+        android:layout_below="@+id/imageViewGraph"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/buttonGraphHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clicks_last_hour"
+            android:background="?android:attr/selectableItemBackground"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="36dp"
+            android:paddingTop="@dimen/material_padding_half"
+            android:paddingBottom="@dimen/material_padding_half"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white_translucent"/>
+        <Button
+            android:id="@+id/buttonGraphDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clicks_last_day"
+            android:background="?android:attr/selectableItemBackground"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="36dp"
+            android:paddingTop="@dimen/material_padding_half"
+            android:paddingBottom="@dimen/material_padding_half"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white_translucent"/>
+        <Button
+            android:id="@+id/buttonGraphWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clicks_last_week"
+            android:background="?android:attr/selectableItemBackground"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="36dp"
+            android:paddingTop="@dimen/material_padding_half"
+            android:paddingBottom="@dimen/material_padding_half"
+            android:layout_gravity="center_vertical"
+            android:background="@color/white_translucent"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/buttonGraphMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clicks_last_month"
+            android:background="?android:attr/selectableItemBackground"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

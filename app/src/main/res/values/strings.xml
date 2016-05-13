@@ -73,6 +73,9 @@
     <string name="clicks_last_two_years">Last 2 years</string>
     <string name="clicks_last_seven_days">Last 7 days</string>
     <string name="clicks_last_few_hours">Last few hours</string>
+    <string name="clicks_last_hour">hour</string>
+    <string name="clicks_last_day">day</string>
+    <string name="clicks_last_week">week</string>
     <string name="loading">Loading…</string>
     <string name="links_see_all">See All</string>
     <string name="links_see_more">See More</string>
@@ -147,4 +150,8 @@
     <string name="title_activity_create_link">Create Bitmark</string>
     <string name="url_label">Url</string>
     <string name="action_save">Save</string>
+    <string name="clicks_last_month">Month</string>
+    <string name="action_browse">Open in Browser</string>
+    <string name="link_info_date_title">Date Created</string>
+    <string name="link_info_creator_title">Link Creator</string>
 </resources>

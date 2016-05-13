@@ -125,4 +125,6 @@
     <string name="action_sign_in">Sign In to Bitly</string>
     <string name="link_icon">Link Icon</string>
     <string name="url_label">Url</string>
+    <string name="link_info_date_title">Date Created</string>
+    <string name="link_info_creator_title">Creator</string>
 </resources>

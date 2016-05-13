@@ -6,9 +6,14 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.text.util.Linkify;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,12 +88,17 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
     @BindView(R.id.toolbar) Toolbar mToolbar;
 
+    @BindView(R.id.coordinatorLayoutLinkDetailContainer) CoordinatorLayout mLinkDetailMainWrapper;
+
     @BindView(R.id.linearLayoutLinkDetailWrapper) LinearLayout mLinkDetailWrapper;
     @BindView(R.id.textViewLinkDetailTitle) TextView mTextViewLinkTitle;
+    @BindView(R.id.viewLinkDetailTitlePlaceholder) View mTextViewLinkTitlePlaceholder;
     @BindView(R.id.textViewLinkDetailLongUrl) TextView mTextViewLinkLongUrl;
     @BindView(R.id.textViewLinkDetailShortUrl) TextView mTextViewLinkShortUrl;
     @BindView(R.id.imageViewLinkDetailFavicon) ImageView mImageViewFavicon;
     @BindView(R.id.imageViewLinkDetailPrivaticon) ImageView mImageViewPrivate;
+
+    @BindView(R.id.textViewGraphClickCount) TextView mTextViewClicksTotalGraph;
     @BindView(R.id.textViewLinkDetailClickCountTotal) TextView mTextViewClicksTotal;
     @BindView(R.id.textViewLinkDetailClickCountTotalGlobal) TextView mTextViewClicksTotalGlobal;
 
@@ -104,6 +114,8 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
     @BindView(R.id.imageButtonLinkDetailRefresh) ImageButton mButtonRefresh;
 
+    @BindView(R.id.fabLinkEdit) FloatingActionButton mFabEdit;
+
     private boolean infoEventDone = true;
     private boolean clicksHourEventDone = true;
     private boolean clicksDayEventDone = true;
@@ -115,7 +127,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(R.anim.fade_in, R.anim.slide_down);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_link);
 
@@ -148,8 +160,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
             Bitmark myLink = mCurrentBitmark = Bitmark.GetBitmarkFromJson(bitmarkString);
             if (myLink != null) {
                 String longUrl = myLink.getLong_url();
-                mTextViewLinkShortUrl.setText(myLink.getUrl());
-                Linkify.addLinks(mTextViewLinkShortUrl, Linkify.WEB_URLS);
+                mTextViewLinkShortUrl.setText(formatShortUrl(myLink.getUrl()));
 
                 mTextViewLinkLongUrl.setText(myLink.getLong_url());
 
@@ -198,6 +209,17 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        mFabEdit.hide();
+        super.onBackPressed();
+    }
+
+    private Spanned formatShortUrl(String url) {
+        String shortUrl = url.replace("http://","").replace("https://","");
+        return Html.fromHtml(shortUrl.replace("/", "/<b>") + "</b>");
+    }
+
     @OnClick(R.id.imageButtonLinkDetailRefresh)
     public void refreshButton() {
         showProgress();
@@ -207,7 +229,7 @@ public class LinkInfoActivity extends BaseBrevosActivity {
             link = mCurrentBitmark.getUrl();
             globalLink = mCurrentBitmark.getAggregate_url();
         } else {
-            link = mTextViewLinkShortUrl.getText().toString();
+            link = mTextViewLinkShortUrl.getText().toString().replace("<b>","").replace("</b>","");
         }
 
         BitlyTasks mBitlyTasks = new BitlyTasks((BrevosApp) mContext);
@@ -232,11 +254,13 @@ public class LinkInfoActivity extends BaseBrevosActivity {
         if(info.html_title != null && info.html_title.length() > 0) {
             mTextViewLinkTitle.setText(info.html_title);
             mTextViewLinkTitle.setVisibility(View.VISIBLE);
+            mTextViewLinkTitlePlaceholder.setVisibility(View.GONE);
         } else {
             mTextViewLinkTitle.setVisibility(View.GONE);
+            mTextViewLinkTitlePlaceholder.setVisibility(View.VISIBLE);
         }
-        mTextViewLinkShortUrl.setText(info.aggregate_link);
-        Linkify.addLinks(mTextViewLinkShortUrl, Linkify.WEB_URLS);
+        mTextViewLinkShortUrl.setText(formatShortUrl(info.aggregate_link));
+//        Linkify.addLinks(mTextViewLinkShortUrl, Linkify.WEB_URLS);
         mTextViewLinkLongUrl.setText(info.original_url);
     }
 
@@ -260,6 +284,10 @@ public class LinkInfoActivity extends BaseBrevosActivity {
             case R.id.action_copy:
                 if(mCurrentBitmark != null)
                     copyToClipboard(mCurrentBitmark.getUrl());
+                break;
+            case R.id.action_browse:
+                if(mCurrentBitmark != null)
+                    openBrowser(mCurrentBitmark.getUrl());
                 break;
         }
         return true;
@@ -321,12 +349,16 @@ public class LinkInfoActivity extends BaseBrevosActivity {
 
     private void showTotalClicks(int count, boolean global) {
         if(global) {
+
             mTextViewClicksTotalGlobal.setText(BitlyUtil.getLinkClicksString(count));
             mTextViewClicksTotalGlobal.setVisibility(View.VISIBLE);
 //            mTextViewClicksTotalGlobal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
         } else {
-            mTextViewClicksTotal.setText(BitlyUtil.getLinkClicksString(count));
+            String clicks = BitlyUtil.getLinkClicksString(count);
+            mTextViewClicksTotal.setText(clicks);
             mTextViewClicksTotal.setVisibility(View.VISIBLE);
+            mTextViewClicksTotalGraph.setText(clicks);
+            mTextViewClicksTotalGraph.setVisibility(View.VISIBLE);
 //            mTextViewClicksTotal.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
         }
     }
@@ -492,5 +524,14 @@ public class LinkInfoActivity extends BaseBrevosActivity {
     @OnClick(R.id.textViewLinkDetailClickCountTotalGlobal)
     public void showGlobalLinkClicksToast() {
         Toast.makeText(this, getString(R.string.clicks_total_global_link), Toast.LENGTH_SHORT).show();
+    }
+
+    private void openBrowser(String short_url) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(short_url)));
+    }
+
+    @OnClick(R.id.fabLinkEdit)
+    public void onFabEditClick() {
+        Snackbar.make(mLinkDetailMainWrapper, "Allow Editing Some Day", Snackbar.LENGTH_SHORT).show();
     }
 }

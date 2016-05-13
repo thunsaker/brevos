@@ -11,7 +11,7 @@
     tools:context="com.thunsaker.brevos.ui.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarCreate"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -187,12 +187,29 @@
             <!--android:layout_height="wrap_content" />-->
     <!--</LinearLayout>-->
 
+    <!--android:id="@+id/recyclerLinks"-->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerLinks"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <LinearLayout
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_horizontal|center_vertical">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_vertical|center_horizontal"
+            style="?android:attr/progressBarStyleLarge"
+            android:indeterminate="true" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayoutMainEmptyWrapper"
@@ -292,6 +309,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|right|end"
         android:elevation="2dp"
+        android:transitionName="@string/transition_text_fab_main_edit"
         android:src="@drawable/ic_link" />
     <!--app:layout_behavior="com.thunsaker.brevos.ui.custom.FloatingActionButtonBehavior"-->
 

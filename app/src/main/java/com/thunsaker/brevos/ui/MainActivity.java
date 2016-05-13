@@ -121,8 +121,8 @@ public class MainActivity extends BaseBrevosActivity
     @BindView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
     @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
-//    @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
-    @BindView(R.id.recyclerLinks) RecyclerView mRecyclerLinks;
+    @BindView(android.R.id.list) RecyclerView mRecyclerLinks;
+    @BindView(android.R.id.empty) LinearLayout mRecyclerLinksLoader;
 
     @BindView(R.id.fabMainCreate) FloatingActionButton mFabCreate;
     @BindView(R.id.fabMainClipboard) FloatingActionButton mFabClipboard;
@@ -286,6 +286,8 @@ public class MainActivity extends BaseBrevosActivity
     protected void onResume() {
         super.onResume();
         checkClipboardForUrl();
+
+        mFabCreate.show();
 
         if(mBus != null && !mBus.isRegistered(this))
             mBus.register(this);
@@ -908,6 +910,7 @@ public class MainActivity extends BaseBrevosActivity
                         mRecyclerLinks.setAdapter(mLinkListAdapter);
                         mRecyclerLinks.setLayoutManager(new LinearLayoutManager(this));
                         mRecyclerLinks.setVisibility(View.VISIBLE);
+                        mRecyclerLinksLoader.setVisibility(View.GONE);
                     }
                 }
             }
@@ -915,6 +918,11 @@ public class MainActivity extends BaseBrevosActivity
     }
 
     private void openLinkInfoActivity(LinkHistoryItem link, View view) {
+        mFabCreate.hide();
+
+        if(mFabClipboard.isShown())
+            mFabClipboard.hide();
+
         Intent linkInfoIntent =
                 new Intent(mContext,
                         Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
@@ -935,7 +943,7 @@ public class MainActivity extends BaseBrevosActivity
                 Pair<View, String> pairClicks = Pair.create(view.findViewById(R.id.textViewHistoryClicks), this.getString(R.string.transition_text_clicks));
                 Pair<View, String> pairTitle = Pair.create(view.findViewById(R.id.textViewHistoryTitle), this.getString(R.string.transition_text_title));
                 ActivityOptionsCompat options =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairClicks);
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairWrapper);
 
                 startActivity(linkInfoIntent, options.toBundle());
             } catch (Exception ex) {
