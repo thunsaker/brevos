@@ -518,6 +518,7 @@ public class BitlyTasks {
 
                         mBus.post(new GetUserHistoryEvent(true, "", historyList, listType));
                     } else {
+                        // TODO: Add "No Links Yet" message
                         mBus.post(new GetUserHistoryEvent(false, mContext.getString(R.string.error_loading_history), null, 0));
                     }
                 } else {
