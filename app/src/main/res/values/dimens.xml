@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <dimen name="activity_horizontal_margin">5dp</dimen>
-    <dimen name="activity_vertical_margin">5dp</dimen>
     <dimen name="activity_vertical_margin_overlay_actionbar">60dp</dimen>
     <dimen name="padding_small">5dp</dimen>
     <dimen name="padding_medium">10dp</dimen>
@@ -10,7 +7,6 @@
     <dimen name="padding_xlarge">25dp</dimen>
     <dimen name="list_item_padding">0dp</dimen>
     <dimen name="list_divider_height">2dp</dimen>
-    <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="card_side_margin">10dp</dimen>
     <dimen name="card_shadow_height">5dp</dimen>
     <dimen name="card_shadow_side_margin">12dp</dimen>
@@ -27,4 +23,44 @@
     <dimen name="fab_icon_padding">10dp</dimen>
     <dimen name="fab_side_margin">16dp</dimen>
     <dimen name="progress_padding">0dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="material_action_bar_height">56dp</dimen>
+    <dimen name="material_padding_half">4dp</dimen>
+    <dimen name="material_padding">8dp</dimen>
+    <dimen name="material_padding_and_a_half">12dp</dimen>
+    <dimen name="material_padding_double">16dp</dimen>
+    <dimen name="material_padding_triple">24dp</dimen>
+    <dimen name="material_padding_quadruple">32dp</dimen>
+    <dimen name="material_padding_quintuple">40dp</dimen>
+    <dimen name="material_padding_sextuple">48dp</dimen>
+    <dimen name="material_type_xlarge">45sp</dimen>
+    <dimen name="material_type_large">34sp</dimen>
+    <dimen name="material_type_med">24sp</dimen>
+    <dimen name="material_type_small">16sp</dimen>
+    <dimen name="material_type_micro">13sp</dimen>
+
+    <dimen name="material_keyline_1">16dp</dimen>
+    <dimen name="material_keyline_1_offset_negative">12dp</dimen>
+    <dimen name="material_keyline_1_offset_plus">20dp</dimen>
+    <dimen name="material_keyline_2">72dp</dimen>
+    <dimen name="material_keyline_2_offset">68dp</dimen>
+
+    <dimen name="material_icon_size_micro">32dp</dimen>
+    <dimen name="material_icon_size_small">40dp</dimen>
+    <dimen name="material_icon_size_large">56dp</dimen>
+
+    <dimen name="material_section_height_small">40dp</dimen>
+    <dimen name="material_section_height_medium">56dp</dimen>
+    <dimen name="material_section_height_large">72dp</dimen>
+    <dimen name="material_section_height_xlarge">88dp</dimen>
+
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="account_drawer_width">300dp</dimen>
+    <dimen name="navigation_list_item_height">48dp</dimen>
+    <dimen name="material_type_nav_drawer">14sp</dimen>
+
 </resources>

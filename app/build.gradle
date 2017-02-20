@@ -1,25 +1,25 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            url 'http://download.crashlytics.com/maven'
-        }
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.21.6'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 22
+        minSdkVersion 14
+        targetSdkVersion 23
         versionCode 21
         versionName "3.2"
     }
@@ -49,21 +49,31 @@ android {
 
     buildTypes {
         debug {
-            zipAlign true
+            buildConfigField("String", "BITLY_ID", getEnv("BREVOS_BIT_ID"));
+            buildConfigField("String", "BITLY_SECRET", getEnv("BREVOS_BIT_SECRET"));
+            buildConfigField("String", "BITLY_DEFAULT_USERNAME", getEnv("BREVOS_BIT_DEFAULT_USERNAME"));
+            buildConfigField("String", "BITLY_DEFAULT_KEY", getEnv("BREVOS_BIT_DEFAULT_KEY"));
+
+            zipAlignEnabled true
             debuggable true
-            runProguard false
+            minifyEnabled false
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            signingConfig signingConfigs.debugSigning
+//            signingConfig signingConfigs.debugSigning
         }
 
         release {
-            zipAlign true
+            buildConfigField("String", "BITLY_ID", getEnv("BREVOS_BIT_ID"));
+            buildConfigField("String", "BITLY_SECRET", getEnv("BREVOS_BIT_SECRET"));
+            buildConfigField("String", "BITLY_DEFAULT_USERNAME", getEnv("BREVOS_BIT_DEFAULT_USERNAME"));
+            buildConfigField("String", "BITLY_DEFAULT_KEY", getEnv("BREVOS_BIT_DEFAULT_KEY"));
+
+            zipAlignEnabled true
             debuggable false
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
 //            signingConfig signingConfigs.proReleaseSigning
-            signingConfig signingConfigs.releaseSigning
+//            signingConfig signingConfigs.releaseSigning
         }
     }
 
@@ -76,34 +86,53 @@ android {
             applicationId "com.thunsaker.BitDroid.Donate"
         }
     }
+
+    compileOptions {
+        encoding "UTF-8"
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 repositories {
     mavenCentral()
-    maven { url 'http://download.crashlytics.com/maven' }
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+def getEnv(key, defVal = '') {
+    "\"${System.env.containsKey(key) ? System.env.get(key) : defVal}\""
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':HoloGraphLibrary')
-    compile project(':AboutLibraries')
+    compile project(':HoloGraphLibrary:HoloGraphLibrary')
 
-    provided 'com.squareup.dagger:dagger-compiler:1.2.1'
+    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
 
-    compile 'com.android.support:support-v4:19.+'
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.google.android.gms:play-services:+'
-    compile 'joda-time:joda-time:+'
-    compile 'com.squareup.dagger:dagger:1.2.1'
-    compile 'com.squareup.okhttp:okhttp:1.3.0'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+        transitive = true;
+    }
+
+    compile('com.mikepenz:aboutlibraries:5.2.2@aar') {
+        transitive = true
+    }
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'joda-time:joda-time:2.8.1'
+    compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.squareup.picasso:picasso:2.2.0'
-    compile 'com.squareup.retrofit:retrofit:1.4.1'
-
-    compile 'com.jakewharton:butterknife:5.1.+'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'io.reactivex:rxjava:1.1.3'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.jakewharton:butterknife:8.0.1'
     compile 'com.nineoldandroids:library:2.4.0'
-
     compile 'de.greenrobot:eventbus:2.2.0'
     compile 'com.twitter:twitter-text:1.9.0'
-    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile 'com.github.talenguyen:prettysharedpreferences:1.0.2'
+    compile 'com.android.support:design:23.3.0'
 }

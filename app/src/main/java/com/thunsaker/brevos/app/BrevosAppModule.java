@@ -8,6 +8,7 @@ import android.support.v7.appcompat.BuildConfig;
 import com.squareup.picasso.Picasso;
 import com.thunsaker.android.common.annotations.ForApplication;
 import com.thunsaker.android.common.dagger.AndroidApplicationModule;
+import com.thunsaker.brevos.BrevosPrefsManager;
 import com.thunsaker.brevos.services.BitlyClient;
 import com.thunsaker.brevos.services.BitlyService;
 import com.thunsaker.brevos.services.BitlyTasks;
@@ -35,8 +36,15 @@ public class BrevosAppModule {
 
     @Provides
     @Singleton
+    BrevosPrefsManager providesBrevosPrefsManager(@ForApplication Context mContext) {
+        return new BrevosPrefsManager(mContext.getSharedPreferences("bitdroid_prefs", Context.MODE_PRIVATE));
+    }
+
+    @Provides
+    @Singleton
     BitlyService providesBitlyService() {
         final RequestInterceptor requestInterceptor = new RequestInterceptor() {
+
             @Override
             public void intercept(RequestFacade request) {
                 request.addQueryParam("format", "json");
@@ -46,10 +54,10 @@ public class BrevosAppModule {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(BitlyClient.BITLY_BASE_URL)
                 .setRequestInterceptor(requestInterceptor)
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
-        BitlyService service = restAdapter.create(BitlyService.class);
-        return service;
+        return restAdapter.create(BitlyService.class);
     }
 
     @Provides

@@ -14,6 +14,6 @@
         android:id="@+id/buttonLinkListFooterSeeAll"
         android:layout_width="wrap_content"
         android:text="@string/links_see_more"
-        style="@style/Button.Brevos.NowAction.Green"
         android:visibility="visible" />
+    <!--style="@style/Button.Brevos.NowAction.Green"-->
 </LinearLayout>

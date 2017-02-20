@@ -4,7 +4,7 @@
     android:id="@+id/wizard_page_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/primary">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,11 +12,12 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal">
         <TextView
-            style="?android:textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/material_padding_double"
             android:textStyle="bold"
+            android:fontFamily="sans-serif-thin"
+            android:textSize="@dimen/material_type_large"
             android:gravity="center"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/wizard_welcome" />
@@ -24,9 +25,9 @@
         <ImageView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:layout_marginTop="8dp"
+            android:layout_margin="@dimen/material_padding_double"
             android:adjustViewBounds="true"
+            android:elevation="2dp"
             android:maxWidth="500dp"
             android:src="@drawable/brevos_screen_shortened_result_fade"
             android:contentDescription="@string/wizard_welcome_shorten_screen_description" />
@@ -35,10 +36,8 @@
             style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="0dp"
-            android:paddingBottom="16dp"
+            android:padding="@dimen/material_padding_double"
+            android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/wizard_welcome_about_brevos" />

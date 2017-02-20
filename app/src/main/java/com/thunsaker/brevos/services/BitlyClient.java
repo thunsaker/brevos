@@ -8,7 +8,7 @@ public class BitlyClient {
     public static String UNIT_YEAR = "year";
     public static String UNIT_ALL = "all";
 
-    public static String BITLY_BASE_URL = "https://api-ssl.bitly.com/v3/";
+    public static String BITLY_BASE_URL = "https://api-ssl.bitly.com";
     public static String BITLY_DOMAIN_DEFAULT = "";
     public static String BITLY_DOMAIN_BITLY = "bit.ly";
     public static String BITLY_DOMAIN_JMP = "j.mp";

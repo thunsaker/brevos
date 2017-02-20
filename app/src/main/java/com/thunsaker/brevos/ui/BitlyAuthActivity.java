@@ -3,34 +3,44 @@ package com.thunsaker.brevos.ui;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import com.thunsaker.android.common.annotations.ForApplication;
-import com.thunsaker.android.common.util.HttpUtils;
-import com.thunsaker.android.common.util.QueryStringParser;
-import com.thunsaker.android.common.util.Util;
 import com.thunsaker.R;
+import com.thunsaker.android.common.annotations.ForApplication;
+import com.thunsaker.android.common.util.Util;
+import com.thunsaker.brevos.BrevosPrefsManager;
 import com.thunsaker.brevos.app.BaseBrevosActivity;
 import com.thunsaker.brevos.data.events.BitlyAuthEvent;
-import com.thunsaker.brevos.services.BitlyPrefs;
+import com.thunsaker.brevos.services.AuthHelper;
+import com.thunsaker.brevos.services.BitlyService;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import retrofit.client.Response;
+import retrofit.mime.TypedByteArray;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class BitlyAuthActivity extends BaseBrevosActivity {
 	final String TAG = "BitlyAuthActivity";
+
+	public static final int REQUEST_CODE_BITLY_SIGN_IN = 8000;
+
 
 	public static final String ACCESS_URL = "https://api-ssl.bitly.com/oauth/access_token";
 	public static final String AUTHORIZE_URL = "https://bitly.com/oauth/authorize";
@@ -44,25 +54,44 @@ public class BitlyAuthActivity extends BaseBrevosActivity {
     @Inject
     EventBus mBus;
 
+	@Inject
+	BrevosPrefsManager mPreferences;
+
+	@Inject
+	BitlyService mBitlyService;
+
+	@BindView(R.id.toolbar_bitly) Toolbar mToolbar;
+	@BindView(R.id.progress_bitly) ProgressBar mProgress;
+	@BindView(R.id.webview_bitly) WebView mWebView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_up_affordance_white));
+		setContentView(R.layout.activity_bitly);
+
+		ButterKnife.bind(this);
+
+		setSupportActionBar(mToolbar);
+		setTitle(R.string.title_activity_bitly_auth);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.close, menu);
+		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-	        case android.R.id.home:
-	        	finish();
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		int id = item.getItemId();
+
+		if (id == R.id.action_close) {
+			this.setResult(RESULT_CANCELED);
+			this.finish();
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -70,54 +99,81 @@ public class BitlyAuthActivity extends BaseBrevosActivity {
 	protected void onResume() {
 		super.onResume();
 
-        loadingDialog = ProgressDialog.show(
-                BitlyAuthActivity.this, getString(R.string.dialog_please_wait),
-                getString(R.string.dialog_loading_authorization),
-                true, // Undefined progress
-                true, // Allow canceling of operation
-                new DialogInterface.OnCancelListener() {
-                    public void onCancel(DialogInterface dialog) {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                getString(R.string.dialog_abort),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+		mProgress.setVisibility(View.VISIBLE);
+		mWebView.getSettings().setJavaScriptEnabled(true);
 
-		WebView webView = new WebView(this);
-		webView.getSettings().setJavaScriptEnabled(true);
-		webView.setVisibility(View.VISIBLE);
-		setContentView(webView);
+		String authUrl = String.format("%s?client_id=%s&redirect_uri=%s",
+				AUTHORIZE_URL, AuthHelper.BITLY_CLIENT_ID, AuthHelper.BITLY_REDIRECT_URL);
 
-		String authUrl = String.format("%s?client_id=%s&redirect_uri=%s", AUTHORIZE_URL, BitlyPrefs.BITLY_CLIENT_ID, BitlyPrefs.BITLY_REDIRECT_URL);
+		Log.i(TAG, "Bitly Auth Url: " + authUrl);
 
 		try {
-			webView.setWebViewClient(new WebViewClient() {
+			mWebView.setWebViewClient(new WebViewClient() {
 				@Override
 				public void onPageStarted(WebView view, String url, Bitmap favicon) { }
 
 				@Override
 				public void onPageFinished(WebView view, String url) {
-					if(url.startsWith(BitlyPrefs.BITLY_REDIRECT_URL)) {
+					if(url.startsWith(AuthHelper.BITLY_REDIRECT_URL)) {
 						try {
 							if(url.contains("code=")) {
-								String requestToken = extractParamFromUrl(url, "code");
+								String requestToken = Util.extractParamFromUrl(url, "code");
 
-								// Do http post here...
-								String accessUrl = String.format("%s?code=%s&client_id=%s&client_secret=%s&redirect_uri=%s",
-										ACCESS_URL,
-										requestToken,
-                                        BitlyPrefs.BITLY_CLIENT_ID,
-                                        BitlyPrefs.BITLY_CLIENT_SECRET,
-                                        BitlyPrefs.BITLY_REDIRECT_URL);
+								mBitlyService
+										.getAccessToken(
+												"Non est corpus.",
+												requestToken,
+												AuthHelper.BITLY_CLIENT_ID,
+												AuthHelper.BITLY_CLIENT_SECRET,
+												AuthHelper.BITLY_REDIRECT_URL)
+										.subscribeOn(Schedulers.io())
+										.observeOn(AndroidSchedulers.mainThread())
+										.onErrorReturn(new Func1<Throwable, Response>() {
+											@Override
+											public Response call(Throwable throwable) {
+												mPreferences.bitlyEnabled().put(false).commit();
+												mBus.post(new BitlyAuthEvent(false, ""));
+												return null;
+											}
+										})
+										.subscribe(new Action1<Response>() {
+											@Override
+											public void call(Response response) {
+												Log.i(TAG, "Here I am!");
+												boolean result = false;
+												Log.i(TAG, "Response = " + response);
+												if (response != null) {
+													Log.i(TAG, "Here I am again!!");
+													String responseBody =
+															new String(
+																	((TypedByteArray) response.getBody()).getBytes());
+													String accessToken =
+															Util.extractParamFromUrl(responseBody, "access_token");
+													String login = Util.extractParamFromUrl(responseBody, "login");
+													// Deprecated
+													String apikey = Util.extractParamFromUrl(responseBody, "apiKey");
 
-								new TokenFetcher(mContext, accessUrl).execute();
+													if (accessToken.length() > 0 && login.length() > 0) {
+														mPreferences
+																.bitlyEnabled().put(true)
+																.bitlyToken().put(accessToken)
+																.bitlyUsername().put(login)
+																.bitlyApiKey().put(apikey)
+																.commit();
+														result = true;
+													}
+												}
 
-								view.setVisibility(View.INVISIBLE);
-                                finish();
-//                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+												mBus.post(new BitlyAuthEvent(result, ""));
+												MainActivity.isBitlyConnected = true;
+											}
+										});
+
+								setResult(RESULT_OK);
+								finish();
 							} else if (url.contains("error=")) {
 								view.setVisibility(View.INVISIBLE);
+								setResult(RESULT_CANCELED);
 								finish();
 							}
 						} catch (Exception e) {
@@ -128,61 +184,23 @@ public class BitlyAuthActivity extends BaseBrevosActivity {
 				}
 			});
 
-			webView.loadUrl(authUrl);
-			webView.requestFocus();
-			loadingDialog.dismiss();
+			mWebView.loadUrl(authUrl);
+			mWebView.requestFocus();
+			mProgress.setVisibility(View.GONE);
+			mWebView.setVisibility(View.VISIBLE);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private String extractParamFromUrl(String url,String paramName) {
-		String queryString = url.substring(url.indexOf("?", 0)+1,url.length());
-		QueryStringParser queryStringParser = new QueryStringParser(queryString);
-		return queryStringParser.getQueryParamValue(paramName);
-	}
-
-	public class TokenFetcher extends AsyncTask<Void, Integer, Boolean> {
-		Context myContext;
-		String myUrl;
-		public TokenFetcher(Context theContext, String theUrl) {
-			myContext = theContext;
-			myUrl = theUrl;
-		}
-
-		@Override
-		protected Boolean doInBackground(Void... params) {
-			Boolean result = false;
-			String response = HttpUtils.getHttpResponse(myUrl, true, Util.contentType, Util.contentType);
-			if(response != null) {
-				String accessToken = extractParamFromUrl(response, "access_token");
-				String login = extractParamFromUrl(response, "login");
-				String apikey = extractParamFromUrl(response, "apiKey");
-
-				if(accessToken.length() > 0 && login.length() > 0 && apikey.length() > 0) {
-					result = true;
-					PreferencesHelper.setBitlyToken(myContext, accessToken);
-					PreferencesHelper.setBitlyLogin(myContext, login);
-					PreferencesHelper.setBitlyApiKey(myContext, apikey);
-					PreferencesHelper.setBitlyConnected(myContext, result);
-				}
-			} else {
-				PreferencesHelper.setBitlyConnected(myContext, result);
-			}
-
-			return result;
-		}
-
-		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-			Toast.makeText(myContext, "Bit.ly Account Authorized", Toast.LENGTH_SHORT).show();
-            mBus.post(new BitlyAuthEvent(result, ""));
 		}
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(null);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mWebView = null;
 	}
 }

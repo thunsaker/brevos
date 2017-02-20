@@ -1,6 +1,7 @@
 package com.thunsaker.brevos.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ClipData;
@@ -11,13 +12,13 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -35,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.crashlytics.android.Crashlytics;
@@ -61,12 +61,15 @@ import java.util.TimeZone;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnFragmentInteractionListener, LinkFragment.OnFragmentListViewScrollListener {
+public class MainActivity extends BaseBrevosActivity
+        implements LinkFragment.OnFragmentInteractionListener,
+        LinkFragment.OnFragmentListViewScrollListener {
 
     @Inject @ForApplication Context mContext;
     @Inject EventBus mBus;
@@ -75,40 +78,39 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     @Inject android.text.ClipboardManager mClipboardManagerLegacy;
     @Inject NotificationManager mNotificationManager;
 
-    @InjectView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
-    @InjectView(R.id.editTextUrl) EditText mEditTextUrl;
-    @InjectView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
-    @InjectView(R.id.linearLayoutAuthButtonWrapper) LinearLayout mAuthButtonWrapper;
+    @BindView(R.id.relativeLayoutMainContainer) RelativeLayout mMainLayoutContainer;
 
-    @InjectView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
-    @InjectView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
-    @InjectView(R.id.linearLayoutMainWrapper) LinearLayout mMainLayoutWrapper;
+    @BindView(R.id.buttonShortenUrl) ImageButton mImageButtonShortenUrl;
+    @BindView(R.id.editTextUrl) EditText mEditTextUrl;
+    @BindView(R.id.toggleButtonOptionsPrivateUrl) ToggleButton mTogglePrivate;
 
-    @InjectView(R.id.relativeLayoutResultWrapper) RelativeLayout mResultLayoutWrapper;
-    @InjectView(R.id.textViewShortenResultUrl) TextView mTextViewResultUrl;
-    @InjectView(R.id.textViewOriginalUrl) TextView mTextViewOriginalUrl;
-    @InjectView(R.id.imageViewFavicon) ImageView mImageViewFavicon;
-    @InjectView(R.id.imageViewPrivaticon) ImageView mImageViewPrivaticon;
+    @BindView(R.id.linearLayoutAuthButtonWrapper) LinearLayout mAuthButtonWrapper;
 
-    @InjectView(R.id.imageButtonResultActionCopyUrl) ImageButton mButtonCopy;
-    @InjectView(R.id.imageButtonResultActionInfo) ImageButton mButtonInfo;
-    @InjectView(R.id.imageButtonResultActionShare) ImageButton mButtonShare;
+    @BindView(R.id.linearLayoutMainWrapperOuter) LinearLayout mMainLayoutWrapperOuter;
+    @BindView(R.id.relativeLayoutMainWrapperInner) RelativeLayout mMainLayoutWrapperInner;
+    @BindView(R.id.linearLayoutMainWrapper) LinearLayout mMainLayoutWrapper;
 
-    @InjectView(R.id.relativeLayoutExpandResultWrapper) RelativeLayout mExpandResultLayoutWrapper;
-    @InjectView(R.id.textViewExpandResultUrl) TextView mTextViewExpandResultUrl;
-    @InjectView(R.id.textViewExpandShortUrl) TextView mTextViewExpandShortUrl;
+    @BindView(R.id.relativeLayoutResultWrapper) RelativeLayout mResultLayoutWrapper;
+    @BindView(R.id.textViewShortenResultUrl) TextView mTextViewResultUrl;
+    @BindView(R.id.textViewOriginalUrl) TextView mTextViewOriginalUrl;
+    @BindView(R.id.imageViewFavicon) ImageView mImageViewFavicon;
+    @BindView(R.id.imageViewPrivaticon) ImageView mImageViewPrivaticon;
 
-    @InjectView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
-    @InjectView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
+    @BindView(R.id.imageButtonResultActionCopyUrl) ImageButton mButtonCopy;
+    @BindView(R.id.imageButtonResultActionInfo) ImageButton mButtonInfo;
+    @BindView(R.id.imageButtonResultActionShare) ImageButton mButtonShare;
 
-    @InjectView(R.id.linearLayoutMainUrlInClipboardWrapper) LinearLayout mClipboardWrapper;
-    @InjectView(R.id.textViewMainClipboardText) TextView mTextViewClipboard;
+    @BindView(R.id.relativeLayoutExpandResultWrapper) RelativeLayout mExpandResultLayoutWrapper;
+    @BindView(R.id.textViewExpandResultUrl) TextView mTextViewExpandResultUrl;
+    @BindView(R.id.textViewExpandShortUrl) TextView mTextViewExpandShortUrl;
 
-    @InjectView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
+    @BindView(R.id.imageButtonExpandResultCopy) ImageButton mButtonExpandCopy;
+    @BindView(R.id.imageButtonExpandResultBrowse) ImageButton mButtonExpandBrowse;
 
-//    @InjectView(R.id.relativeLayoutFabWrapper) RelativeLayout mFabWrapper;
-//    @InjectView(R.id.fabCreate) ImageButton mFabCreate;
+    @BindView(R.id.linearLayoutMainLinkListWrapper) LinearLayout mLinkListWrapper;
 
     public static String BREVOS_POP_OVER_BITMARK = "BREVOS_POP_OVER_BITMARK";
     private static String BREVOS_CURRENT_BITMARK = "BREVOS_CURRENT_BITMARK";
@@ -123,7 +125,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     private boolean isPrivate = false;
     private String domain = BitlyClient.BITLY_DOMAIN_DEFAULT;
     private static boolean ignoreClipboard = false;
-    private CountDownTimer clipboardPromptCountDown;
     public static int COMPACT_LINK_LIST_COUNT = 20;
 
     private AdView adView;
@@ -131,21 +132,18 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     private PendingIntent retryPendingIntent;
     private PendingIntent genericPendingIntent;
     private boolean createHidden = false;
-//    public static boolean mFabStateUp = false;
 
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
 
         setContentView(R.layout.activity_main);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setTitle(null);
+        ButterKnife.bind(this);
 
-        ButterKnife.inject(this);
+        setSupportActionBar(mToolbar);
 
         if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             mImageButtonShortenUrl.setEnabled(true);
@@ -216,10 +214,10 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 //            }
         }
 
-        if(getIsPro())
+//        if(getIsPro())
             hideAds();
-        else
-            showAds();
+//        else
+//            showAds();
 
         checkClipboardForUrl();
     }
@@ -270,7 +268,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                 mEditTextUrl.invalidate();
                 mTogglePrivate.setVisibility(View.GONE);
             } else {
-                mTogglePrivate.setVisibility(View.VISIBLE);
+//                mTogglePrivate.setVisibility(View.VISIBLE);
                 mTogglePrivate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -355,7 +353,8 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 //                } else {
 //                    showUpsellDialog();
 //                }
-                Toast.makeText(mContext, "Bundles coming soon!", Toast.LENGTH_SHORT).show();
+                // TODO: BUNDLES?!
+                Snackbar.make(mMainLayoutContainer, "Bundles coming soon!", Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.action_search:
                 startActivity(new Intent(mContext, LinkSearchActivity.class));
@@ -379,7 +378,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         PreferencesHelper.setBitlyApiKey(mContext, null);
         PreferencesHelper.setBitlyLogin(mContext, null);
         PreferencesHelper.setBrevosWelcomeWizard(mContext, false);
-        Toast.makeText(mContext, "Clearing all Settings", Toast.LENGTH_SHORT).show();
+        Snackbar.make(mMainLayoutContainer, "Clearing all Settings", Snackbar.LENGTH_SHORT).show();
         mBus.post(new BitlyAuthEvent(false, ""));
     }
 
@@ -388,7 +387,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         }
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            hideClipboardPrompt();
             if (count > 0) {
                 if(android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                     mImageButtonShortenUrl.setEnabled(true);
@@ -408,9 +406,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
             }
         }
 
-        public void afterTextChanged(Editable s) {
-            hideClipboardPrompt();
-        }
+        public void afterTextChanged(Editable s) { }
     };
 
     @OnClick(R.id.buttonShortenUrl)
@@ -429,14 +425,14 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                 }
             } else {
                 showProgress();
-                if (isPrivate)
+                if (isPrivate) {
                     bitlyTasks.new SaveBitmark(linkToShorten, BitlyClient.SHORTENED_ACTION_DEFAULT, isPrivate).execute();
-                else {
+                } else {
                     bitlyTasks.new CreateBitmark(linkToShorten, BitlyClient.SHORTENED_ACTION_DEFAULT, domain, false).execute();
                 }
             }
         } else {
-            Toast.makeText(mContext, getString(R.string.error_invalid_url), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.error_invalid_url, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -448,7 +444,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 
     @OnClick(R.id.linearLayoutAuthButton)
     public void showAuth() {
-        startActivity(new Intent(mContext, BitlyAuthActivity.class));
+        startActivityForResult(new Intent(mContext, BitlyAuthActivity.class), BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN);
     }
 
     public void onEvent(BitlyAuthEvent event) {
@@ -456,7 +452,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
             showLinkFragment();
             mAuthButtonWrapper.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fall_down_out));
             mAuthButtonWrapper.setVisibility(View.GONE);
-            mTogglePrivate.setVisibility(View.VISIBLE);
+//            mTogglePrivate.setVisibility(View.VISIBLE);
             mTogglePrivate.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_in));
 
             isBitlyConnected = PreferencesHelper.getBitlyConnected(mContext);
@@ -466,10 +462,10 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                 if (event.resultMessage.equals(CLEAR_BITLY_DATA)) {
                     clearBitlyData();
                 } else if (event.resultMessage.length() > 0) {
-                    Toast.makeText(mContext, String.format(getString(R.string.error_placeholder), event.resultMessage), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(mContext, getString(R.string.bitly_connection_error), Toast.LENGTH_SHORT).show();
+                Snackbar.make(mMainLayoutContainer, R.string.bitly_connection_error, Snackbar.LENGTH_SHORT).show();
             }
 
             mAuthButtonWrapper.setVisibility(View.VISIBLE);
@@ -487,10 +483,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         if(event.result) {
             mCurrentBitmark = event.bitmark;
             switch (event.action) {
-                case 0: // SHORTENED_ACTION_POPOVER
-                    showPopOver(event.bitmark);
-                    hideShortenNotification();
-                    break;
                 case 1: // SHORTENED_ACTION_DEFAULT
                     showLinkResult(event.bitmark);
                     break;
@@ -502,13 +494,15 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
             if(event.action.equals(BitlyClient.SHORTENED_ACTION_POPOVER)) {
                 setupNotificationIntents(event.longUrl);
                 showShorteningFailedNotification(event.longUrl);
-            } else
-                Toast.makeText(mContext, "Error: " + event.resultMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void showLinkResult(final Bitmark bitmark) {
-        mClipboardWrapper.setVisibility(View.GONE);
+        copyToClipboard(bitmark.getUrl());
+
         mExpandResultLayoutWrapper.setVisibility(View.GONE);
         mEditTextUrl.setText(null);
 
@@ -546,7 +540,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         mImageViewPrivaticon.setVisibility(bitmark.getIs_private() ? View.VISIBLE : View.GONE);
 
         hideExpandLinkResult();
-        hideClipboardPrompt();
 
         mResultLayoutWrapper.startAnimation(slideDownFromTopAnimation);
         mResultLayoutWrapper.setOnTouchListener(new SwipeDismissTouchListener(
@@ -556,17 +549,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                     @Override
                     public void onDismiss(View view, Object token) {
                         mMainLayoutWrapperOuter.removeView(mResultLayoutWrapper);
-                    }
-                }
-        ));
-
-        mClipboardWrapper.setOnTouchListener(new SwipeDismissTouchListener(
-                mClipboardWrapper,
-                null,
-                new SwipeDismissTouchListener.OnDismissCallback() {
-                    @Override
-                    public void onDismiss(View view, Object token) {
-                        mMainLayoutWrapperOuter.removeView(mClipboardWrapper);
                     }
                 }
         ));
@@ -593,12 +575,11 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                     break;
             }
         } else {
-            Toast.makeText(mContext, "Error: " + event.resultMessage, Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.error_placeholder), event.resultMessage), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     private void showExpandLinkResult(final Bitmark bitmark) {
-        mClipboardWrapper.setVisibility(View.GONE);
         mResultLayoutWrapper.setVisibility(View.GONE);
         mEditTextUrl.setText(null);
 
@@ -623,7 +604,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         });
 
         hideLinkResult();
-        hideClipboardPrompt();
 
         mExpandResultLayoutWrapper.startAnimation(slideDownFromTopAnimation);
     }
@@ -658,7 +638,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
             linkInfo.putExtra(LinkInfoActivity.EXTRA_LINK, myBitmark.toString());
             startActivity(linkInfo);
         } else {
-            Toast.makeText(mContext, "Sign in to bit.ly to see link info.", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_prompt_info, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -688,71 +668,25 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         super.onDestroy();
     }
 
-    @OnClick(R.id.buttonPasteFromClipboard)
-    public void pasteFromClipboard() {
-        mEditTextUrl.setText(getClipboardText());
-        hideClipboardPrompt();
-    }
-
-    @OnClick(R.id.buttonShortenUrlFromClipboard)
     public void shortenFromClipboard(){
         shorten(getClipboardText());
-        hideClipboardPrompt();
-    }
-
-    @OnClick(R.id.linearLayoutMainUrlInClipboardWrapper)
-    public void dismissClipboardPrompt() {
-        hideClipboardPrompt();
-    }
-
-    public void hideClipboardPrompt() {
-        if(clipboardPromptCountDown != null)
-            clipboardPromptCountDown.cancel();
-
-        if(mClipboardWrapper.getVisibility() == View.VISIBLE) {
-            Animation slideUpAnimation = AnimationUtils.loadAnimation(mContext, R.anim.slide_up);
-            slideUpAnimation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) { }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mClipboardWrapper.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) { }
-            });
-            mClipboardWrapper.startAnimation(slideUpAnimation);
-            mClipboardWrapper.setVisibility(View.GONE);
-        }
-    }
-
-    private void showClipboardPrompt(String clipText) {
-        if(mClipboardWrapper.getVisibility() == View.GONE) {
-            mClipboardWrapper.setVisibility(View.VISIBLE);
-            mTextViewClipboard.setText(String.format(getString(R.string.clipboard_url_text), clipText));
-            final Animation slideDown = AnimationUtils.loadAnimation(mContext, R.anim.slide_down);
-            mClipboardWrapper.startAnimation(slideDown);
-
-            clipboardPromptCountDown = new CountDownTimer(20000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) { }
-
-                @Override
-                public void onFinish() {
-                    hideClipboardPrompt();
-                }
-            }.start();
-        }
     }
 
     private void checkClipboardForUrl() {
         if(!ignoreClipboard) {
             String clipText = getClipboardText();
 
+            assert clipText != null;
             if (clipText.length() > 0 && BitlyUtil.isValidUrl(clipText) && !BitlyUtil.isBitlyUrl(clipText))
-                showClipboardPrompt(clipText);
+                Snackbar
+                        .make(mMainLayoutWrapperOuter, String.format(getString(R.string.clipboard_url_text), clipText), Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.shorten, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                shortenFromClipboard();
+                            }
+                        })
+                        .show();
         }
     }
 
@@ -791,9 +725,9 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
                 mClipboardManagerLegacy.setText(shortUrlString);
             }
             ignoreClipboard = true;
-            Toast.makeText(this, String.format(getString(R.string.link_copied), shortUrlString), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, String.format(getString(R.string.link_copied), shortUrlString), Snackbar.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, getString(R.string.error_copy_nothing), Toast.LENGTH_SHORT).show();
+            Snackbar.make(mMainLayoutContainer, R.string.error_copy_nothing, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -807,11 +741,9 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("2B0F45ECB7E319BC2500CD6AFF1353CC") // N7 - 4.4.4
                     .addTestDevice("D50AF454D0BF794B6A38811EEA1F21EE") // GS3 - 4.3
                     .addTestDevice("6287716BED76BCE3BB981DD19AA858E1") // GS3 - 4.1
-                    .addTestDevice("FDC26B2E6C049E2E9ECE7C97D42A4726") // G2 - 2.3.4
-                    .addTestDevice("1BF36BBC3C197AFF96AF3F9F305CAD48") // N5 - L
+                    .addTestDevice("EF2AC044641A83A5F1084ADC3828467B") // GS6 - 6.0.1
                     .build();
 
             if (adView != null)
@@ -906,7 +838,7 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
         mNotificationManager.notify(MainActivity.NOTIFICATION_BREVOS_SHORTEN, mNotificationShorten.getNotification());
     }
 
-    private NotificationCompat.Builder createShorteningFailedNotification(String notificationText) {
+    public NotificationCompat.Builder createShorteningFailedNotification(String notificationText) {
         return new NotificationCompat.Builder(mContext)
                 .setSmallIcon(R.drawable.ic_stat_brevos_wing)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher))
@@ -920,8 +852,6 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
     @SuppressLint("InlinedApi")
     @Override
     public void onFragmentListViewScrollListener(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        hideClipboardPrompt();
-
         if(view != null) {
             View first = view.getChildAt(0);
             if(first != null) {
@@ -970,6 +900,19 @@ public class MainActivity extends BaseBrevosActivity implements LinkFragment.OnF
 //            });
             mMainLayoutWrapperInner.startAnimation(slideUpAnimation);
             createHidden = true;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case BitlyAuthActivity.REQUEST_CODE_BITLY_SIGN_IN:
+                if(resultCode == Activity.RESULT_OK) {
+                    Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_success, Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(mMainLayoutContainer, R.string.bitly_auth_error, Snackbar.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }

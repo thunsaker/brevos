@@ -1,11 +1,11 @@
 package com.thunsaker.android.common.dagger;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import dagger.ObjectGraph;
 
-public abstract class BaseActivity extends ActionBarActivity implements Injector {
+public abstract class BaseActivity extends AppCompatActivity implements Injector {
     private ObjectGraph mActivityGraph;
 
     @Override

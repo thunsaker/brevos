@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,13 +20,20 @@ import com.thunsaker.brevos.app.BaseBrevosActivity;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WizardActivity extends BaseBrevosActivity {
 
     @Inject
     @ForApplication
     Context mContext;
 
-    private ViewPager mPager;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.wizard_pager) ViewPager mPager;
+
     private PagerAdapter mPagerAdapter;
 
     private static final int NUM_PAGES = 3;
@@ -37,11 +44,13 @@ public class WizardActivity extends BaseBrevosActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wizard);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
-        ab.setTitle(R.string.title_activity_wizard);
+        ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
 
-        mPager = (ViewPager) findViewById(R.id.wizard_pager);
+//        ActionBar ab = getSupportActionBar();
+//        ab.setIcon(getResources().getDrawable(R.drawable.ic_launcher_flat_white));
+//        ab.setTitle(R.string.title_activity_wizard);
+
         mPagerAdapter = new WizardPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
     }

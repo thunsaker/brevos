@@ -68,7 +68,4 @@ gradle-app.setting
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
 
-app/src/main/java/com/thunsaker/brevos/services/BitlyPrefs.java
-app/src/main/res/values/donotsave.xml
-
-app/libs
+donotsave.xml

@@ -4,15 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".brevos.ui.HistorySearchActivity"
+    android:background="@color/now_background"
+    tools:context=".brevos.ui.LinkSearchActivity"
     tools:ignore="MergeRootFrame" >
 
-    <include layout="@layout/search_header_view" />
-
-    <View
+    <RelativeLayout
+        android:id="@+id/search_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/hard_shadow"/>
+        android:layout_height="?android:actionBarSize"
+        android:orientation="horizontal"
+        android:outlineProvider="bounds"
+        android:elevation="4dp"
+        android:background="@color/primary"
+        android:theme="@style/SearchViewTheme">
+
+        <FrameLayout
+            android:id="@+id/frameLayoutSearchSearchContainer"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/material_padding"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingEnd="@dimen/material_padding"
+            android:paddingRight="@dimen/material_padding"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent">
+
+            <ImageButton
+                android:id="@+id/imageButtonSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="start|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back" />
+
+        </FrameLayout>
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/material_padding_quadruple"
+            android:layout_marginStart="@dimen/material_padding_quadruple"
+            android:layout_marginEnd="@dimen/material_padding_quadruple"
+            android:layout_marginRight="@dimen/material_padding_quadruple"
+            android:iconifiedByDefault="false" />
+
+        <FrameLayout
+            android:id="@+id/frameLayoutSearchCloseContainer"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/material_padding"
+            android:paddingLeft="@dimen/material_padding"
+            android:paddingEnd="@dimen/material_padding"
+            android:paddingRight="@dimen/material_padding"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:background="@android:color/transparent">
+
+            <ImageButton
+                android:id="@+id/imageButtonSearchClear"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close" />
+
+        </FrameLayout>
+    </RelativeLayout>
+
+    <include layout="@layout/search_header_view" />
 
     <FrameLayout
         android:id="@+id/frameLayoutHistorySearchListContainer"

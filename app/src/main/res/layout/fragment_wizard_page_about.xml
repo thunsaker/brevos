@@ -4,7 +4,7 @@
     android:id="@+id/wizard_page_wrapper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/primary">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,13 +13,12 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/material_padding_double"
             android:adjustViewBounds="true"
             android:maxWidth="350dp"
             android:scaleType="centerInside"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/brevos_medium_wings"
+            android:src="@drawable/bitly_fugu"
             android:contentDescription="@string/app_name" />
 
         <TextView
@@ -27,7 +26,8 @@
             style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/material_padding_double"
+            android:fontFamily="sans-serif"
             android:gravity="center"
             android:lineSpacingMultiplier="1.2"
             android:text="@string/wizard_welcome_about_history" />

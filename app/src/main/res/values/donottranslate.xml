@@ -46,4 +46,6 @@
     <string name="title_activity_main">Brevos</string>
     <string name="prefs_brevos_welcome_wizard">brevos_welcome_wizard</string>
     <string name="default_click_count">-</string>
+
+    <string name="bitly" translatable="false">bit.ly</string>
 </resources>

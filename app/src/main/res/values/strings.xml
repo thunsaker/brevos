@@ -103,7 +103,7 @@
     <string name="menu_action_previous">Previous</string>
     <string name="menu_action_next">Next</string>
     <string name="about_welcome">Welcome Screen</string>
-    
+
     <string name="action_bundle">Bundles</string>
     <string name="loading_title">Loading Title…</string>
     <string name="error_loading_search">Error loading search results</string>
@@ -118,4 +118,13 @@
     <string name="clicks_total_your_link">Total clicks from your link</string>
     <string name="clicks_total_global_link">Total clicks from global link</string>
     <string name="search_no_results">No results found.</string>
+    <string name="close">Close</string>
+    <string name="title_activity_pop_over_permission">Brevos PopOver</string>
+    <string name="placeholder_url_short">https://bit.ly/####</string>
+    <string name="placholder_title">Link Title</string>
+    <string name="placeholder_url_long">http://example.com/long-url-that-is-the-queen-of-refuse-slime-filth-putrescence-boo-boo</string>
+    <string name="processing_link">Processing link...</string>
+    <string name="bitly_auth_success">Bit.ly Authorized</string>
+    <string name="bitly_auth_error">Authorization error :(</string>
+    <string name="bitly_auth_prompt_info">Sign in to bit.ly to see link info.</string>
 </resources>
